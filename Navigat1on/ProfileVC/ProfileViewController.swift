@@ -8,14 +8,14 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    static var user = User(login: "aria1401",
-                           fullName: "Ария",
-                           avatar: UIImage(named: "19"),
-                           status: "У меня вылез уже пятый фуб!"
-   )
-    
     
     // MARK: - Properties
+    
+    var user = User(login: "test",
+                    fullName: "",
+                    avatar: UIImage(systemName: "person.fill.questionmark"),
+                    status: ""
+    )
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -40,6 +40,13 @@ class ProfileViewController: UIViewController {
     }
   
 
+    // MARK: - Public
+    
+    func setup(user: User) {
+        self.user = user
+    }
+    
+    
     // MARK: - Methods
     
     private func setupView() {
@@ -121,7 +128,7 @@ extension ProfileViewController: UITableViewDelegate {
         if section == 0 {
             if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderViewID") as? ProfileHeaderView {
                 
-                headerView.setup(user: ProfileViewController.user)
+                headerView.setup(user: user)
                 return headerView
             }
         }

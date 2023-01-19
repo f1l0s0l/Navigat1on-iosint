@@ -11,7 +11,15 @@ class LogInViewController: UIViewController {
 
     // MARK: - Properties
     
-    private var currentUserServise = CurrentUserServise(user: ProfileViewController.user)
+    #if DEBUG
+    var userServise = TestUserServise()
+    #else
+    var userServise = CurrentUserServise(user: User(login: "aria1401",
+                                                    fullName: "Ария",
+                                                    avatar: UIImage(named: "19"),
+                                                    status: "У меня вылез новый фуб")
+    )
+    #endif
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -158,10 +166,10 @@ class LogInViewController: UIViewController {
     @objc
     private func touchUpInsideOnLogInButton() {
         guard let login = self.userEmailTextField.text else {return}
-    
-        if self.currentUserServise.checkLogin(login: login) != nil {
+        
+        if let user = self.userServise.checkLogin(login: login) {
             let profileViewController = ProfileViewController()
-            profileViewController.title = "Hello"
+            profileViewController.setup(user: user)
             navigationController?.pushViewController(profileViewController, animated: true)
         } else if login == "" {
             print("Введите логин")

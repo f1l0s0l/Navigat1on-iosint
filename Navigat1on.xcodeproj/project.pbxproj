@@ -34,6 +34,7 @@
 		A43698C82979B04B00395E32 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698C72979B04B00395E32 /* User.swift */; };
 		A43698CA2979B05800395E32 /* UserServiswProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698C92979B05800395E32 /* UserServiswProtocol.swift */; };
 		A43698CC2979B06E00395E32 /* CurrentUserSersive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */; };
+		A43698CE2979B37F00395E32 /* TestUserServisw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698CD2979B37F00395E32 /* TestUserServisw.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		A43698C72979B04B00395E32 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A43698C92979B05800395E32 /* UserServiswProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiswProtocol.swift; sourceTree = "<group>"; };
 		A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserSersive.swift; sourceTree = "<group>"; };
+		A43698CD2979B37F00395E32 /* TestUserServisw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserServisw.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				A43698C72979B04B00395E32 /* User.swift */,
 				A43698C92979B05800395E32 /* UserServiswProtocol.swift */,
 				A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */,
+				A43698CD2979B37F00395E32 /* TestUserServisw.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A43698CE2979B37F00395E32 /* TestUserServisw.swift in Sources */,
 				A436989D2979AAEB00395E32 /* ArrayPhotos.swift in Sources */,
 				A43698952979AA9900395E32 /* StatusText.swift in Sources */,
 				A43698CC2979B06E00395E32 /* CurrentUserSersive.swift in Sources */,
