@@ -11,6 +11,8 @@ class LogInViewController: UIViewController {
 
     // MARK: - Properties
     
+    private var currentUserServise = CurrentUserServise(user: ProfileViewController.user)
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,12 +146,32 @@ class LogInViewController: UIViewController {
     private func setupTapOnLogInButton() {
         self.logInButton.addTarget(self, action: #selector(touchUpInsideOnLogInButton), for: .touchUpInside)
     }
+    
+    private func setupAlertConfiguration(title: String) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Продолжить", style: .cancel)
+        alertController.addAction(action)
+        
+        return alertController
+    }
 
     @objc
     private func touchUpInsideOnLogInButton() {
-        let profileViewController = ProfileViewController()
-        profileViewController.title = "Hello"
-        navigationController?.pushViewController(profileViewController, animated: true)
+        guard let login = self.userEmailTextField.text else {return}
+    
+        if self.currentUserServise.checkLogin(login: login) != nil {
+            let profileViewController = ProfileViewController()
+            profileViewController.title = "Hello"
+            navigationController?.pushViewController(profileViewController, animated: true)
+        } else if login == "" {
+            print("Введите логин")
+            let alert = self.setupAlertConfiguration(title: "Введите логин")
+            self.present(alert, animated: true)
+        } else {
+            print("Неправильный логин")
+            let alert = self.setupAlertConfiguration(title: "Неправильный логин")
+            self.present(alert, animated: true)
+        }
     }
     
 

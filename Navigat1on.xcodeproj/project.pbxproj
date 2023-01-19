@@ -31,6 +31,9 @@
 		A43698BF2979AD8600395E32 /* StorageServise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A43698B92979AD8600395E32 /* StorageServise.framework */; };
 		A43698C02979AD8600395E32 /* StorageServise.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A43698B92979AD8600395E32 /* StorageServise.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A43698C62979AD9900395E32 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698C52979AD9900395E32 /* Post.swift */; };
+		A43698C82979B04B00395E32 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698C72979B04B00395E32 /* User.swift */; };
+		A43698CA2979B05800395E32 /* UserServiswProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698C92979B05800395E32 /* UserServiswProtocol.swift */; };
+		A43698CC2979B06E00395E32 /* CurrentUserSersive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,9 @@
 		A43698B92979AD8600395E32 /* StorageServise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageServise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A43698BB2979AD8600395E32 /* StorageServise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageServise.h; sourceTree = "<group>"; };
 		A43698C52979AD9900395E32 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		A43698C72979B04B00395E32 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A43698C92979B05800395E32 /* UserServiswProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiswProtocol.swift; sourceTree = "<group>"; };
+		A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserSersive.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,9 @@
 				A43698982979AAC300395E32 /* PostView.swift */,
 				A436989A2979AADF00395E32 /* DataPosts.swift */,
 				A436989C2979AAEB00395E32 /* ArrayPhotos.swift */,
+				A43698C72979B04B00395E32 /* User.swift */,
+				A43698C92979B05800395E32 /* UserServiswProtocol.swift */,
+				A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -330,6 +339,7 @@
 			files = (
 				A436989D2979AAEB00395E32 /* ArrayPhotos.swift in Sources */,
 				A43698952979AA9900395E32 /* StatusText.swift in Sources */,
+				A43698CC2979B06E00395E32 /* CurrentUserSersive.swift in Sources */,
 				A43698AF2979AC8500395E32 /* PostTableViewCell.swift in Sources */,
 				A43698A12979ABAF00395E32 /* FeeaViewController.swift in Sources */,
 				A43698AD2979AC6E00395E32 /* PhotosTableViewCell.swift in Sources */,
@@ -340,12 +350,14 @@
 				A43698AB2979AC4900395E32 /* ProfileHeaderView.swift in Sources */,
 				A43698A72979ABFD00395E32 /* LogInViewController.swift in Sources */,
 				A436989B2979AADF00395E32 /* DataPosts.swift in Sources */,
+				A43698CA2979B05800395E32 /* UserServiswProtocol.swift in Sources */,
 				A436987C2979A89700395E32 /* SceneDelegate.swift in Sources */,
 				A43698992979AAC300395E32 /* PostView.swift in Sources */,
 				A43698972979AAB900395E32 /* Exstension + UITextField.swift in Sources */,
 				A43698A52979ABDE00395E32 /* InfoViewController.swift in Sources */,
 				A43698B32979ACB000395E32 /* PhotosCollectionViewCell.swift in Sources */,
 				A43698A32979ABC600395E32 /* PostViewController.swift in Sources */,
+				A43698C82979B04B00395E32 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

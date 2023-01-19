@@ -8,6 +8,12 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    static var user = User(login: "aria1401",
+                           fullName: "Ария",
+                           avatar: UIImage(named: "19"),
+                           status: "У меня вылез уже пятый фуб!"
+   )
+    
     
     // MARK: - Properties
     
@@ -113,11 +119,9 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderViewID") {
-                // только так можно задавать фон header
-                let backgroundView = UIView(frame: headerView.frame)
-                backgroundView.backgroundColor = UIColor.systemGray6
-                headerView.backgroundView = backgroundView
+            if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderViewID") as? ProfileHeaderView {
+                
+                headerView.setup(user: ProfileViewController.user)
                 return headerView
             }
         }
