@@ -11,8 +11,8 @@ class TabBarController: UITabBarController {
     
     // MARK: - Properties
     
-    var lineTabNavigationController: UINavigationController!
-    var infoTabNavigationController: UINavigationController!
+    var feedTabNavigationController: UINavigationController!
+    var logInTabNavigationController: UINavigationController!
     
     // MARK: - Life cycle
     
@@ -25,11 +25,18 @@ class TabBarController: UITabBarController {
     // MARK: - Methods
     
     private func setupUI() {
-        lineTabNavigationController = UINavigationController.init(rootViewController: FeedViewController())
-        infoTabNavigationController = UINavigationController.init(rootViewController: LogInViewController())
-        infoTabNavigationController.navigationBar.isHidden = true
+        let feedViewController = FeedViewController()
+        let logInViewController = LogInViewController()
+        //У нас в проекте NAvigation объявление LogInViewController() происходит не в AppleDelegate/SceneDelegate
+        //В AppleDalegate/SceneDelegate назначается рутовым котроллером TabBarController()
+        //Так что делегат я тут присвоил
+        logInViewController.loginDelegate = MyLoginFactory().makeLoginInspector()
         
-        self.viewControllers = [lineTabNavigationController, infoTabNavigationController]
+        feedTabNavigationController = UINavigationController.init(rootViewController: feedViewController )
+        logInTabNavigationController = UINavigationController.init(rootViewController: logInViewController)
+        logInTabNavigationController.navigationBar.isHidden = true
+                
+        self.viewControllers = [feedTabNavigationController, logInTabNavigationController]
         
         let item1 = UITabBarItem(title: "Feed",
                                  image: UIImage(systemName: "square.stack.3d.down.right"), tag: 0)
@@ -37,8 +44,8 @@ class TabBarController: UITabBarController {
         let item2 = UITabBarItem(title: "Profile",
                                  image: UIImage(systemName: "person.crop.circle"), tag: 1)
         
-        lineTabNavigationController.tabBarItem = item1
-        infoTabNavigationController.tabBarItem = item2
+        feedTabNavigationController.tabBarItem = item1
+        logInTabNavigationController.tabBarItem = item2
         
         UITabBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
         UITabBar.appearance().backgroundColor = .white
