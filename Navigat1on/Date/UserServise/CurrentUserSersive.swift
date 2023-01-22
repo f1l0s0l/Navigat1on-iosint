@@ -10,11 +10,10 @@ import UIKit
 
 
 class CurrentUserServise: UserServise {
-//    static let shared: CurrentUserServise = .init(user: <#User#>)
     
     let user: User
     
-    func checkLogin(login: String) -> User? {
+    func checkLogin(login: String?) -> User? {
         if login  == self.user.login {
             return user
         }

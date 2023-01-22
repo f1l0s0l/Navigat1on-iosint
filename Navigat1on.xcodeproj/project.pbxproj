@@ -35,6 +35,10 @@
 		A43698CA2979B05800395E32 /* UserServiswProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698C92979B05800395E32 /* UserServiswProtocol.swift */; };
 		A43698CC2979B06E00395E32 /* CurrentUserSersive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */; };
 		A43698CE2979B37F00395E32 /* TestUserServisw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698CD2979B37F00395E32 /* TestUserServisw.swift */; };
+		A43698D2297AC27200395E32 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698D1297AC27200395E32 /* Checker.swift */; };
+		A43698D6297AC79200395E32 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698D5297AC79200395E32 /* LoginInspector.swift */; };
+		A43698D8297AD81E00395E32 /* LoginFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698D7297AD81E00395E32 /* LoginFactoryProtocol.swift */; };
+		A43698DA297AD88800395E32 /* MyLoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698D9297AD88800395E32 /* MyLoginFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +95,10 @@
 		A43698C92979B05800395E32 /* UserServiswProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiswProtocol.swift; sourceTree = "<group>"; };
 		A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserSersive.swift; sourceTree = "<group>"; };
 		A43698CD2979B37F00395E32 /* TestUserServisw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserServisw.swift; sourceTree = "<group>"; };
+		A43698D1297AC27200395E32 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		A43698D5297AC79200395E32 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
+		A43698D7297AD81E00395E32 /* LoginFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactoryProtocol.swift; sourceTree = "<group>"; };
+		A43698D9297AD88800395E32 /* MyLoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLoginFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,15 +156,14 @@
 		A436988D2979AA1700395E32 /* Date */ = {
 			isa = PBXGroup;
 			children = (
+				A43698DB297AD88F00395E32 /* Factory */,
+				A43698D0297AC25900395E32 /* Checker */,
+				A43698CF297AC24000395E32 /* UserServise */,
 				A43698942979AA9900395E32 /* StatusText.swift */,
 				A43698962979AAB900395E32 /* Exstension + UITextField.swift */,
 				A43698982979AAC300395E32 /* PostView.swift */,
 				A436989A2979AADF00395E32 /* DataPosts.swift */,
 				A436989C2979AAEB00395E32 /* ArrayPhotos.swift */,
-				A43698C72979B04B00395E32 /* User.swift */,
-				A43698C92979B05800395E32 /* UserServiswProtocol.swift */,
-				A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */,
-				A43698CD2979B37F00395E32 /* TestUserServisw.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -225,6 +232,35 @@
 				A43698C52979AD9900395E32 /* Post.swift */,
 			);
 			path = StorageServise;
+			sourceTree = "<group>";
+		};
+		A43698CF297AC24000395E32 /* UserServise */ = {
+			isa = PBXGroup;
+			children = (
+				A43698C72979B04B00395E32 /* User.swift */,
+				A43698C92979B05800395E32 /* UserServiswProtocol.swift */,
+				A43698CB2979B06E00395E32 /* CurrentUserSersive.swift */,
+				A43698CD2979B37F00395E32 /* TestUserServisw.swift */,
+			);
+			path = UserServise;
+			sourceTree = "<group>";
+		};
+		A43698D0297AC25900395E32 /* Checker */ = {
+			isa = PBXGroup;
+			children = (
+				A43698D1297AC27200395E32 /* Checker.swift */,
+				A43698D5297AC79200395E32 /* LoginInspector.swift */,
+			);
+			path = Checker;
+			sourceTree = "<group>";
+		};
+		A43698DB297AD88F00395E32 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				A43698D7297AD81E00395E32 /* LoginFactoryProtocol.swift */,
+				A43698D9297AD88800395E32 /* MyLoginFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,13 +391,17 @@
 				A43698A72979ABFD00395E32 /* LogInViewController.swift in Sources */,
 				A436989B2979AADF00395E32 /* DataPosts.swift in Sources */,
 				A43698CA2979B05800395E32 /* UserServiswProtocol.swift in Sources */,
+				A43698D6297AC79200395E32 /* LoginInspector.swift in Sources */,
 				A436987C2979A89700395E32 /* SceneDelegate.swift in Sources */,
+				A43698D8297AD81E00395E32 /* LoginFactoryProtocol.swift in Sources */,
 				A43698992979AAC300395E32 /* PostView.swift in Sources */,
 				A43698972979AAB900395E32 /* Exstension + UITextField.swift in Sources */,
 				A43698A52979ABDE00395E32 /* InfoViewController.swift in Sources */,
 				A43698B32979ACB000395E32 /* PhotosCollectionViewCell.swift in Sources */,
+				A43698DA297AD88800395E32 /* MyLoginFactory.swift in Sources */,
 				A43698A32979ABC600395E32 /* PostViewController.swift in Sources */,
 				A43698C82979B04B00395E32 /* User.swift in Sources */,
+				A43698D2297AC27200395E32 /* Checker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
