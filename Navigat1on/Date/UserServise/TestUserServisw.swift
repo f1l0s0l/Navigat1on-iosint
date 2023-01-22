@@ -17,7 +17,7 @@ class TestUserServise: UserServise {
                     status: "TestStatus"
     )
     
-    func checkLogin(login: String) -> User? {
+    func checkLogin(login: String?) -> User? {
         if login  == self.user.login {
             return user
         }

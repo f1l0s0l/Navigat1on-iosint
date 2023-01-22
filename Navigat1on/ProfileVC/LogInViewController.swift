@@ -7,6 +7,13 @@
 
 import UIKit
 
+// MARK: - Protocol LogInViewControllerDelegate
+
+protocol LogInViewControllerDelegate {
+    func check(log: String?, pasw: String?) -> Bool
+}
+
+
 class LogInViewController: UIViewController {
 
     // MARK: - Properties
@@ -20,6 +27,8 @@ class LogInViewController: UIViewController {
                                                     status: "У меня вылез новый фуб")
     )
     #endif
+    
+    var loginDelegate: LogInViewControllerDelegate?
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -165,18 +174,26 @@ class LogInViewController: UIViewController {
 
     @objc
     private func touchUpInsideOnLogInButton() {
-        guard let login = self.userEmailTextField.text else {return}
+        //Мне кажется, как то я усложнил тут, посоветуйте, пожвлуйста, как можно упростить мой синтаксис тут
         
-        if let user = self.userServise.checkLogin(login: login) {
-            let profileViewController = ProfileViewController()
-            profileViewController.setup(user: user)
-            navigationController?.pushViewController(profileViewController, animated: true)
-        } else if login == "" {
-            print("Введите логин")
+        if let user = self.userServise.checkLogin(login: self.userEmailTextField.text) {
+            
+            switch loginDelegate?.check(log: self.userEmailTextField.text, pasw: self.userPasswordTextField.text) {
+            case true:
+                let profileViewController = ProfileViewController()
+                profileViewController.setup(user: user)
+                navigationController?.pushViewController(profileViewController, animated: true)
+            case false:
+                let alert = self.setupAlertConfiguration(title: "Неправильный пароль")
+                self.present(alert, animated: true)
+            default:
+                break
+            }
+            
+        } else if self.userEmailTextField.text == "" {
             let alert = self.setupAlertConfiguration(title: "Введите логин")
             self.present(alert, animated: true)
         } else {
-            print("Неправильный логин")
             let alert = self.setupAlertConfiguration(title: "Неправильный логин")
             self.present(alert, animated: true)
         }
