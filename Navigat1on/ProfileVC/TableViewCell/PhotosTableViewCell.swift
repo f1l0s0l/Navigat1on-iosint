@@ -95,17 +95,17 @@ class PhotosTableViewCell: UITableViewCell {
     
     // MARK: - Public
     
-    func setup(withPhoto photos: [String]){
+    func setup(withPhoto photos: [UIImage?]){
         for (index, photo) in photos.enumerated() {
             switch index {
             case 0:
-                self.firstPhotoImage.image = UIImage(named: photo)
+                self.firstPhotoImage.image = photo
             case 1:
-                self.secondPhotoImage.image = UIImage(named: photo)
+                self.secondPhotoImage.image = photo
             case 2:
-                self.thirdPhotoImage.image = UIImage(named: photo)
+                self.thirdPhotoImage.image = photo
             case 3:
-                self.fourthPhotoImage.image = UIImage(named: photo)
+                self.fourthPhotoImage.image = photo
             default:
                 break
             }

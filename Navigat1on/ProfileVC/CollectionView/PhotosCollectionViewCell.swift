@@ -5,6 +5,7 @@
 //  Created by Илья Сидорик on 19.01.2023.
 //
 
+import iOSIntPackage
 import UIKit
 
 class PhotosCollectionViewCell: UICollectionViewCell {
@@ -16,7 +17,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .systemGray6
+//        imageView.backgroundColor = .systemGray6
+        imageView.backgroundColor = .red
         return imageView
     }()
     
@@ -34,8 +36,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public
     
-    func setup(withPhoto photo: String) {
-        self.imageView.image = UIImage(named: photo)
+    func setup(withPhoto photo: UIImage?) {
+        self.imageView.image = photo
     }
 
     

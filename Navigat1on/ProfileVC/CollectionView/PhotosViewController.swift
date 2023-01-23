@@ -5,6 +5,7 @@
 //  Created by Илья Сидорик on 19.01.2023.
 //
 
+import iOSIntPackage
 import UIKit
 
 class PhotosViewController: UIViewController {
@@ -20,6 +21,11 @@ class PhotosViewController: UIViewController {
     
     
     // MARK: - Properties
+    
+    private var publisher = ImagePublisherFacade()
+    
+    private var arrayPhotosss: [UIImage] = []
+     
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -65,6 +71,11 @@ class PhotosViewController: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .systemGray6
         self.view.addSubview(collectionView)
+        self.initTimerInPublisher()
+    }
+    
+    private func initTimerInPublisher() {
+        publisher.addImagesWithTimer(time: 1, repeat: 10)
     }
     
     
@@ -82,12 +93,14 @@ class PhotosViewController: UIViewController {
 }
 
 
+
     // MARK: - Extension UICollectionViewDataSourse
 
 extension PhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        Photos.photos.count
+//        Photos.photos.count
+        arrayPhotosss.count
     }
     
     
@@ -98,7 +111,13 @@ extension PhotosViewController: UICollectionViewDataSource {
             return cell
         }
         
-        cell.setup(withPhoto: Photos.photos[indexPath.item])
+        
+//
+//        cell.setup(withPhoto: Photos.photos[indexPath.item])
+        if arrayPhotosss.count != 0 {
+            cell.setup(withPhoto: arrayPhotosss[indexPath.item])
+        }
+
         return cell
     }
 }
@@ -115,3 +134,28 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+
+    // MARK: - Extension ImageLibrarySubscriber
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        arrayPhotosss = images
+        self.collectionView.reloadData()
+        
+//        if let image = images.last{
+//            Photos.photos.insert(image, at: 0)
+//            print(Photos.photos.count)
+//            self.collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+//            publisher.rechargeImageLibrary()
+//        }
+    }
+}
+
+//Я тут не могу никак разобраться
+//По логике, должно работать
+//обновили массив с фото, перезагрузили коллекцию( да перезагружать коллекцию каджый раз бесмысленно, проще делать
+//collection.insertItems(insertItems(at: [IndexPath(item: 0, section: 0)]) или не в начало а в конец, не принципиально
+//Но в любом случае, и так и так не раотает, и я не могу разоабрться почему
+//Помогите, пожалуста!)

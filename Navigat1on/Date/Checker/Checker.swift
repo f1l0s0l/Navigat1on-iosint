@@ -9,11 +9,11 @@ import Foundation
 
 
 public class Checker {
-    static let shared: Checker = .init()
+    static let shared = Checker()
     
     #if DEBUG
     private let logIn = ""
-    private let password = "q"
+    private let password = ""
     #else
     private let logIn = "aria1401"
     private let password = "qwe"
@@ -22,11 +22,7 @@ public class Checker {
     private init() {}
     
     func check(logIn: String?, password: String?) -> Bool {
-        if logIn == self.logIn && password == self.password {
-            return true
-        }
-
-        return false
+        logIn == self.logIn && password == self.password
     }
     
     

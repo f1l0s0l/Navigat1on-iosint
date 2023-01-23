@@ -12,7 +12,6 @@ struct LoginInspector {
 }
 
 
-
 extension LoginInspector: LogInViewControllerDelegate {
     
     func check(log: String?, pasw: String?) -> Bool {
