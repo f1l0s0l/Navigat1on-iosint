@@ -22,7 +22,7 @@ class PhotosViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var publisher = ImagePublisherFacade()
+    private let publisher = ImagePublisherFacade()
     
     private var thisArrayPhotos: [UIImage] = []
      
@@ -54,6 +54,7 @@ class PhotosViewController: UIViewController {
         super.viewDidLoad()
         self.setupView()
         self.setupConstraint()
+        self.initTimerInPublisher()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +73,6 @@ class PhotosViewController: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .systemGray6
         self.view.addSubview(collectionView)
-        self.initTimerInPublisher()
     }
     
     private func initTimerInPublisher() {
@@ -112,8 +112,6 @@ extension PhotosViewController: UICollectionViewDataSource {
             cell.backgroundColor = .orange
             return cell
         }
-        
-        
 //
 //        cell.setup(withPhoto: Photos.photos[indexPath.item])
         if thisArrayPhotos.count != 0 {
