@@ -25,7 +25,9 @@ class TabBarController: UITabBarController {
     // MARK: - Methods
     
     private func setupUI() {
-        let feedViewController = FeedViewController()
+        let feedModel = FeedModel()
+        let feedViewController = FeedViewController(feedModel: feedModel)
+        
         let logInViewController = LogInViewController()
         //У нас в проекте NAvigation объявление LogInViewController() происходит не в AppleDelegate/SceneDelegate
         //В AppleDalegate/SceneDelegate назначается рутовым котроллером TabBarController()

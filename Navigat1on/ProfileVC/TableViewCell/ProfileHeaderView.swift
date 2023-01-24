@@ -36,13 +36,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
-        
-    private lazy var buttonShowStatus: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Show status", for: .normal)
+    
+    private lazy var buttonShowStatus: CustomButton = {
+        let button = CustomButton(title: "Show status",
+                                  backgroundColor: UIColor.systemBlue
+        )
+        button.target = { [weak self] in
+            self?.tapOnButtonShowStatus()
+        }
+        // Вопрос, надо использовать так?
+        // Или тут не будет возникать циклической ссылки и можно просывать так:
+        //button.target = tapOnButtonShowStatus
         button.layer.cornerRadius = 14
-        button.backgroundColor = .systemBlue
         button.layer.shadowOffset.width = 4
         button.layer.shadowOffset.height = 4
         button.layer.shadowRadius = 4
@@ -106,31 +111,20 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(userStatus)
         self.addSubview(changeUserStatus)
         self.addSubview(userPhoto)
-        self.buttonShowStatus.addTarget(self, action: #selector(tapOnButtonShowStatus), for: .touchUpInside)
-        //Добавил прстую аниманию нажатия на кнопку
-        self.buttonShowStatus.addTarget(self, action: #selector(tapDownButtonShowStatus), for: .touchDown)
         //Добавил изменение текста на кнопке в "Set status" согласно макету
         self.changeUserStatus.addTarget(self, action: #selector(titleButtonShowStatusChange), for: .touchDown) //!!!!!!!!
         self.changeUserStatus.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         self.setupConstraint()
     }
     
-    //Тут я добавил простую анимацию нажатия на кнопку
-    @objc
     private func tapOnButtonShowStatus() {
-        buttonShowStatus.alpha = 1
         userStatus.text = statusText.text
         changeUserStatus.placeholder = statusText.text
         print(userStatus.text ?? "Нет статуса")
-        //Добавил закрытие клавиатуры по нажатию на эту кнопку
         self.endEditing(true)
         buttonShowStatus.setTitle("Show status", for: .normal)
     }
     
-    @objc
-    private func tapDownButtonShowStatus() {
-        buttonShowStatus.alpha = 0.6
-    }
     
     @objc
     private func statusTextChanged(_ textField: UITextField){

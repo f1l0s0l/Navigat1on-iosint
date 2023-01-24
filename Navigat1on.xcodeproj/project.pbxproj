@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A426E45229804997001128BF /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45129804997001128BF /* FeedModel.swift */; };
 		A436987A2979A89700395E32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698792979A89700395E32 /* AppDelegate.swift */; };
 		A436987C2979A89700395E32 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A436987B2979A89700395E32 /* SceneDelegate.swift */; };
 		A43698832979A89900395E32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A43698822979A89900395E32 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		A43698D8297AD81E00395E32 /* LoginFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698D7297AD81E00395E32 /* LoginFactoryProtocol.swift */; };
 		A43698DA297AD88800395E32 /* MyLoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698D9297AD88800395E32 /* MyLoginFactory.swift */; };
 		A43698DE297E964900395E32 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = A43698DD297E964900395E32 /* iOSIntPackage */; };
+		A43698E129800B7E00395E32 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698E029800B7E00395E32 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A426E45129804997001128BF /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		A43698762979A89700395E32 /* Navigat1on.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigat1on.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A43698792979A89700395E32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A436987B2979A89700395E32 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +103,7 @@
 		A43698D5297AC79200395E32 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		A43698D7297AD81E00395E32 /* LoginFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactoryProtocol.swift; sourceTree = "<group>"; };
 		A43698D9297AD88800395E32 /* MyLoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLoginFactory.swift; sourceTree = "<group>"; };
+		A43698E029800B7E00395E32 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 		A43698782979A89700395E32 /* Navigat1on */ = {
 			isa = PBXGroup;
 			children = (
+				A43698DF29800B5600395E32 /* CustomButton */,
 				A436988D2979AA1700395E32 /* Date */,
 				A436988E2979AA2000395E32 /* Application */,
 				A436988F2979AA3F00395E32 /* TabBarController */,
@@ -193,6 +198,7 @@
 				A43698A02979ABAF00395E32 /* FeeaViewController.swift */,
 				A43698A22979ABC600395E32 /* PostViewController.swift */,
 				A43698A42979ABDE00395E32 /* InfoViewController.swift */,
+				A426E45129804997001128BF /* FeedModel.swift */,
 			);
 			path = FeedVC;
 			sourceTree = "<group>";
@@ -263,6 +269,14 @@
 				A43698D9297AD88800395E32 /* MyLoginFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		A43698DF29800B5600395E32 /* CustomButton */ = {
+			isa = PBXGroup;
+			children = (
+				A43698E029800B7E00395E32 /* CustomButton.swift */,
+			);
+			path = CustomButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,6 +400,7 @@
 			files = (
 				A43698CE2979B37F00395E32 /* TestUserServisw.swift in Sources */,
 				A436989D2979AAEB00395E32 /* ArrayPhotos.swift in Sources */,
+				A43698E129800B7E00395E32 /* CustomButton.swift in Sources */,
 				A43698952979AA9900395E32 /* StatusText.swift in Sources */,
 				A43698CC2979B06E00395E32 /* CurrentUserSersive.swift in Sources */,
 				A43698AF2979AC8500395E32 /* PostTableViewCell.swift in Sources */,
@@ -394,6 +409,7 @@
 				A43698A92979AC1000395E32 /* ProfileViewController.swift in Sources */,
 				A436989F2979AB6600395E32 /* TabBarController.swift in Sources */,
 				A436987A2979A89700395E32 /* AppDelegate.swift in Sources */,
+				A426E45229804997001128BF /* FeedModel.swift in Sources */,
 				A43698B12979AC9D00395E32 /* PhotosViewController.swift in Sources */,
 				A43698AB2979AC4900395E32 /* ProfileHeaderView.swift in Sources */,
 				A43698A72979ABFD00395E32 /* LogInViewController.swift in Sources */,

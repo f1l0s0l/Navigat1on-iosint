@@ -91,16 +91,17 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var logInButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.clipsToBounds = true
-        button.setTitle("Log in", for: .normal)
-        button.clipsToBounds = true
-        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "blue_pixelALPHA08"), for: .selected)
-        button.setBackgroundImage(UIImage(named: "blue_pixelALPHA08"), for: .highlighted)
-        button.setBackgroundImage(UIImage(named: "blue_pixelALPHA08"), for: .disabled)
+    private lazy var logInButton: CustomButton = {
+        let button = CustomButton(title: "Log In",
+                                  backgroundImage: UIImage(named: "blue_pixel")
+                                  
+        )
+        button.target = { [weak self] in
+            self?.touchUpInsideOnLogInButton()
+        }
+        //Вопрос, надо использовать так?
+        // Или тут не будет возникать циклической ссылки и можно просывать так:
+        //button.target = touchUpInsideOnLogInButton
         button.layer.cornerRadius = 10
         return button
     }()
@@ -135,7 +136,6 @@ class LogInViewController: UIViewController {
         self.stackView.addArrangedSubview(self.userEmailTextField)
         self.stackView.addArrangedSubview(self.userPasswordTextField)
         self.scrollView.addSubview(self.logInButton)
-        setupTapOnLogInButton()
     }
     
     private func setupGestures() {
@@ -160,9 +160,6 @@ class LogInViewController: UIViewController {
         }
     }
     
-    private func setupTapOnLogInButton() {
-        self.logInButton.addTarget(self, action: #selector(touchUpInsideOnLogInButton), for: .touchUpInside)
-    }
     
     private func setupAlertConfiguration(title: String) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
@@ -172,7 +169,6 @@ class LogInViewController: UIViewController {
         return alertController
     }
 
-    @objc
     private func touchUpInsideOnLogInButton() {
         //Мне кажется, как то я усложнил тут, посоветуйте, пожвлуйста, как можно упростить мой синтаксис тут
         

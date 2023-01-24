@@ -12,6 +12,8 @@ class FeedViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let feedModel: FeedModelProtocol
+    
     var post = Post(title: "Title of this Post")
     
     private let stackView: UIStackView = {
@@ -23,22 +25,55 @@ class FeedViewController: UIViewController {
         return stackView
     }()
     
-    private let buttonFirst: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("First post", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.backgroundColor = .lightGray
+    private lazy var buttonFirst: CustomButton = {
+        let button = CustomButton(title: "First post",
+                                  titleColor: UIColor.black,
+                                  backgroundColor: UIColor.lightGray
+        )
         button.layer.cornerRadius = 14
+        button.target = { [weak self] in
+            self?.tochUpInsideOnButtonFirst()
+        }
+        // Вопрос, надо использовать так?
+        // Или тут не будет возникать циклической ссылки и можно просывать так:
+        //button.target = tochUpInsideOnButtonFirst
         return button
     }()
     
-    private let buttonSecond: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Second post", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.backgroundColor = .lightGray
+    private lazy var buttonSecond: CustomButton = {
+        let button = CustomButton(title: "Second post",
+                                  titleColor: UIColor.black,
+                                  backgroundColor: UIColor.lightGray
+        )
+        button.layer.cornerRadius = 14
+        button.target = { [weak self] in
+            self?.tochUpInsideOnButtonSecond()
+        }
+        // Вопрос, надо использовать так?
+        // Или тут не будет возникать циклической ссылки и можно просывать так:
+        //button.target = tochUpInsideOnButtonSecond
+        return button
+    }()
+    
+    private lazy var checkPasswordTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.backgroundColor = .systemGray6
+        textField.layer.cornerRadius = 5
+        return textField
+    }()
+    
+    private lazy var checkGuessButton: CustomButton = {
+        let button = CustomButton(title: "Check",
+                                  titleColor: UIColor.black,
+                                  backgroundColor: UIColor.lightGray
+        )
+        button.target = { [weak self] in
+            self?.didPabCheckGuessButton()
+        }
+        // Вопрос, надо использовать так?
+        // Или тут не будет возникать циклической ссылки и можно просывать так:
+        //button.target = didPabCheckGuessButton
         button.layer.cornerRadius = 14
         return button
     }()
@@ -51,6 +86,15 @@ class FeedViewController: UIViewController {
         setupViewController()
     }
     
+    init(feedModel: FeedModelProtocol) {
+        self.feedModel = feedModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
  
     // MARK: - Methods
     
@@ -59,45 +103,37 @@ class FeedViewController: UIViewController {
         self.title = "Feed"
         self.view.addSubview(stackView)
         self.setupStackView()
+        self.view.addSubview(checkPasswordTextField)
+        self.view.addSubview(checkGuessButton)
         self.setupConstraints()
     }
     
     private func setupStackView() {
         stackView.addArrangedSubview(buttonFirst)
         stackView.addArrangedSubview(buttonSecond)
-        setupTapOnButton()
     }
     
-    private func setupTapOnButton() {
-        buttonFirst.addTarget(self, action: #selector(tochDownOnButtonFirst), for: .touchDown)
-        buttonFirst.addTarget(self, action: #selector(tochUpInsideOnButtonFirst), for: .touchUpInside)
-        
-        buttonSecond.addTarget(self, action: #selector(tochDownOnButtonSecond), for: .touchDown)
-        buttonSecond.addTarget(self, action: #selector(tochUpInsideOnButtonSecond), for: .touchUpInside)
-    }
-    
-    @objc
-    private func tochDownOnButtonFirst() {
-        buttonFirst.alpha = 0.6
-    }
-    
-    @objc
+  
     private func tochUpInsideOnButtonFirst() {
-        buttonFirst.alpha = 1
         let postViewController = PostViewController()
         postViewController.titlePost = post.title
         navigationController?.pushViewController(postViewController, animated: true)
     }
-    @objc
-    private func tochDownOnButtonSecond() {
-        buttonSecond.alpha = 0.6
-    }
-    @objc
+    
     private func tochUpInsideOnButtonSecond() {
-        buttonSecond.alpha = 1
         let postViewController = PostViewController()
         postViewController.titlePost = post.title
         navigationController?.pushViewController(postViewController, animated: true)
+    }
+    
+    private func didPabCheckGuessButton() {
+        self.view.endEditing(true)
+        if feedModel.check(word: checkPasswordTextField.text) {
+            checkGuessButton.backgroundColor = UIColor.green
+        } else {
+            checkGuessButton.backgroundColor = UIColor.red
+        }
+       
     }
     
     
@@ -115,7 +151,18 @@ class FeedViewController: UIViewController {
             
             buttonSecond.leftAnchor.constraint(equalTo: stackView.leftAnchor, constant: 10),
             buttonSecond.rightAnchor.constraint(equalTo: stackView.rightAnchor, constant: -10),
-            buttonSecond.heightAnchor.constraint(equalToConstant: 50)
+            buttonSecond.heightAnchor.constraint(equalToConstant: 50),
+            
+            checkPasswordTextField.bottomAnchor.constraint(equalTo: checkGuessButton.topAnchor, constant: -10),
+            checkPasswordTextField.widthAnchor.constraint(equalTo: buttonFirst.widthAnchor),
+            checkPasswordTextField.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+            
+            checkGuessButton.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -50),
+            checkGuessButton.widthAnchor.constraint(equalTo: checkPasswordTextField.widthAnchor),
+            checkGuessButton.centerXAnchor.constraint(equalTo: checkPasswordTextField.centerXAnchor),
+            checkGuessButton.heightAnchor.constraint(equalTo: buttonFirst.heightAnchor),
+
+            
         ])
     }
 }
