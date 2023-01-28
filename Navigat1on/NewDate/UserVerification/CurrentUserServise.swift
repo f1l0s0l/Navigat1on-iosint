@@ -1,17 +1,15 @@
 //
-//  CurrentUserSersive.swift
+//  CurrentUserServise.swift
 //  Navigat1on
 //
-//  Created by Илья Сидорик on 20.01.2023.
+//  Created by Илья Сидорик on 25.01.2023.
 //
 
-import Foundation
 import UIKit
-
 
 class CurrentUserServise: UserServise {
     
-    let user: User
+    private let user: User
     
     func checkLogin(login: String?) -> User? {
         if login  == self.user.login {

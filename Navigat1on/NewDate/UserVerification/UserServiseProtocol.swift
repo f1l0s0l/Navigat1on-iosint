@@ -1,13 +1,13 @@
 //
-//  UserServiswProtocol.swift
+//  UserServiseProtocol.swift
 //  Navigat1on
 //
-//  Created by Илья Сидорик on 20.01.2023.
+//  Created by Илья Сидорик on 25.01.2023.
 //
 
 import Foundation
 
-
 protocol UserServise {
     func checkLogin(login: String?) -> User?
 }
+
