@@ -90,6 +90,7 @@ final class LogInViewController2: UIViewController {
     
     private lazy var loadingView: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .green
         view.alpha = 0
         return view
@@ -109,7 +110,8 @@ final class LogInViewController2: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.brown
+        self.setupView()
+        self.bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,6 +129,7 @@ final class LogInViewController2: UIViewController {
         self.view.addSubview(self.scrollView)
         setupScrollView()
         setupGestures()
+        self.view.addSubview(loadingView)
         setupConstraint()
     }
     
@@ -184,8 +187,13 @@ final class LogInViewController2: UIViewController {
             case .initial:
                 ()
             case .loading:
-                self.loadingView.alpha = 0.6
+                self.loadingView.alpha = 1
+                print("Загрузка идет")
+//                self.loadingView.alpha = 1
+//                sleep(3)
             case .loaded:
+//                sleep(3)
+                print("Загрузка закончилась")
                 self.loadingView.alpha = 0
             case .changeContentOffset(yPoint: let yPoint):
                 self.scrollView.setContentOffset(CGPoint(x: 0, y: yPoint), animated: true)

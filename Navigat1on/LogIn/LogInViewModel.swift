@@ -82,6 +82,8 @@ final class LogInViewModel {
         switch action {
         case .didTapButton(let log, let pswrd):
             state = .loading
+            sleep(2)
+            state = .loaded
             let result = Checker.shared.check(logIn: log, pswrd: pswrd)
             
             switch result {
@@ -89,13 +91,13 @@ final class LogInViewModel {
                 state = .loaded
                 (coordinator as? LogInCoordinator)?.pushMainTabBarController()
             case .noLogInData:
-                state = .loaded
+//                state = .loaded
                 state = .wrong(text: "Введите логин")
             case .wrongLogIn:
-                state = .loaded
+//                state = .loaded
                 state = .wrong(text: "Неправильный логин")
             case .wrongPswrd:
-                state = .loaded
+//                state = .loaded
                 state = .wrong(text: "Неправильный пароль")
             }
             

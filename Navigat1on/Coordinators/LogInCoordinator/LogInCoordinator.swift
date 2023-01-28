@@ -21,7 +21,7 @@ final class LogInCoordinator: Coordinatable {
                                           coordinator: self,
                                           flow: .logIn
         )
-        return logInViewController.navigationController
+        return logInViewController.navigationController.viewControllers[0]
     }
     
     func pushMainTabBarController() {

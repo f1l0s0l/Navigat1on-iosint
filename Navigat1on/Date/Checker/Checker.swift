@@ -38,7 +38,7 @@ public class Checker {
     private init() {}
     
     func check(logIn: String?, pswrd: String?) -> Resault {
-        sleep(3)
+//        sleep(3)                          
         guard logIn == "" else {
             return .noLogInData
         }

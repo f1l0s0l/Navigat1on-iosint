@@ -42,7 +42,7 @@ final class MainCoordinator: Coordinatable {
     func pushLogInViewController() {
         let logInCoordinator = LogInCoordinator()
         addChildCoordinator(logInCoordinator)
-        navigationController.pushViewController(logInCoordinator.start(), animated: true)  //append(logInCoordinator.start())
+        navigationController.viewControllers.append(logInCoordinator.start())   // pushViewController(logInCoordinator.start(), animated: true)
     }
         
     func addChildCoordinator(_ coordinator: Coordinatable) {
