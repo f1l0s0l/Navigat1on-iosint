@@ -34,6 +34,11 @@ final class ProfileViewController2: UIViewController {
         self.setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.title = "Profile"
+    }
+    
     
     // MARK: - Methods
     

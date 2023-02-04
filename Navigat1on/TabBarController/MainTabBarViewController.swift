@@ -26,12 +26,12 @@ import UIKit
      }
      
     
-     private func setup(viewControllers: [UIViewController]) {
-         for vc in viewControllers {
-             let tempNavigationController = UINavigationController.init(rootViewController: vc)
-             self.navControllers.append(tempNavigationController)
-         }
-     }
+//     private func setup(viewControllers: [UIViewController]) {
+//         for vc in viewControllers {
+//             let tempNavigationController = UINavigationController.init(rootViewController: vc)
+//             self.navControllers.append(tempNavigationController)
+//         }
+//     }
     
     
     

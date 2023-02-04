@@ -28,9 +28,8 @@ final class TabBarCoordinator: Coordinatable {
         let profileCoordinator = ProfileCoordinator(user: self.user, navController: UINavigationController())
         let feedCoordinator = FeedCoordinator(navController: UINavigationController())
         let mainTabBarController = MainTabBarViewController(viewControllers: [
-            
-            profileCoordinator.start(),
             feedCoordinator.start(),
+            profileCoordinator.start()
         ])
         
         addChildCoordinator(profileCoordinator)

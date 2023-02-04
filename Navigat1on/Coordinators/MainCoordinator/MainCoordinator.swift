@@ -15,16 +15,14 @@ protocol MainMainCoordinator: AnyObject {
 final class MainCoordinator: Coordinatable {
     
     // MARK: - Public Properties
-    
-//    var navigationController: UINavigationController
-    
-    var viewController: UIViewController
+        
+    var navigationController: UINavigationController
     
     
     // MARK: - Life cycle
     
-    init(viewController: UIViewController) {
-        self.viewController = viewController
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
     }
     
     
@@ -32,35 +30,34 @@ final class MainCoordinator: Coordinatable {
     
     func start() -> UIViewController {
         guard isVerification else {
-//            self.pushLogInViewController()
-            return viewController
+            self.pushLogInViewController()
+            return self.navigationController
         }
         self.pushMainTabBarController()
-        return viewController
+        return self.navigationController
     }
     
     func pushMainTabBarController() {
+        self.navigationController.navigationBar.isHidden = true
         print("Попали в Мэйн соориднатор, вызываем таб бар навигатор")
-//        navigationController.viewControllers.removeAll()
+        self.navigationController.viewControllers.removeAll()
         
         let tabBarCoordinator = TabBarCoordinator(user: self.user)
-        childCoordinators.append(tabBarCoordinator)
-//        addChildCoordinator(tabBarCoordinator)
-//        navigationController.setViewControllers([tabBarCoordinator.start()], animated: true) // viewControllers.append(tabBarCoordinator.start())
+        self.addChildCoordinator(tabBarCoordinator)
         
-        viewController.view.addSubview(tabBarCoordinator.start().view)
-        viewController.addChild(tabBarCoordinator.start())
-        tabBarCoordinator.start().didMove(toParent: viewController)
+        self.navigationController.setViewControllers([tabBarCoordinator.start()], animated: true) // viewControllers.append(tabBarCoordinator.start())
     }
     
-//    func pushLogInViewController() {
-//        let logInCoordinator = LogInCoordinator(navigationController: navigationController)
-//        logInCoordinator.parentCoordinator = self
-////        childCoordinators.append(logInCoordinator)
-////        addChildCoordinator(logInCoordinator)
-//        navigationController.viewControllers = [logInCoordinator.start()]
-////        navigationController.viewControllers.append(logInCoordinator.start())   // pushViewController(logInCoordinator.start(), animated: true)
-//    }
+    func pushLogInViewController() {
+        self.navigationController.navigationBar.isHidden = true
+        self.navigationController.viewControllers.removeAll()
+
+        let logInCoordinator = LogInCoordinator() //(navigationController: navigationController)
+        logInCoordinator.parentCoordinator = self
+        self.addChildCoordinator(logInCoordinator)
+        self.navigationController.setViewControllers([logInCoordinator.start()], animated: true)
+//        navigationController.viewControllers.append(logInCoordinator.start())   // pushViewController(logInCoordinator.start(), animated: true)
+    }
         
     func addChildCoordinator(_ coordinator: Coordinatable) {
 //        guard !childCoordinators.contains(where: { $0 === coordinator }) else { // Что означает ! перед childCoordinators?
@@ -76,7 +73,7 @@ final class MainCoordinator: Coordinatable {
     
     // MARK: - Properties
     
-    private var isVerification: Bool = true
+    private var isVerification: Bool = false
     
     private var user: User = User(login: "defaultLogIn",
                                   fullName: "DefaultName",

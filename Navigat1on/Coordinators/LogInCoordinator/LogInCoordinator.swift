@@ -15,12 +15,12 @@ final class LogInCoordinator: Coordinatable {
     weak var parentCoordinator: MainMainCoordinator?
     
     
-    var navigationController: UINavigationController
-    
-    
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
+//    var navigationController: UINavigationController
+//    
+//    
+//    init(navigationController: UINavigationController) {
+//        self.navigationController = navigationController
+//    }
     
     
     

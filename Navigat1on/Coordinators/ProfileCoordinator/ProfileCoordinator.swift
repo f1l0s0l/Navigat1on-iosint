@@ -64,7 +64,8 @@ final class ProfileCoordinator: Coordinatable {
 //        self.test = profileViewController
 //        return profileViewController
         self.navigationController = profileViewController.navigationController
-        return self.navigationController
+//        return self.navigationController
+        return profileViewController.navigationController
     }
     
     
@@ -76,7 +77,7 @@ final class ProfileCoordinator: Coordinatable {
     
     func pushToPhotosViewController() { // тут мы передадим фотгграфии из viewModel
         let photosViewController = PhotosViewController()
-        self.test?.navigationController?.pushViewController(photosViewController, animated: true)
+        self.navigationController.pushViewController(photosViewController, animated: true)
 //        self.navigationController.pushViewController(photosViewController, animated: true)
     }
     
