@@ -12,7 +12,17 @@ final class LogInCoordinator: Coordinatable {
     
     // MARK: - Public Properties
 
-    weak var parentCoordinator: Coordinatable?
+    weak var parentCoordinator: MainMainCoordinator?
+    
+    
+    var navigationController: UINavigationController
+    
+    
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+    
+    
     
     // MARK: - Public Methods
     
@@ -24,8 +34,10 @@ final class LogInCoordinator: Coordinatable {
         return logInViewController.navigationController.viewControllers[0]
     }
     
-    func pushMainTabBarController() {
-        (parentCoordinator as? MainCoordinator)?.pushMainTabBarController()
+    func pushMainTabBarController(user: User) {
+        print("в Лог Координаторе, вызов таб бар соординатора")
+        parentCoordinator?.testPushVC(user: user)
+//        (parentCoordinator as? MainCoordinator)?.pushMainTabBarController()
     }
     
     func addChildCoordinator(_ coordinator: Coordinatable) {
@@ -39,6 +51,6 @@ final class LogInCoordinator: Coordinatable {
     
     // MARK: - Properties
 
-    private(set) var childCoordinators: [Coordinatable] = []
+     var childCoordinators: [Coordinatable] = []
     
 }

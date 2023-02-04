@@ -14,15 +14,23 @@ final class TabBarCoordinator: Coordinatable {
     
     weak var parentCoordinator: Coordinatable?
     
+    private var user: User
+    
+    
+    init(user: User) {
+        self.user = user
+    }
+    
     
     // MARK: - Public Methods
 
     func start() -> UIViewController {
-        let profileCoordinator = ProfileCoordinator()
-        let feedCoordinator = FeedCoordinator()
+        let profileCoordinator = ProfileCoordinator(user: self.user, navController: UINavigationController())
+        let feedCoordinator = FeedCoordinator(navController: UINavigationController())
         let mainTabBarController = MainTabBarViewController(viewControllers: [
+            
             profileCoordinator.start(),
-            feedCoordinator.start()
+            feedCoordinator.start(),
         ])
         
         addChildCoordinator(profileCoordinator)
@@ -43,6 +51,6 @@ final class TabBarCoordinator: Coordinatable {
     
     // MARK: - Properties
 
-    private(set) var childCoordinators: [Coordinatable] = []
+    var childCoordinators: [Coordinatable] = []
  
 }

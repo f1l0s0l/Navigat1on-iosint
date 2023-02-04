@@ -14,14 +14,31 @@ final class FeedCoordinator: Coordinatable {
 
     weak var parentCoordinator: Coordinatable?
     
+    
+    private var navigationController: UINavigationController
+    
+    
+    init(navController: UINavigationController) {
+        self.navigationController = navController
+    }
+    
+    
     // MARK: - Public Methods
     
     func start() -> UIViewController {
-        let feedViewController = Factory(navigationController: UINavigationController(),
+        let feedViewController = Factory(navigationController: self.navigationController,
                                          coordinator: self,
                                          flow: .feed
         )
-        return feedViewController.navigationController
+        let itemForProfileVCc = UITabBarItem(title: "Feed",
+                                            image: UIImage(systemName: "square.stack.3d.down.right"),
+                                            tag: 1
+        )
+        feedViewController.navigationController.tabBarItem = itemForProfileVCc
+        
+        self.navigationController = feedViewController.navigationController
+        return self.navigationController
+//        return feedViewController.navigationController
     }
  
     func addChildCoordinator(_ coordinator: Coordinatable) {
@@ -35,6 +52,6 @@ final class FeedCoordinator: Coordinatable {
     
     // MARK: - Public Properties
 
-    private(set) var childCoordinators: [Coordinatable] = []
+    var childCoordinators: [Coordinatable] = []
   
 }

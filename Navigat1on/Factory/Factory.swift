@@ -11,7 +11,7 @@ final class Factory {
     enum Flow {
         case logIn
         case feed
-        case profile
+        case profile(user: User)
     }
     
     let navigationController: UINavigationController
@@ -39,8 +39,8 @@ final class Factory {
             let controller = FeedViewController2(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
             
-        case .profile:
-            let viewModel = ProfileViewModel(coordinator: self.coordinator)
+        case let .profile(user):
+            let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
             let controller = ProfileViewController2(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
         }

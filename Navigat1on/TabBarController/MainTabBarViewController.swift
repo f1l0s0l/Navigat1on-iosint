@@ -11,9 +11,14 @@ import UIKit
 
  final class MainTabBarViewController: UITabBarController {
      
+     private var navControllers: [UIViewController] = []
+     
      init(viewControllers: [UIViewController]) {
          super.init(nibName: nil, bundle: nil)
+//         self.setup(viewControllers: viewControllers)
+//         self.viewControllers = navControllers
          self.viewControllers = viewControllers
+         setupView()
      }
      
      required init?(coder: NSCoder) {
@@ -21,7 +26,12 @@ import UIKit
      }
      
     
-    
+     private func setup(viewControllers: [UIViewController]) {
+         for vc in viewControllers {
+             let tempNavigationController = UINavigationController.init(rootViewController: vc)
+             self.navControllers.append(tempNavigationController)
+         }
+     }
     
     
     
@@ -49,14 +59,16 @@ import UIKit
     
     // MARK: - Methods
     
-//    private func setupView() {
-//        UITabBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+    private func setupView() {
+        UITabBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
 //        UITabBar.appearance().backgroundColor = .white
-//
-//        UINavigationBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
-//        UINavigationBar.appearance().backgroundColor = .systemGray6
-//    }
-//
+        UITabBar.appearance().backgroundColor = .purple
+
+
+        UINavigationBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+        UINavigationBar.appearance().backgroundColor = .systemGray6
+    }
+
 //    private func setupNavigationControllers() {
 //        let itemForFeedVC = UITabBarItem(title: "Feed",
 //                                         image: UIImage(systemName: "square.stack.3d.down.right"),
@@ -71,7 +83,7 @@ import UIKit
 //        profileViewController.navigationController.tabBarItem = itemForProfileVC
 //
 //    }
-//
+
 //    private func setControllers() {
 //        self.viewControllers = [
 ////            logInViewController.navigationController,

@@ -191,16 +191,21 @@ final class LogInViewController2: UIViewController {
                 print("Загрузка идет")
 //                self.loadingView.alpha = 1
 //                sleep(3)
+                
             case .loaded:
 //                sleep(3)
                 print("Загрузка закончилась")
                 self.loadingView.alpha = 0
+                
             case .changeContentOffset(yPoint: let yPoint):
                 self.scrollView.setContentOffset(CGPoint(x: 0, y: yPoint), animated: true)
+                
             case .HideKeyboard:
                 self.view.endEditing(true)
+                
             case .wrong(text: let text):
                 self.setupAlertConfiguration(title: text)
+                
             case .error:
                 print("Какая то ошибка!!!")
             }

@@ -8,17 +8,23 @@
 import Foundation
 import UIKit
 
+protocol MainMainCoordinator: AnyObject {
+    func testPushVC(user: User)
+}
+
 final class MainCoordinator: Coordinatable {
     
     // MARK: - Public Properties
     
-    var navigationController: UINavigationController
+//    var navigationController: UINavigationController
+    
+    var viewController: UIViewController
     
     
     // MARK: - Life cycle
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(viewController: UIViewController) {
+        self.viewController = viewController
     }
     
     
@@ -26,29 +32,40 @@ final class MainCoordinator: Coordinatable {
     
     func start() -> UIViewController {
         guard isVerification else {
-            self.pushLogInViewController()
-            return navigationController
+//            self.pushLogInViewController()
+            return viewController
         }
         self.pushMainTabBarController()
-        return navigationController
+        return viewController
     }
     
     func pushMainTabBarController() {
-        navigationController.viewControllers.removeAll()
-        let tabBarCoordinator = TabBarCoordinator()
-        navigationController.viewControllers.append(tabBarCoordinator.start())
+        print("Попали в Мэйн соориднатор, вызываем таб бар навигатор")
+//        navigationController.viewControllers.removeAll()
+        
+        let tabBarCoordinator = TabBarCoordinator(user: self.user)
+        childCoordinators.append(tabBarCoordinator)
+//        addChildCoordinator(tabBarCoordinator)
+//        navigationController.setViewControllers([tabBarCoordinator.start()], animated: true) // viewControllers.append(tabBarCoordinator.start())
+        
+        viewController.view.addSubview(tabBarCoordinator.start().view)
+        viewController.addChild(tabBarCoordinator.start())
+        tabBarCoordinator.start().didMove(toParent: viewController)
     }
     
-    func pushLogInViewController() {
-        let logInCoordinator = LogInCoordinator()
-        addChildCoordinator(logInCoordinator)
-        navigationController.viewControllers.append(logInCoordinator.start())   // pushViewController(logInCoordinator.start(), animated: true)
-    }
+//    func pushLogInViewController() {
+//        let logInCoordinator = LogInCoordinator(navigationController: navigationController)
+//        logInCoordinator.parentCoordinator = self
+////        childCoordinators.append(logInCoordinator)
+////        addChildCoordinator(logInCoordinator)
+//        navigationController.viewControllers = [logInCoordinator.start()]
+////        navigationController.viewControllers.append(logInCoordinator.start())   // pushViewController(logInCoordinator.start(), animated: true)
+//    }
         
     func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard childCoordinators.contains(where: { $0 === coordinator }) else { // Что означает ! перед childCoordinators?
-            return
-        }
+//        guard !childCoordinators.contains(where: { $0 === coordinator }) else { // Что означает ! перед childCoordinators?
+//            return
+//        }
         childCoordinators.append(coordinator)
     }
     
@@ -59,8 +76,27 @@ final class MainCoordinator: Coordinatable {
     
     // MARK: - Properties
     
-    private var isVerification: Bool = false
+    private var isVerification: Bool = true
     
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var user: User = User(login: "defaultLogIn",
+                                  fullName: "DefaultName",
+                                  avatar: UIImage(named: "logo"),
+                                  status: "DefaultStatus"
+    )
+    
+    var childCoordinators: [Coordinatable] = [] // (set)
 
+}
+
+
+extension MainCoordinator: MainMainCoordinator {
+    
+    func testPushVC(user: User) {
+        print("Провалились в делегат, но сам метод еще не вызвали")
+        //передакм сюда user
+        self.user = user
+        self.pushMainTabBarController()
+    }
+    
+    
 }

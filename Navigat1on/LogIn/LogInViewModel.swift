@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol LogInCheckerProtocol {
     func check(log: String?, pasw: String?) -> Bool
@@ -82,14 +83,15 @@ final class LogInViewModel {
         switch action {
         case .didTapButton(let log, let pswrd):
             state = .loading
-            sleep(2)
+            sleep(1)
             state = .loaded
             let result = Checker.shared.check(logIn: log, pswrd: pswrd)
             
             switch result {
-            case .success:
+            case let .success(user):
+                print("Логин правильный")
                 state = .loaded
-                (coordinator as? LogInCoordinator)?.pushMainTabBarController()
+                (coordinator as? LogInCoordinator)?.pushMainTabBarController(user: user)
             case .noLogInData:
 //                state = .loaded
                 state = .wrong(text: "Введите логин")

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 public class Checker {
@@ -13,7 +14,7 @@ public class Checker {
     
     
     enum Resault {
-        case success
+        case success(user: User)
         case wrongLogIn
         case wrongPswrd
         case noLogInData
@@ -26,7 +27,7 @@ public class Checker {
 //    private let userLogIn = ""
     private let userPswrd = ""
     #else
-    private var userServise = CurrentUserServise(User(login: "aria1401",
+    private var userServise = CurrentUserServise(user: User(login: "aria1401",
                                           fullName: "Ария",
                                           avatar: UIImage(named: "19"),
                                           status: "У меня вылез новый фуб")
@@ -39,16 +40,16 @@ public class Checker {
     
     func check(logIn: String?, pswrd: String?) -> Resault {
 //        sleep(3)                          
-        guard logIn == "" else {
-            return .noLogInData
-        }
-        guard userServise.checkLogin(login: logIn) != nil else {
+       
+        guard let user = userServise.checkLogin(login: logIn) else {
             return .wrongLogIn
         }
+        
         guard pswrd == self.userPswrd else {
             return .wrongPswrd
         }
-        return .success
+        
+        return .success(user: user)
     }
     
 }

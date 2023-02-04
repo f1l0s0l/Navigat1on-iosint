@@ -8,7 +8,7 @@
 import UIKit
 
 protocol Coordinatable: AnyObject {
-    var childCoordinators: [Coordinatable] { get }
+    var childCoordinators: [Coordinatable] { get set } // тут было только get
     func start() -> UIViewController
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)

@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var mainCoordinator: MainCoordinator?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -19,8 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 //        window.rootViewController = TabBarController()
         
-        let mainCoordinator = MainCoordinator(navigationController: UINavigationController())
-        window.rootViewController = mainCoordinator.start()
+        
+        let navContr = UIViewController()
+        
+//        navContr.navigationBar.isHidden = true
+//
+        mainCoordinator = MainCoordinator(viewController: navContr)
+        window.rootViewController = mainCoordinator?.start()
+//        let test = TestViewController()
+//        window.rootViewController = UINavigationController.init(rootViewController: test)
         
         window.makeKeyAndVisible()
         self.window = window
