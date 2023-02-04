@@ -12,10 +12,14 @@ final class TabBarCoordinator: Coordinatable {
     
     // MARK: - Public Properties
     
-    weak var parentCoordinator: Coordinatable?
+//    weak var parentCoordinator: Coordinatable?
     
+    
+    // MARK: - Properties
+
     private var user: User
     
+    private(set) var childCoordinators: [Coordinatable] = []
     
     init(user: User) {
         self.user = user
@@ -46,10 +50,5 @@ final class TabBarCoordinator: Coordinatable {
     func removeChildCoordinator(_ coordinator: Coordinatable) {
         ()
     }
-    
-    
-    // MARK: - Properties
-
-    var childCoordinators: [Coordinatable] = []
  
 }

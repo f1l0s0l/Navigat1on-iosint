@@ -36,12 +36,13 @@ final class Factory {
 
         case .feed:
             let viewModel = FeedViewModel(coordinator: self.coordinator)
-            let controller = FeedViewController2(viewModel: viewModel)
+            let feedModel = FeedModel()
+            let controller = FeedViewController(feedModel: feedModel)
             navigationController.setViewControllers([controller], animated: true)
             
         case let .profile(user):
             let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
-            let controller = ProfileViewController2(viewModel: viewModel)
+            let controller = ProfileViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
         }
         
@@ -63,7 +64,7 @@ final class Factory {
 //        case .profile:
 //            let coordinator = ProfileCoordinator()
 //            let viewModel = ProfileViewModel(coordinator: coordinator)
-//            let controller = ProfileViewController2(viewModel: viewModel)
+//            let controller = ProfileViewController(viewModel: viewModel)
 //            navigationController.setViewControllers([controller], animated: true)
 //        }
     }

@@ -8,8 +8,12 @@
 import UIKit
 
 protocol Coordinatable: AnyObject {
-    var childCoordinators: [Coordinatable] { get set } // тут было только get
+    var childCoordinators: [Coordinatable] { get }
     func start() -> UIViewController
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)
+}
+
+protocol MainCoordinatorDelegate: AnyObject {
+    func pushMainTabBarController(user: User)
 }

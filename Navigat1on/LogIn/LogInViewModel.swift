@@ -6,17 +6,7 @@
 //
 
 import Foundation
-import UIKit
-
-protocol LogInCheckerProtocol {
-    func check(log: String?, pasw: String?) -> Bool
-}
-
-protocol LogInVerificationDelegate: AnyObject {
-
-}
-
-
+//import UIKit
 
 final class LogInViewModel {
     
@@ -47,13 +37,6 @@ final class LogInViewModel {
     }
     
     // MARK: - Public Properties
-
-//    var stateKeyboardChenged: ((StateKeyboard) -> Void)?
-//    private(set) var stateKeyboard: StateKeyboard = .initial {
-//        didSet {
-//            stateKeyboardChenged?(stateKeyboard)
-//        }
-//    }
     
     var stateChenged: ((State) -> Void)?
     private(set) var state: State = .initial {
@@ -68,6 +51,22 @@ final class LogInViewModel {
             stateWronVerification?(stateWronVerificationChenged)
         }
     }
+    
+    
+    // MARK: - Properties
+    
+    private let coordinator: Coordinatable
+    private let servise = ServiseContentOfSet()
+    
+//    #if DEBUG
+//    private var userServise: UserServise?
+//    #else
+//    private var userServise = CurrentUserServise(user: User(login: "aria1401",
+//                                                    fullName: "Ария",
+//                                                    avatar: UIImage(named: "19"),
+//                                                    status: "У меня вылез новый фуб")
+//    )
+//    #endif
     
     
     // MARK: - Life cycle
@@ -93,16 +92,12 @@ final class LogInViewModel {
                 state = .loaded
                 (coordinator as? LogInCoordinator)?.pushMainTabBarController(user: user)
             case .noLogInData:
-//                state = .loaded
                 state = .wrong(text: "Введите логин")
             case .wrongLogIn:
-//                state = .loaded
                 state = .wrong(text: "Неправильный логин")
             case .wrongPswrd:
-//                state = .loaded
                 state = .wrong(text: "Неправильный пароль")
             }
-            
             
         case .didTapSuperView:
             state = .HideKeyboard
@@ -110,45 +105,9 @@ final class LogInViewModel {
     }
     
     
-    
-    
-    //!!!!!!!!!!!!!!!!!!!
     func keyboardNotification(_ stateKeyboard: ServiseContentOfSet.StateK, _ notification: Notification) {
-        
-        let t = self.servise.ServiseContentOfSet(notification, stateK: stateKeyboard)
-        self.state = .changeContentOffset(yPoint: t)
+        let y = self.servise.ServiseContentOfSet(notification, stateK: stateKeyboard)
+        self.state = .changeContentOffset(yPoint: y)
     }
-    
-    
-    
-    
-    // MARK: - Properties
-    
-    #if DEBUG
-    var userServise: UserServise?
-    #else
-    var userServise = CurrentUserServise(user: User(login: "aria1401",
-                                                    fullName: "Ария",
-                                                    avatar: UIImage(named: "19"),
-                                                    status: "У меня вылез новый фуб")
-    )
-    #endif
- 
-    
-    let coordinator: Coordinatable
-    
-    private let servise = ServiseContentOfSet()
-    
-//    private weak var logInViewControlle: LogInViewController2?
-    
-    private var logInChecker: LogInCheckerProtocol?
-    
-    
-    
-    
-    
-    
-    
-    
     
 }

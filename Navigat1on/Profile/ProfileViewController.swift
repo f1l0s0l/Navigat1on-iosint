@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ProfileViewController2: UIViewController {
+final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -34,11 +34,6 @@ final class ProfileViewController2: UIViewController {
         self.setupView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.title = "Profile"
-    }
-    
     
     // MARK: - Methods
     
@@ -54,7 +49,9 @@ final class ProfileViewController2: UIViewController {
 //        self.view.addSubview(profileView)
         self.view = profileView
 //        self.title = "Profile"
-//        self.navigationController?.navigationBar.isHidden = true
+        self.title = "Profile"
+        self.navigationController?.navigationBar.isHidden = true
+        
     }
     
 }
@@ -63,7 +60,7 @@ final class ProfileViewController2: UIViewController {
 
     // MARK: - Extension UITableViewDataSource
 
-extension ProfileViewController2: UITableViewDataSource {
+extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         2
@@ -106,7 +103,7 @@ extension ProfileViewController2: UITableViewDataSource {
 
     // MARK: - Extension UITableViewDelegate
 
-extension ProfileViewController2: UITableViewDelegate {
+extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
@@ -125,10 +122,6 @@ extension ProfileViewController2: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             self.viewModel.didPab()
-//            let photosViewController = PhotosViewController()
-//            photosViewController.title = "Photo Gallery"
-//            // Тут должен работать coordinator
-//            navigationController?.pushViewController(photosViewController, animated: true)
         }
     }
     

@@ -51,7 +51,7 @@ final class ProfileView: UIView {
     
     private func setupView() {
         self.addSubview(tableView)
-        self.backgroundColor = .red
+        self.backgroundColor = .systemGray6
     }
     
     

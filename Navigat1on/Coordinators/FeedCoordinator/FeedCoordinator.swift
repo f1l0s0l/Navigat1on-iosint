@@ -12,11 +12,16 @@ final class FeedCoordinator: Coordinatable {
     
     // MARK: - Public Properties
 
-    weak var parentCoordinator: Coordinatable?
+//    weak var parentCoordinator: Coordinatable?
     
     
+    // MARK: - Properties
+
     private var navigationController: UINavigationController
     
+    private(set) var childCoordinators: [Coordinatable] = []
+    
+    // MARK: - Life Cycle
     
     init(navController: UINavigationController) {
         self.navigationController = navController
@@ -35,23 +40,17 @@ final class FeedCoordinator: Coordinatable {
                                             tag: 1
         )
         feedViewController.navigationController.tabBarItem = itemForProfileVCc
-        
         self.navigationController = feedViewController.navigationController
+        
         return self.navigationController
-//        return feedViewController.navigationController
     }
  
     func addChildCoordinator(_ coordinator: Coordinatable) {
-        print()
+        ()
     }
     
     func removeChildCoordinator(_ coordinator: Coordinatable) {
-        print()
+        ()
     }
     
-    
-    // MARK: - Public Properties
-
-    var childCoordinators: [Coordinatable] = []
-  
 }

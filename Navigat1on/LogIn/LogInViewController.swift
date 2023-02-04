@@ -11,9 +11,7 @@ final class LogInViewController2: UIViewController {
     
     // MARK: - Properties
     
-    let viewModel: LogInViewModel
-    
-    
+    private let viewModel: LogInViewModel
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -79,7 +77,6 @@ final class LogInViewController2: UIViewController {
     private lazy var logInButton: CustomButton = {
         let button = CustomButton(title: "Log In",
                                   backgroundImage: UIImage(named: "blue_pixel")
-                                  
         )
         button.target = { [weak self] in
             self?.didTabLogInButton()
@@ -115,12 +112,18 @@ final class LogInViewController2: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(didShowKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didHideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didShowKeyboard(_:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil
+        )
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didHideKeyboard(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil
+        )
     }
 
-    
     
     // MARK: - Methods
 
@@ -146,11 +149,9 @@ final class LogInViewController2: UIViewController {
         self.view.addGestureRecognizer(tapGesture)
     }
     
-
     
     @objc
     private func didHideKeyboard(_ notification: Notification) {
-//        self.forcedHidingKeyboard()
         self.viewModel.keyboardNotification(.Hide, notification)
     }
     
@@ -169,15 +170,11 @@ final class LogInViewController2: UIViewController {
         self.present(alertController, animated: true)
     }
     
-    
     private func didTabLogInButton() {
         self.viewModel.didTap(action: .didTapButton(log: self.userEmailTextField.text,
                                                           pswrd: self.userPasswordTextField.text)
         )
     }
-    
-    
-    
     
     private func bindViewModel() {
         viewModel.stateChenged = { [weak self] state in
@@ -213,7 +210,6 @@ final class LogInViewController2: UIViewController {
         }
     }
     
-
     
     // MARK: - Constraint
 

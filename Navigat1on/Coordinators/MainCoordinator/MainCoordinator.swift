@@ -8,15 +8,21 @@
 import Foundation
 import UIKit
 
-protocol MainMainCoordinator: AnyObject {
-    func testPushVC(user: User)
-}
-
 final class MainCoordinator: Coordinatable {
     
-    // MARK: - Public Properties
-        
-    var navigationController: UINavigationController
+    // MARK: - Properties
+
+    private var navigationController: UINavigationController
+    
+    private var isVerification: Bool = false
+    
+    private var user: User = User(login: "defaultLogIn",
+                                  fullName: "DefaultName",
+                                  avatar: UIImage(named: "logo"),
+                                  status: "DefaultStatus"
+    )
+    
+    private(set) var childCoordinators: [Coordinatable] = []
     
     
     // MARK: - Life cycle
@@ -70,27 +76,13 @@ final class MainCoordinator: Coordinatable {
         childCoordinators.removeAll(where: {$0 === coordinator})
     }
     
-    
-    // MARK: - Properties
-    
-    private var isVerification: Bool = false
-    
-    private var user: User = User(login: "defaultLogIn",
-                                  fullName: "DefaultName",
-                                  avatar: UIImage(named: "logo"),
-                                  status: "DefaultStatus"
-    )
-    
-    var childCoordinators: [Coordinatable] = [] // (set)
-
 }
 
 
-extension MainCoordinator: MainMainCoordinator {
+extension MainCoordinator: MainCoordinatorDelegate {
     
-    func testPushVC(user: User) {
+    func pushMainTabBarController(user: User) {
         print("Провалились в делегат, но сам метод еще не вызвали")
-        //передакм сюда user
         self.user = user
         self.pushMainTabBarController()
     }
