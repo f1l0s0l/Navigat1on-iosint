@@ -51,7 +51,6 @@
 		A48049032983DF54009FAA66 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48049022983DF54009FAA66 /* TabBarCoordinator.swift */; };
 		A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */; };
 		A480490C298A658D009FAA66 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A480490B298A658D009FAA66 /* ProfileView.swift */; };
-		A4804910298CF77A009FAA66 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = A480490F298CF77A009FAA66 /* test.swift */; };
 		A4E427D829818D9400A249F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D729818D9400A249F0 /* User.swift */; };
 		A4E427DA29818DD000A249F0 /* UserServiseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D929818DD000A249F0 /* UserServiseProtocol.swift */; };
 		A4E427DC29818DE300A249F0 /* CurrentUserServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */; };
@@ -128,7 +127,6 @@
 		A48049022983DF54009FAA66 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiseContentOfSet.swift; sourceTree = "<group>"; };
 		A480490B298A658D009FAA66 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		A480490F298CF77A009FAA66 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		A4E427D729818D9400A249F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A4E427D929818DD000A249F0 /* UserServiseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiseProtocol.swift; sourceTree = "<group>"; };
 		A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserServise.swift; sourceTree = "<group>"; };
@@ -295,7 +293,6 @@
 			children = (
 				A43698792979A89700395E32 /* AppDelegate.swift */,
 				A436987B2979A89700395E32 /* SceneDelegate.swift */,
-				A480490F298CF77A009FAA66 /* test.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -514,7 +511,6 @@
 				A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */,
 				A43698E129800B7E00395E32 /* CustomButton.swift in Sources */,
 				A43698952979AA9900395E32 /* StatusText.swift in Sources */,
-				A4804910298CF77A009FAA66 /* test.swift in Sources */,
 				A43698AF2979AC8500395E32 /* PostTableViewCell.swift in Sources */,
 				A426E45F2981668D001128BF /* ProfileCoordinator.swift in Sources */,
 				A43698A12979ABAF00395E32 /* FeeaViewController.swift in Sources */,
