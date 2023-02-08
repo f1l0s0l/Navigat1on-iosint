@@ -35,7 +35,7 @@ final class Factory {
             navigationController.setViewControllers([controller], animated: true)
 
         case .feed:
-            let viewModel = FeedViewModel(coordinator: self.coordinator)
+//            let viewModel = FeedViewModel(coordinator: self.coordinator)
             let feedModel = FeedModel()
             let controller = FeedViewController(feedModel: feedModel)
             navigationController.setViewControllers([controller], animated: true)

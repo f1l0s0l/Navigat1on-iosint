@@ -11,7 +11,7 @@ import UIKit
 class PhotosViewController: UIViewController {
 
     // MARK: - Constants
-
+    
     private enum Constants {
         static let numberOfColums: CGFloat = 3
         static let minimumInteritemSpacing: CGFloat = 8
@@ -22,9 +22,7 @@ class PhotosViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let publisher = ImagePublisherFacade()
-    
-    private var thisArrayPhotos: [UIImage] = []
+    private var thisArrayPhotos: [UIImage?]
      
     
     private lazy var layout: UICollectionViewFlowLayout = {
@@ -50,11 +48,20 @@ class PhotosViewController: UIViewController {
     
     // MARK: - Life cycle
     
+    init(arrayPhotos: [UIImage?]) {
+        thisArrayPhotos = arrayPhotos
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
         self.setupConstraint()
-        self.initTimerInPublisher()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +71,6 @@ class PhotosViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = true
-        self.publisher.removeSubscription(for: self)
     }
     
     
@@ -73,11 +79,30 @@ class PhotosViewController: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .systemGray6
         self.view.addSubview(collectionView)
+        self.startProcessImagesOnThread()
     }
     
-    private func initTimerInPublisher() {
-        publisher.subscribe(self)
-        publisher.addImagesWithTimer(time: 1, repeat: 10, userImages: Photos.photos.compactMap({ $0 }) )
+    private func startProcessImagesOnThread () {
+        let photos = thisArrayPhotos.compactMap { $0 }
+        
+        let startTime = Calendar.current.component(.second, from: Date())
+        print("Начало выполнения метода: \(startTime)")
+        
+        ImageProcessor.init().processImagesOnThread(sourceImages: photos,
+                                                    filter: .colorInvert,
+                                                    qos: .userInitiated) { arrayPhotosCGImage in
+            
+            let endTime = Calendar.current.component(.second, from: Date())
+            print("Конец выполнения метода: \(endTime)")
+            print("Возможное время выполнения метода: \(endTime - startTime)")
+            
+            let newArrayPhotos = arrayPhotosCGImage.compactMap({ $0 }).map{ UIImage(cgImage: $0) }
+            DispatchQueue.main.sync {
+                self.thisArrayPhotos = newArrayPhotos
+                self.collectionView.reloadData()
+            }
+            
+        }
     }
     
     

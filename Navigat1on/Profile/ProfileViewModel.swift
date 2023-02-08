@@ -29,7 +29,7 @@ final class ProfileViewModel {
     // MARK: - Public Methods
     
     func didPab() {
-        (coordinator as? ProfileCoordinator)?.pushToPhotosViewController()
+        (coordinator as? ProfileCoordinator)?.pushToPhotosViewController(arrayPhotos: arrayPhotos)
     }
     
 }

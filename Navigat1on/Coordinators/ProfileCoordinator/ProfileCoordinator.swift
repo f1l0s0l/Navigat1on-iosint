@@ -49,8 +49,8 @@ final class ProfileCoordinator: Coordinatable {
         return profileViewController.navigationController
     }
 
-    func pushToPhotosViewController() { // тут мы передадим фотгграфии из viewModel
-        let photosViewController = PhotosViewController()
+    func pushToPhotosViewController(arrayPhotos: [UIImage?]) { // тут мы передадим фотгграфии из viewModel
+        let photosViewController = PhotosViewController(arrayPhotos: arrayPhotos)
         photosViewController.title = "Photo Gallery"
         self.navigationController.pushViewController(photosViewController, animated: true)
     }
