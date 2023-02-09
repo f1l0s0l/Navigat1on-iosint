@@ -85,23 +85,17 @@ class PhotosViewController: UIViewController {
     private func startProcessImagesOnThread () {
         let photos = thisArrayPhotos.compactMap { $0 }
         
-        let startTime = Calendar.current.component(.second, from: Date())
-        print("Начало выполнения метода: \(startTime)")
-        
+        let startDate = Date()
         ImageProcessor.init().processImagesOnThread(sourceImages: photos,
                                                     filter: .colorInvert,
-                                                    qos: .userInitiated) { arrayPhotosCGImage in
-            
-            let endTime = Calendar.current.component(.second, from: Date())
-            print("Конец выполнения метода: \(endTime)")
-            print("Возможное время выполнения метода: \(endTime - startTime)")
+                                                    qos: .userInitiated) { [weak self] arrayPhotosCGImage in
             
             let newArrayPhotos = arrayPhotosCGImage.compactMap({ $0 }).map{ UIImage(cgImage: $0) }
             DispatchQueue.main.sync {
-                self.thisArrayPhotos = newArrayPhotos
-                self.collectionView.reloadData()
+                self?.thisArrayPhotos = newArrayPhotos
+                self?.collectionView.reloadData()
             }
-            
+            print("Process time:  \(Date().timeIntervalSince(startDate)) seconds")
         }
     }
     

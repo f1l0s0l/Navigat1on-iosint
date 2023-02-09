@@ -18,6 +18,7 @@ final class LogInViewModel {
     enum Action {
         case didTapButton(log: String?, pswrd: String?)
         case didTapSuperView
+        case didTabBruteForceButton
     }
     
     enum State {
@@ -27,14 +28,15 @@ final class LogInViewModel {
         case changeContentOffset(yPoint: Double)
         case HideKeyboard
         case wrong(text: String)
+        case bruteForseSuccess(pswrd: String)
         case error
     }
     
-    enum StateWronVerification {
-        case notWrong
-        case wrongLogIn
-        case wrongPswrd
-    }
+//    enum StateWronVerification {
+//        case notWrong
+//        case wrongLogIn
+//        case wrongPswrd
+//    }
     
     // MARK: - Public Properties
     
@@ -45,12 +47,12 @@ final class LogInViewModel {
         }
     }
     
-    var stateWronVerification: ((StateWronVerification) -> Void)?
-    private(set) var stateWronVerificationChenged: StateWronVerification = .notWrong {
-        didSet {
-            stateWronVerification?(stateWronVerificationChenged)
-        }
-    }
+//    var stateWronVerification: ((StateWronVerification) -> Void)?
+//    private(set) var stateWronVerificationChenged: StateWronVerification = .notWrong {
+//        didSet {
+//            stateWronVerification?(stateWronVerificationChenged)
+//        }
+//    }
     
     
     // MARK: - Properties
@@ -76,32 +78,54 @@ final class LogInViewModel {
     }
     
     
+    
     // MARK: - Public methods
     
     func didTap(action: Action) {
         switch action {
-        case .didTapButton(let log, let pswrd):
-            state = .loading
-            sleep(1)
-            state = .loaded
-            let result = Checker.shared.check(logIn: log, pswrd: pswrd)
             
-            switch result {
-            case let .success(user):
-                print("Логин правильный")
-                state = .loaded
-                (coordinator as? LogInCoordinator)?.pushMainTabBarController(user: user)
-            case .noLogInData:
-                state = .wrong(text: "Введите логин")
-            case .wrongLogIn:
-                state = .wrong(text: "Неправильный логин")
-            case .wrongPswrd:
-                state = .wrong(text: "Неправильный пароль")
+        case .didTapButton(let log, let pswrd):
+            self.state = .loading
+            self.state = .HideKeyboard
+            
+            Checker.shared.check(logIn: log, pswrd: pswrd) { [weak self] result in
+                DispatchQueue.main.sync {
+                    switch result {
+                    case .success(user: let user):
+                        self?.state = .loaded
+                        (self?.coordinator as? LogInCoordinator)?.pushMainTabBarController(user: user)
+                    case .wrongLogIn:
+                        self?.state = .loaded
+                        self?.state = .wrong(text: "Неправильный логин")
+                    case .wrongPswrd:
+                        self?.state = .loaded
+                        self?.state = .wrong(text: "Неправильный пароль")
+                    case .noLogInData:
+                        self?.state = .loaded
+                        self?.state = .wrong(text: "Введите логин")
+                    }
+                }
+            }
+
+        case .didTapSuperView:
+            self.state = .HideKeyboard
+            
+        case .didTabBruteForceButton:
+            self.state = .HideKeyboard
+            #if DEBUG
+            let password = "q"
+            #else
+            let password = "qwe"
+            #endif
+            print("Подбор начался")
+            BruteForse.shared.bruteForce2(passwordToUnlock: password) { [weak self] pswrd in
+                DispatchQueue.main.sync {
+                    self?.state = .bruteForseSuccess(pswrd: pswrd)
+                }
             }
             
-        case .didTapSuperView:
-            state = .HideKeyboard
         }
+        
     }
     
     

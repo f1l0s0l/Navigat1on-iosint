@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A410AA2129952D73001B666B /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A410AA2029952D73001B666B /* BruteForce.swift */; };
 		A426E45229804997001128BF /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45129804997001128BF /* FeedModel.swift */; };
 		A426E4592981662E001128BF /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E4582981662E001128BF /* MainCoordinator.swift */; };
 		A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45A2981666A001128BF /* LogInCoordinator.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A410AA2029952D73001B666B /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 		A426E45129804997001128BF /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		A426E4582981662E001128BF /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		A426E45A2981666A001128BF /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */,
 				A4E427DD29818DF100A249F0 /* TestUserServise.swift */,
 				A43698D1297AC27200395E32 /* Checker.swift */,
+				A410AA2029952D73001B666B /* BruteForce.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 			files = (
 				A426E473298174A7001128BF /* FeedViewModel.swift in Sources */,
 				A436989D2979AAEB00395E32 /* ArrayPhotos.swift in Sources */,
+				A410AA2129952D73001B666B /* BruteForce.swift in Sources */,
 				A426E45D29816681001128BF /* FeedCoordinator.swift in Sources */,
 				A426E46429816C09001128BF /* MainTabBarViewController.swift in Sources */,
 				A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */,

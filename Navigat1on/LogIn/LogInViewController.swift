@@ -85,12 +85,28 @@ final class LogInViewController2: UIViewController {
         return button
     }()
     
+    private lazy var bruteForceButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.setTitle("Brute force", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector(didTabBruteForceButton), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .green
+        view.backgroundColor = .white
         view.alpha = 0
         return view
+    }()
+        
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activitiIndicator = UIActivityIndicatorView(style: .medium)
+        activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activitiIndicator
     }()
     
     
@@ -132,7 +148,9 @@ final class LogInViewController2: UIViewController {
         self.view.addSubview(self.scrollView)
         setupScrollView()
         setupGestures()
+        self.view.addSubview(bruteForceButton)
         self.view.addSubview(loadingView)
+        self.view.addSubview(activityIndicator)
         setupConstraint()
     }
     
@@ -145,7 +163,7 @@ final class LogInViewController2: UIViewController {
     }
     
     private func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapSuperView))
         self.view.addGestureRecognizer(tapGesture)
     }
     
@@ -183,16 +201,16 @@ final class LogInViewController2: UIViewController {
             switch state {
             case .initial:
                 ()
+                
             case .loading:
-                self.loadingView.alpha = 1
+                self.loadingView.alpha = 0.6
+                self.activityIndicator.startAnimating()
                 print("Загрузка идет")
-//                self.loadingView.alpha = 1
-//                sleep(3)
                 
             case .loaded:
-//                sleep(3)
                 print("Загрузка закончилась")
                 self.loadingView.alpha = 0
+                self.activityIndicator.stopAnimating()
                 
             case .changeContentOffset(yPoint: let yPoint):
                 self.scrollView.setContentOffset(CGPoint(x: 0, y: yPoint), animated: true)
@@ -202,6 +220,10 @@ final class LogInViewController2: UIViewController {
                 
             case .wrong(text: let text):
                 self.setupAlertConfiguration(title: text)
+
+            case .bruteForseSuccess(pswrd: let pswrd):
+                print("Подбор закончился")
+                self.userPasswordTextField.text = pswrd
                 
             case .error:
                 print("Какая то ошибка!!!")
@@ -235,26 +257,30 @@ final class LogInViewController2: UIViewController {
             logInButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             
+            bruteForceButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 8),
+            bruteForceButton.centerXAnchor.constraint(equalTo: self.logInButton.centerXAnchor),
+            
             loadingView.topAnchor.constraint(equalTo: self.view.topAnchor),
             loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             loadingView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             loadingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: self.loadingView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.loadingView.centerYAnchor),
+
         ])
     }
     
-    //Так же скорее всего это надо перебросить во ViewModel
     @objc
-    private func forcedHidingKeyboard() {
+    private func didTapSuperView() {
         self.viewModel.didTap(action: .didTapSuperView)
-        
-        //!!!
-        self.view.endEditing(true)
-        self.scrollView.setContentOffset(.zero, animated: true)
-        //!!!!!
     }
     
-   
- 
+    @objc
+     private func didTabBruteForceButton() {
+         self.viewModel.didTap(action: .didTabBruteForceButton)
+     }
+    
 }
 
 
