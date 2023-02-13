@@ -51,29 +51,48 @@ final class MainCoordinator: Coordinatable {
         let tabBarCoordinator = TabBarCoordinator(user: self.user)
         self.addChildCoordinator(tabBarCoordinator)
         
-        self.navigationController.setViewControllers([tabBarCoordinator.start()], animated: true) // viewControllers.append(tabBarCoordinator.start())
+        self.navigationController.setViewControllers([tabBarCoordinator.start()], animated: true)
+        self.startTimerForBannerVC()
     }
     
     func pushLogInViewController() {
         self.navigationController.navigationBar.isHidden = true
         self.navigationController.viewControllers.removeAll()
 
-        let logInCoordinator = LogInCoordinator() //(navigationController: navigationController)
+        let logInCoordinator = LogInCoordinator()
         logInCoordinator.parentCoordinator = self
         self.addChildCoordinator(logInCoordinator)
         self.navigationController.setViewControllers([logInCoordinator.start()], animated: true)
-//        navigationController.viewControllers.append(logInCoordinator.start())   // pushViewController(logInCoordinator.start(), animated: true)
     }
         
     func addChildCoordinator(_ coordinator: Coordinatable) {
-//        guard !childCoordinators.contains(where: { $0 === coordinator }) else { // Что означает ! перед childCoordinators?
-//            return
-//        }
+        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
+        }
         childCoordinators.append(coordinator)
     }
     
     func removeChildCoordinator(_ coordinator: Coordinatable) {
         childCoordinators.removeAll(where: {$0 === coordinator})
+    }
+    
+    
+    // MARK: - Methods
+
+    private func startTimerForBannerVC() {
+        Timer.scheduledTimer(
+            withTimeInterval: 3,
+            repeats: true
+        ) { timer in
+            self.pushBannerVC()
+            timer.invalidate()
+        }
+    }
+    
+    private func pushBannerVC() {
+        let bannerVC = BannerViewController()
+        bannerVC.delegate = self
+        self.navigationController.pushViewController(bannerVC, animated: true)
     }
     
 }
@@ -86,6 +105,12 @@ extension MainCoordinator: MainCoordinatorDelegate {
         self.user = user
         self.pushMainTabBarController()
     }
+}
+
+extension MainCoordinator: BannerViewControllerDelegate {
     
-    
+    func popBannerVC() {
+        self.navigationController.popViewController(animated: true)
+        self.startTimerForBannerVC()
+    }
 }

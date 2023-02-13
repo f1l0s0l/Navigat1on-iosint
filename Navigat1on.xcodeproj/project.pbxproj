@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A410AA23299A1E18001B666B /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A410AA22299A1E18001B666B /* BannerViewController.swift */; };
 		A426E45229804997001128BF /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45129804997001128BF /* FeedModel.swift */; };
 		A426E4592981662E001128BF /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E4582981662E001128BF /* MainCoordinator.swift */; };
 		A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45A2981666A001128BF /* LogInCoordinator.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A410AA22299A1E18001B666B /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
 		A426E45129804997001128BF /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		A426E4582981662E001128BF /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		A426E45A2981666A001128BF /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				A426E4582981662E001128BF /* MainCoordinator.swift */,
+				A410AA22299A1E18001B666B /* BannerViewController.swift */,
 			);
 			path = MainCoordinator;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				A43698AF2979AC8500395E32 /* PostTableViewCell.swift in Sources */,
 				A426E45F2981668D001128BF /* ProfileCoordinator.swift in Sources */,
 				A43698A12979ABAF00395E32 /* FeeaViewController.swift in Sources */,
+				A410AA23299A1E18001B666B /* BannerViewController.swift in Sources */,
 				A43698AD2979AC6E00395E32 /* PhotosTableViewCell.swift in Sources */,
 				A48049032983DF54009FAA66 /* TabBarCoordinator.swift in Sources */,
 				A426E47829817706001128BF /* ProfileViewModel.swift in Sources */,
