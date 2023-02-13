@@ -17,7 +17,6 @@ final class LogInViewModel {
     enum Action {
         case didTapButton(log: String?, pswrd: String?)
         case didTapSuperView
-        case didTabBruteForceButton
     }
     
     enum State {
@@ -27,7 +26,6 @@ final class LogInViewModel {
         case changeContentOffset(yPoint: Double)
         case HideKeyboard
         case wrong(text: String)
-        case bruteForseSuccess(pswrd: String)
         case error
     }
     
@@ -85,22 +83,6 @@ final class LogInViewModel {
 
         case .didTapSuperView:
             self.state = .HideKeyboard
-            
-        case .didTabBruteForceButton:
-            self.state = .HideKeyboard
-            self.state = .loading
-            #if DEBUG
-            let password = "q"
-            #else
-            let password = "qwe"
-            #endif
-            print("Подбор начался")
-            BruteForse.shared.bruteForce2(passwordToUnlock: password) { [weak self] pswrd in
-                DispatchQueue.main.sync {
-                    self?.state = .loaded
-                    self?.state = .bruteForseSuccess(pswrd: pswrd)
-                }
-            }
             
         }
         

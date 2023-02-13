@@ -85,16 +85,6 @@ final class LogInViewController2: UIViewController {
         return button
     }()
     
-    private lazy var bruteForceButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.setTitle("Brute force", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.addTarget(self, action: #selector(didTabBruteForceButton), for: .touchUpInside)
-        return button
-    }()
-    
     private lazy var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +138,6 @@ final class LogInViewController2: UIViewController {
         self.view.addSubview(self.scrollView)
         setupScrollView()
         setupGestures()
-        self.view.addSubview(bruteForceButton)
         self.view.addSubview(loadingView)
         self.view.addSubview(activityIndicator)
         setupConstraint()
@@ -221,10 +210,6 @@ final class LogInViewController2: UIViewController {
             case .wrong(text: let text):
                 self.setupAlertConfiguration(title: text)
 
-            case .bruteForseSuccess(pswrd: let pswrd):
-                print("Подбор закончился")
-                self.userPasswordTextField.text = pswrd
-                
             case .error:
                 print("Какая то ошибка!!!")
             }
@@ -257,9 +242,6 @@ final class LogInViewController2: UIViewController {
             logInButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             
-            bruteForceButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 8),
-            bruteForceButton.centerXAnchor.constraint(equalTo: self.logInButton.centerXAnchor),
-            
             loadingView.topAnchor.constraint(equalTo: self.view.topAnchor),
             loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             loadingView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
@@ -275,11 +257,6 @@ final class LogInViewController2: UIViewController {
     private func didTapSuperView() {
         self.viewModel.didTap(action: .didTapSuperView)
     }
-    
-    @objc
-     private func didTabBruteForceButton() {
-         self.viewModel.didTap(action: .didTabBruteForceButton)
-     }
     
 }
 
