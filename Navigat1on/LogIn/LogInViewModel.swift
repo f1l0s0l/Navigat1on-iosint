@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import UIKit
 
 final class LogInViewModel {
     
@@ -32,11 +31,6 @@ final class LogInViewModel {
         case error
     }
     
-//    enum StateWronVerification {
-//        case notWrong
-//        case wrongLogIn
-//        case wrongPswrd
-//    }
     
     // MARK: - Public Properties
     
@@ -47,28 +41,11 @@ final class LogInViewModel {
         }
     }
     
-//    var stateWronVerification: ((StateWronVerification) -> Void)?
-//    private(set) var stateWronVerificationChenged: StateWronVerification = .notWrong {
-//        didSet {
-//            stateWronVerification?(stateWronVerificationChenged)
-//        }
-//    }
-    
     
     // MARK: - Properties
     
     private let coordinator: Coordinatable
     private let servise = ServiseContentOfSet()
-    
-//    #if DEBUG
-//    private var userServise: UserServise?
-//    #else
-//    private var userServise = CurrentUserServise(user: User(login: "aria1401",
-//                                                    fullName: "Ария",
-//                                                    avatar: UIImage(named: "19"),
-//                                                    status: "У меня вылез новый фуб")
-//    )
-//    #endif
     
     
     // MARK: - Life cycle
@@ -76,7 +53,6 @@ final class LogInViewModel {
     init(coordinator: Coordinatable) {
         self.coordinator = coordinator
     }
-    
     
     
     // MARK: - Public methods
@@ -112,6 +88,7 @@ final class LogInViewModel {
             
         case .didTabBruteForceButton:
             self.state = .HideKeyboard
+            self.state = .loading
             #if DEBUG
             let password = "q"
             #else
@@ -120,6 +97,7 @@ final class LogInViewModel {
             print("Подбор начался")
             BruteForse.shared.bruteForce2(passwordToUnlock: password) { [weak self] pswrd in
                 DispatchQueue.main.sync {
+                    self?.state = .loaded
                     self?.state = .bruteForseSuccess(pswrd: pswrd)
                 }
             }
