@@ -12,11 +12,11 @@ import UIKit
 public class Checker {
     static let shared = Checker()
     
-    enum Resault {
-        case success(user: User)
+    enum CheckerError: Error {
         case wrongLogIn
         case wrongPswrd
         case noLogInData
+        case unknowError
     }
     
     #if DEBUG
@@ -35,26 +35,66 @@ public class Checker {
     private init() {}
     
     
-    func check(logIn: String?, pswrd: String?, completion: @escaping (Resault) -> Void) {
+    func check(
+        logIn: String?,
+        pswrd: String?,
+        completion: @escaping (Result<User, CheckerError>) -> Void
+    ) {
+        
         DispatchQueue.global(qos: .utility).async {
             sleep(3)
-            completion(self.checker(logIn: logIn, pswrd: pswrd))
+            do {
+                try completion(.success(self.checker(logIn: logIn, pswrd: pswrd)))
+            }
+            catch CheckerError.noLogInData {
+                completion(.failure(.noLogInData))
+            }
+            catch CheckerError.wrongLogIn {
+                completion(.failure(.wrongLogIn))
+            }
+            catch CheckerError.wrongPswrd {
+                completion(.failure(.wrongPswrd))
+            }
+            catch {
+                completion(.failure(.unknowError))
+            }
+            
         }
     }
     
-    
-    private func checker(logIn: String?, pswrd: String?) -> Resault {
+    private func checker(logIn: String?, pswrd: String?) throws -> User {
+        guard logIn != "" else {
+            throw CheckerError.noLogInData
+        }
+        
         guard let user = userServise.checkLogin(login: logIn) else {
-            return .wrongLogIn
+            throw CheckerError.wrongLogIn
         }
-        
+
         guard pswrd == self.userPswrd else {
-            return .wrongPswrd
+            throw CheckerError.wrongPswrd
         }
-        
-        return .success(user: user)
+
+        return user
     }
-    
-    
+
 }
+
+extension Checker.CheckerError: CustomStringConvertible {
+    
+    public var description: String {
+        switch self {
+        case .wrongLogIn:
+            return "Неправильный логин"
+        case .wrongPswrd:
+            return "Неправильный пароль"
+        case .noLogInData:
+            return "Введите логин"
+        case .unknowError:
+            return "Неизвестная ошибка"
+        }
+    }
+
+}
+
 

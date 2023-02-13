@@ -65,18 +65,13 @@ final class LogInViewModel {
             Checker.shared.check(logIn: log, pswrd: pswrd) { [weak self] result in
                 DispatchQueue.main.sync {
                     switch result {
-                    case .success(user: let user):
+                    case .success(let user):
                         self?.state = .loaded
                         (self?.coordinator as? LogInCoordinator)?.pushMainTabBarController(user: user)
-                    case .wrongLogIn:
+                        
+                    case .failure(let error):
                         self?.state = .loaded
-                        self?.state = .wrong(text: "Неправильный логин")
-                    case .wrongPswrd:
-                        self?.state = .loaded
-                        self?.state = .wrong(text: "Неправильный пароль")
-                    case .noLogInData:
-                        self?.state = .loaded
-                        self?.state = .wrong(text: "Введите логин")
+                        self?.state = .wrong(text: error.description)
                     }
                 }
             }
@@ -87,7 +82,6 @@ final class LogInViewModel {
         }
         
     }
-    
     
     func keyboardNotification(_ stateKeyboard: ServiseContentOfSet.StateK, _ notification: Notification) {
         let y = self.servise.ServiseContentOfSet(notification, stateK: stateKeyboard)

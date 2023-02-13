@@ -10,7 +10,7 @@ import UIKit
 
 class TestUserServise: UserServise {
     
-    private let user = User(login: "",
+    private let user = User(login: "q",
                     fullName: "TestLogin",
                     avatar: UIImage(systemName: "person.fill.questionmark"),
                     status: "TestStatus"
