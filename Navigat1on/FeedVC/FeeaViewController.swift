@@ -77,7 +77,13 @@ class FeedViewController: UIViewController {
         button.layer.cornerRadius = 14
         return button
     }()
-
+    
+    private lazy var playerView: PlayerView = {
+        let playerView = PlayerView()
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        return playerView
+    }()
+    
     
     // MARK: - Life cycle
     
@@ -105,6 +111,9 @@ class FeedViewController: UIViewController {
         self.setupStackView()
         self.view.addSubview(checkPasswordTextField)
         self.view.addSubview(checkGuessButton)
+        //
+        self.view.addSubview(playerView)
+        //
         self.setupConstraints()
     }
     
@@ -162,7 +171,10 @@ class FeedViewController: UIViewController {
             checkGuessButton.centerXAnchor.constraint(equalTo: checkPasswordTextField.centerXAnchor),
             checkGuessButton.heightAnchor.constraint(equalTo: buttonFirst.heightAnchor),
 
-            
+            playerView.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 30),
+            playerView.leftAnchor.constraint(equalTo: self.stackView.leftAnchor),
+            playerView.rightAnchor.constraint(equalTo: self.stackView.rightAnchor),
+            playerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
         ])
     }
 }
