@@ -14,7 +14,7 @@ final class MainCoordinator: Coordinatable {
 
     private var navigationController: UINavigationController
     
-    private var isVerification: Bool = false
+    private var isVerification: Bool = true
     
     private var user: User = User(login: "defaultLogIn",
                                   fullName: "DefaultName",
@@ -52,7 +52,7 @@ final class MainCoordinator: Coordinatable {
         self.addChildCoordinator(tabBarCoordinator)
         
         self.navigationController.setViewControllers([tabBarCoordinator.start()], animated: true)
-        self.startTimerForBannerVC()
+//        self.startTimerForBannerVC()
     }
     
     func pushLogInViewController() {

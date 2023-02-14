@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		A410AA23299A1E18001B666B /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A410AA22299A1E18001B666B /* BannerViewController.swift */; };
+		A410AA25299B60E2001B666B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A410AA24299B60E1001B666B /* PlayerView.swift */; };
+		A410AA28299B8005001B666B /* Queen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A410AA27299B8005001B666B /* Queen.mp3 */; };
+		A410AA2A299B8201001B666B /* ArrayMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A410AA29299B8201001B666B /* ArrayMusic.swift */; };
+		A410AA2C299B99B3001B666B /* 09. Decibel.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A410AA2B299B99B3001B666B /* 09. Decibel.mp3 */; };
+		A410AA2E299B99BC001B666B /* Dalabil - звезда.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A410AA2D299B99BC001B666B /* Dalabil - звезда.mp3 */; };
+		A410AA30299B99C4001B666B /* 10. Stormy May Day.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A410AA2F299B99C4001B666B /* 10. Stormy May Day.mp3 */; };
 		A426E45229804997001128BF /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45129804997001128BF /* FeedModel.swift */; };
 		A426E4592981662E001128BF /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E4582981662E001128BF /* MainCoordinator.swift */; };
 		A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45A2981666A001128BF /* LogInCoordinator.swift */; };
@@ -85,6 +91,12 @@
 
 /* Begin PBXFileReference section */
 		A410AA22299A1E18001B666B /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
+		A410AA24299B60E1001B666B /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		A410AA27299B8005001B666B /* Queen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Queen.mp3; sourceTree = "<group>"; };
+		A410AA29299B8201001B666B /* ArrayMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayMusic.swift; sourceTree = "<group>"; };
+		A410AA2B299B99B3001B666B /* 09. Decibel.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "09. Decibel.mp3"; sourceTree = "<group>"; };
+		A410AA2D299B99BC001B666B /* Dalabil - звезда.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Dalabil - звезда.mp3"; sourceTree = "<group>"; };
+		A410AA2F299B99C4001B666B /* 10. Stormy May Day.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "10. Stormy May Day.mp3"; sourceTree = "<group>"; };
 		A426E45129804997001128BF /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		A426E4582981662E001128BF /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		A426E45A2981666A001128BF /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -156,6 +168,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A410AA26299B7FE7001B666B /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				A410AA27299B8005001B666B /* Queen.mp3 */,
+				A410AA2B299B99B3001B666B /* 09. Decibel.mp3 */,
+				A410AA2D299B99BC001B666B /* Dalabil - звезда.mp3 */,
+				A410AA2F299B99C4001B666B /* 10. Stormy May Day.mp3 */,
+				A410AA29299B8201001B666B /* ArrayMusic.swift */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		A426E45329816577001128BF /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +272,7 @@
 		A426E47B29817C08001128BF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A410AA26299B7FE7001B666B /* Music */,
 				A43698822979A89900395E32 /* Assets.xcassets */,
 				A43698842979A89900395E32 /* LaunchScreen.storyboard */,
 				A43698872979A89900395E32 /* Info.plist */,
@@ -315,6 +340,7 @@
 				A43698A22979ABC600395E32 /* PostViewController.swift */,
 				A43698A42979ABDE00395E32 /* InfoViewController.swift */,
 				A426E45129804997001128BF /* FeedModel.swift */,
+				A410AA24299B60E1001B666B /* PlayerView.swift */,
 			);
 			path = FeedVC;
 			sourceTree = "<group>";
@@ -488,8 +514,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A410AA30299B99C4001B666B /* 10. Stormy May Day.mp3 in Resources */,
+				A410AA2C299B99B3001B666B /* 09. Decibel.mp3 in Resources */,
+				A410AA28299B8005001B666B /* Queen.mp3 in Resources */,
 				A43698862979A89900395E32 /* LaunchScreen.storyboard in Resources */,
 				A43698832979A89900395E32 /* Assets.xcassets in Resources */,
+				A410AA2E299B99BC001B666B /* Dalabil - звезда.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +540,7 @@
 				A426E473298174A7001128BF /* FeedViewModel.swift in Sources */,
 				A436989D2979AAEB00395E32 /* ArrayPhotos.swift in Sources */,
 				A426E45D29816681001128BF /* FeedCoordinator.swift in Sources */,
+				A410AA25299B60E2001B666B /* PlayerView.swift in Sources */,
 				A426E46429816C09001128BF /* MainTabBarViewController.swift in Sources */,
 				A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */,
 				A43698E129800B7E00395E32 /* CustomButton.swift in Sources */,
@@ -542,6 +573,7 @@
 				A43698972979AAB900395E32 /* CustomUITextField.swift in Sources */,
 				A43698A52979ABDE00395E32 /* InfoViewController.swift in Sources */,
 				A426E46729816D19001128BF /* Factory.swift in Sources */,
+				A410AA2A299B8201001B666B /* ArrayMusic.swift in Sources */,
 				A480490C298A658D009FAA66 /* ProfileView.swift in Sources */,
 				A43698B32979ACB000395E32 /* PhotosCollectionViewCell.swift in Sources */,
 				A43698DA297AD88800395E32 /* MyLoginFactory.swift in Sources */,
