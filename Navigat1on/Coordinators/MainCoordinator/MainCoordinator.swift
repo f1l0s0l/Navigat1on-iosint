@@ -52,7 +52,7 @@ final class MainCoordinator: Coordinatable {
         self.addChildCoordinator(tabBarCoordinator)
         
         self.navigationController.setViewControllers([tabBarCoordinator.start()], animated: true)
-        self.startTimerForBannerVC()
+//        self.startTimerForBannerVC()
     }
     
     func pushLogInViewController() {
