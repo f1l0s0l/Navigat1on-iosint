@@ -52,6 +52,7 @@
 		A48049032983DF54009FAA66 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48049022983DF54009FAA66 /* TabBarCoordinator.swift */; };
 		A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */; };
 		A480490C298A658D009FAA66 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A480490B298A658D009FAA66 /* ProfileView.swift */; };
+		A49AE016299CD24F000E14D3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49AE015299CD24F000E14D3 /* NetworkService.swift */; };
 		A4E427D829818D9400A249F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D729818D9400A249F0 /* User.swift */; };
 		A4E427DA29818DD000A249F0 /* UserServiseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D929818DD000A249F0 /* UserServiseProtocol.swift */; };
 		A4E427DC29818DE300A249F0 /* CurrentUserServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */; };
@@ -129,6 +130,7 @@
 		A48049022983DF54009FAA66 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiseContentOfSet.swift; sourceTree = "<group>"; };
 		A480490B298A658D009FAA66 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A49AE015299CD24F000E14D3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A4E427D729818D9400A249F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A4E427D929818DD000A249F0 /* UserServiseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiseProtocol.swift; sourceTree = "<group>"; };
 		A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserServise.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		A43698782979A89700395E32 /* Navigat1on */ = {
 			isa = PBXGroup;
 			children = (
+				A49AE012299CD206000E14D3 /* NetworkService */,
 				A4804912298EC0FB009FAA66 /* Archive */,
 				A436988E2979AA2000395E32 /* Application */,
 				A43698DF29800B5600395E32 /* CustomUI */,
@@ -378,6 +381,14 @@
 				A436989E2979AB6600395E32 /* TabBarController.swift */,
 			);
 			path = Archive;
+			sourceTree = "<group>";
+		};
+		A49AE012299CD206000E14D3 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				A49AE015299CD24F000E14D3 /* NetworkService.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		A4E427E12982C14100A249F0 /* Protocol */ = {
@@ -529,6 +540,7 @@
 				A43698B12979AC9D00395E32 /* PhotosViewController.swift in Sources */,
 				A43698AB2979AC4900395E32 /* ProfileHeaderView.swift in Sources */,
 				A426E46D29817093001128BF /* LogInViewController.swift in Sources */,
+				A49AE016299CD24F000E14D3 /* NetworkService.swift in Sources */,
 				A436989B2979AADF00395E32 /* DataPosts.swift in Sources */,
 				A426E46B2981700A001128BF /* LogInViewModel.swift in Sources */,
 				A4E427DE29818DF100A249F0 /* TestUserServise.swift in Sources */,

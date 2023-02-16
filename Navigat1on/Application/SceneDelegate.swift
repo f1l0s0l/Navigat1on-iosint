@@ -24,6 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = mainCoordinator?.start()
         window.makeKeyAndVisible()
         self.window = window
+        
+        let appConfiguration = AppConfiguration.ferstUrl(string: "https://swapi.dev/api/people/8")
+        NetworkService.reguest(for: appConfiguration)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
