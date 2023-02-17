@@ -12,6 +12,7 @@ final class Factory {
         case logIn
         case feed
         case profile(user: User)
+        case starWars
     }
     
     let navigationController: UINavigationController
@@ -35,14 +36,20 @@ final class Factory {
             navigationController.setViewControllers([controller], animated: true)
 
         case .feed:
-//            let viewModel = FeedViewModel(coordinator: self.coordinator)
-            let feedModel = FeedModel()
-            let controller = FeedViewController(feedModel: feedModel)
+            let viewModel = FeedViewModel(coordinator: self.coordinator)
+            let controller = FeedViewController2(viewModel: viewModel)
+//            let feedModel = FeedModel()
+//            let controller = FeedViewController(feedModel: feedModel)
             navigationController.setViewControllers([controller], animated: true)
             
         case let .profile(user):
             let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
             let controller = ProfileViewController(viewModel: viewModel)
+            navigationController.setViewControllers([controller], animated: true)
+            
+        case .starWars:
+            let viewModel = StarWarsViewModel(coordinator: self.coordinator)
+            let controller = StarWarsViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
         }
         

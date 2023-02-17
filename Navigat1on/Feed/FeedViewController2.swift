@@ -12,7 +12,22 @@ final class FeedViewController2: UIViewController {
     
     // MARK: - Properties
     
-    let viewModel: FeedViewModel
+    private let viewModel: FeedViewModel
+    
+    
+    private lazy var showStarWarsFlow: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .black
+        button.setTitle("Далекая далекая галактика...", for: .normal)
+        button.addTarget(self, action: #selector(didTapShowStarWarsFlow), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    private func didTapShowStarWarsFlow() {
+        self.viewModel.didTap(action: .didTapShowStarWarsFlow)
+    }
     
     
     // MARK: - Life cycle
@@ -28,9 +43,45 @@ final class FeedViewController2: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.green
-        self.title = "Проверка"
+        self.setupView()
+        self.setupConstraint()
+        self.bindViewModel()
     }
     
+    
+    // MARK: - Methods
+    
+    private func setupView() {
+        self.view.backgroundColor = UIColor.green
+        self.title = "Проверка"
+        self.view.addSubview(showStarWarsFlow)
+    }
+    
+    private func bindViewModel() {
+        viewModel.stateChenged = { state in // [weak self]
+//            guard let self = self else {return}
+            
+            switch state {
+            case .initial:
+                ()
+                
+            case .error:
+                print("Какая то ошибка")
+            }
+        }
+        
+    }
+    
+
+    // MARK: - Constraints
+    
+    private func setupConstraint() {
+        NSLayoutConstraint.activate([
+            showStarWarsFlow.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            showStarWarsFlow.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            showStarWarsFlow.widthAnchor.constraint(equalToConstant: 200),
+            showStarWarsFlow.heightAnchor.constraint(equalToConstant: 50),
+        ])
+    }
     
 }
