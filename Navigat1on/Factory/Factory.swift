@@ -12,7 +12,6 @@ final class Factory {
         case logIn
         case feed
         case profile(user: User)
-        case starWars
     }
     
     let navigationController: UINavigationController
@@ -45,11 +44,6 @@ final class Factory {
         case let .profile(user):
             let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
             let controller = ProfileViewController(viewModel: viewModel)
-            navigationController.setViewControllers([controller], animated: true)
-            
-        case .starWars:
-            let viewModel = StarWarsViewModel(coordinator: self.coordinator)
-            let controller = StarWarsViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
         }
         

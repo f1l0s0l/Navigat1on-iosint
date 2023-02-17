@@ -9,15 +9,18 @@ import Foundation
 
 final class FeedViewModel {
     
-    
     enum State {
         case initial
-//        case loading
+        case loading
+        case loadedFirstTextLabel(text: String)
+        case loadedSecondTextLabel(text: String)
+        case wrong(text: String)
         case error
     }
     
     enum Action {
-        case didTapShowStarWarsFlow
+        case didTapDownloadDataButton
+        case didTapShowNameResidentsButton
     }
     
     
@@ -34,6 +37,7 @@ final class FeedViewModel {
     // MARK: - Properties
     
     private let coordinator: Coordinatable
+    private var residents: [String] = []
     
     // MARK: - Life cycle
     
@@ -46,9 +50,23 @@ final class FeedViewModel {
     
     func didTap(action: Action) {
         switch action {
-        case .didTapShowStarWarsFlow:
-            (self.coordinator as? FeedCoordinator)?.pushStartStarWarsViewController()
-      
+        case .didTapDownloadDataButton:
+            self.state = .loading
+            
+            FeedNetworkService1.request { [weak self] text in
+                self?.state = .loadedFirstTextLabel(text: text)
+            }
+            FeedNetworkService2.request { [weak self] text, residents in
+                self?.state = .loadedSecondTextLabel(text: text)
+                self?.residents = residents
+            }
+            
+        case .didTapShowNameResidentsButton:
+            guard residents.count != 0 else {
+                self.state = .wrong(text: "Нет данных")
+                return
+            }
+            (self.coordinator as? FeedCoordinator)?.pushNameResidentsViewController(residents: self.residents)
         }
     }
     

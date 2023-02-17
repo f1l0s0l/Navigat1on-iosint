@@ -57,11 +57,8 @@
 		A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */; };
 		A480490C298A658D009FAA66 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A480490B298A658D009FAA66 /* ProfileView.swift */; };
 		A49AE016299CD24F000E14D3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49AE015299CD24F000E14D3 /* NetworkService.swift */; };
-		A49C6221299FA81B003190FB /* SWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C6220299FA81B003190FB /* SWViewController.swift */; };
-		A49C6223299FA82B003190FB /* SWViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C6222299FA82B003190FB /* SWViewModel.swift */; };
-		A49C6228299FB887003190FB /* PlanetsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C6227299FB887003190FB /* PlanetsTableView.swift */; };
-		A49C622C299FBC6F003190FB /* PlanetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C622B299FBC6F003190FB /* PlanetTableViewCell.swift */; };
-		A49C622E299FC192003190FB /* PlanetDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C622D299FC192003190FB /* PlanetDetailsTableViewCell.swift */; };
+		A49C6230299FC751003190FB /* NameResidentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C622F299FC751003190FB /* NameResidentsViewController.swift */; };
+		A49C6234299FC9FA003190FB /* NameResidentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49C6233299FC9FA003190FB /* NameResidentsViewModel.swift */; };
 		A4E427D829818D9400A249F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D729818D9400A249F0 /* User.swift */; };
 		A4E427DA29818DD000A249F0 /* UserServiseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D929818DD000A249F0 /* UserServiseProtocol.swift */; };
 		A4E427DC29818DE300A249F0 /* CurrentUserServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */; };
@@ -144,11 +141,8 @@
 		A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiseContentOfSet.swift; sourceTree = "<group>"; };
 		A480490B298A658D009FAA66 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A49AE015299CD24F000E14D3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		A49C6220299FA81B003190FB /* SWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWViewController.swift; sourceTree = "<group>"; };
-		A49C6222299FA82B003190FB /* SWViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWViewModel.swift; sourceTree = "<group>"; };
-		A49C6227299FB887003190FB /* PlanetsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsTableView.swift; sourceTree = "<group>"; };
-		A49C622B299FBC6F003190FB /* PlanetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetTableViewCell.swift; sourceTree = "<group>"; };
-		A49C622D299FC192003190FB /* PlanetDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		A49C622F299FC751003190FB /* NameResidentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameResidentsViewController.swift; sourceTree = "<group>"; };
+		A49C6233299FC9FA003190FB /* NameResidentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameResidentsViewModel.swift; sourceTree = "<group>"; };
 		A4E427D729818D9400A249F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A4E427D929818DD000A249F0 /* UserServiseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiseProtocol.swift; sourceTree = "<group>"; };
 		A4E427DB29818DE300A249F0 /* CurrentUserServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserServise.swift; sourceTree = "<group>"; };
@@ -254,10 +248,11 @@
 		A426E4712981749B001128BF /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				A49C621F299FA7E5003190FB /* StarWars */,
 				A4009528299F6C8C00959447 /* Model */,
 				A426E472298174A7001128BF /* FeedViewModel.swift */,
 				A426E474298174B6001128BF /* FeedViewController2.swift */,
+				A49C6233299FC9FA003190FB /* NameResidentsViewModel.swift */,
+				A49C622F299FC751003190FB /* NameResidentsViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -422,18 +417,6 @@
 			path = NetworkService;
 			sourceTree = "<group>";
 		};
-		A49C621F299FA7E5003190FB /* StarWars */ = {
-			isa = PBXGroup;
-			children = (
-				A49C6222299FA82B003190FB /* SWViewModel.swift */,
-				A49C6220299FA81B003190FB /* SWViewController.swift */,
-				A49C6227299FB887003190FB /* PlanetsTableView.swift */,
-				A49C622B299FBC6F003190FB /* PlanetTableViewCell.swift */,
-				A49C622D299FC192003190FB /* PlanetDetailsTableViewCell.swift */,
-			);
-			path = StarWars;
-			sourceTree = "<group>";
-		};
 		A4E427E12982C14100A249F0 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,14 +551,12 @@
 				A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */,
 				A4009530299F805500959447 /* FeedNetworkService2.swift in Sources */,
 				A43698E129800B7E00395E32 /* CustomButton.swift in Sources */,
-				A49C622C299FBC6F003190FB /* PlanetTableViewCell.swift in Sources */,
 				A43698952979AA9900395E32 /* StatusText.swift in Sources */,
 				A43698AF2979AC8500395E32 /* PostTableViewCell.swift in Sources */,
 				A426E45F2981668D001128BF /* ProfileCoordinator.swift in Sources */,
 				A43698A12979ABAF00395E32 /* FeeaViewController.swift in Sources */,
 				A410AA23299A1E18001B666B /* BannerViewController.swift in Sources */,
 				A43698AD2979AC6E00395E32 /* PhotosTableViewCell.swift in Sources */,
-				A49C622E299FC192003190FB /* PlanetDetailsTableViewCell.swift in Sources */,
 				A48049032983DF54009FAA66 /* TabBarCoordinator.swift in Sources */,
 				A426E47829817706001128BF /* ProfileViewModel.swift in Sources */,
 				A4E427DC29818DE300A249F0 /* CurrentUserServise.swift in Sources */,
@@ -583,8 +564,7 @@
 				A436987A2979A89700395E32 /* AppDelegate.swift in Sources */,
 				A426E45229804997001128BF /* FeedModel.swift in Sources */,
 				A400952A299F6CA800959447 /* FeedNetworkService.swift in Sources */,
-				A49C6221299FA81B003190FB /* SWViewController.swift in Sources */,
-				A49C6228299FB887003190FB /* PlanetsTableView.swift in Sources */,
+				A49C6230299FC751003190FB /* NameResidentsViewController.swift in Sources */,
 				A426E4592981662E001128BF /* MainCoordinator.swift in Sources */,
 				A400952E299F7BDF00959447 /* Resident.swift in Sources */,
 				A43698B12979AC9D00395E32 /* PhotosViewController.swift in Sources */,
@@ -600,10 +580,10 @@
 				A4E427DA29818DD000A249F0 /* UserServiseProtocol.swift in Sources */,
 				A43698D8297AD81E00395E32 /* LoginFactoryProtocol.swift in Sources */,
 				A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */,
-				A49C6223299FA82B003190FB /* SWViewModel.swift in Sources */,
 				A43698992979AAC300395E32 /* PostView.swift in Sources */,
 				A43698972979AAB900395E32 /* CustomUITextField.swift in Sources */,
 				A400952C299F79CD00959447 /* Planet.swift in Sources */,
+				A49C6234299FC9FA003190FB /* NameResidentsViewModel.swift in Sources */,
 				A43698A52979ABDE00395E32 /* InfoViewController.swift in Sources */,
 				A426E46729816D19001128BF /* Factory.swift in Sources */,
 				A480490C298A658D009FAA66 /* ProfileView.swift in Sources */,

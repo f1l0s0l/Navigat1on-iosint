@@ -17,11 +17,19 @@ struct FeedNetworkService1 {
         
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    completion("")
+                }
+                return
+            }
             guard let data = data,
                   let dateDictionary = try? JSONSerialization.jsonObject(with: data) as? [String : Any],
                   let titleText = dateDictionary["title"] as? String
             else {
-                completion("")
+                DispatchQueue.main.async {
+                    completion("")
+                }
                 return
             }
             

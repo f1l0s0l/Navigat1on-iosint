@@ -8,7 +8,7 @@
 import Foundation
 
 struct FeedNetworkService2 {
-    private static let defaultURL = "https://swapi.dev/api/planets/3"
+    private static let defaultURL = "https://swapi.dev/api/planets/1"
     
     static func request(completion: @escaping (String, [String]) -> Void) {
         guard let url = URL(string: defaultURL) else {
@@ -17,6 +17,12 @@ struct FeedNetworkService2 {
         
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    completion("", [])
+                }
+                return
+            }
             guard let data = data,
                   let planet = try? JSONDecoder().decode(Planet.self, from: data)
             else {
@@ -28,7 +34,6 @@ struct FeedNetworkService2 {
             
             DispatchQueue.main.async {
                 completion(planet.orbitalPeriod, planet.residentsURL)
-                print("Ура")
             }
 
         }
@@ -37,31 +42,30 @@ struct FeedNetworkService2 {
     
     
     static func loadResidents(url: String, completion: @escaping (String) -> Void) {
-        
-
         guard let url = URL(string: url) else {
             return
         }
         
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            guard error == nil else {
+                DispatchQueue.main.sync {
+                    completion("")
+                }
+                return
+            }
             guard let data = data,
                   let resident = try? JSONDecoder().decode(Resident.self, from: data)
             else {
+                DispatchQueue.main.sync {
+                    completion("")
+                }
                 return
             }
-//            DispatchQueue.main.sync {
-//                completion(resident.name)
-//                print(resident.name)
-//            }
+            
             completion(resident.name)
-//            print(resident.name)
-
         }
         task.resume()
-        
-        
-        
     }
     
 }

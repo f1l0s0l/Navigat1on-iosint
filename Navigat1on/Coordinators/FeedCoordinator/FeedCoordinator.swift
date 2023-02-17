@@ -45,18 +45,10 @@ final class FeedCoordinator: Coordinatable {
         return self.navigationController
     }
     
-    func pushStartStarWarsViewController() {
-        let starWarsViewModel = StarWarsViewModel(coordinator: self)
-        let starWarsViewController = StarWarsViewController(viewModel: starWarsViewModel)
-        starWarsViewController.title = "StarWars"
-        self.navigationController.pushViewController(starWarsViewController, animated: true)
-    }
-    
-    func pushPlanetDetailsViewController() {
-//        let starWarsViewModel = StarWarsViewModel(coordinator: self)
-        let planetDetailsViewController = PlanetDetailsViewController()
-        planetDetailsViewController.title = "StarWars"
-        self.navigationController.pushViewController(planetDetailsViewController, animated: true)
+    func pushNameResidentsViewController(residents: [String]) {
+        let viewModel = NameResidentsViewModel(residents: residents)
+        let nameResidentsViewController = NameResidentsViewController(viewModel: viewModel)
+        self.navigationController.pushViewController(nameResidentsViewController, animated: true)
     }
  
     func addChildCoordinator(_ coordinator: Coordinatable) {
