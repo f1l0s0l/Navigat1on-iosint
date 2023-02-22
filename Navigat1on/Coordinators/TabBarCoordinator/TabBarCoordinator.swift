@@ -14,7 +14,6 @@ final class TabBarCoordinator: Coordinatable {
     
 //    weak var parentCoordinator: Coordinatable?
     
-    
     // MARK: - Properties
 
     private var user: User

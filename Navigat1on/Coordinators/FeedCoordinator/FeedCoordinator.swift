@@ -9,11 +9,10 @@ import Foundation
 import UIKit
 
 final class FeedCoordinator: Coordinatable {
-    
+
     // MARK: - Public Properties
 
 //    weak var parentCoordinator: Coordinatable?
-    
     
     // MARK: - Properties
 

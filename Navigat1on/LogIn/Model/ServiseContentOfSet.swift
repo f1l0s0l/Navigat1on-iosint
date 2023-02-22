@@ -9,13 +9,13 @@ import Foundation
 import UIKit
 
 struct ServiseContentOfSet {
-    enum StateK {
+    enum StateKayboard {
         case Show(frameScrollView: Any, frameBottomItems: Any)
         case Hide
     }
     
-    func ServiseContentOfSet(_ notification: Notification, stateK: StateK) -> Double {
-        switch stateK {
+    func ServiseContentOfSet(_ notification: Notification, stateKayboard: StateKayboard) -> Double {
+        switch stateKayboard {
         case let .Show(frameScrollView, frameBottomItems):
             guard let frameBottomItems = (frameBottomItems as? CGRect) else {
                 return 0

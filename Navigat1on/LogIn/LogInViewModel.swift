@@ -7,6 +7,13 @@
 
 import Foundation
 
+protocol LogInViewControllerDelegate: AnyObject {
+    func checkCredentials(logIn: String?, pswrd: String?, completion: @escaping (CheckerError?) -> Void)
+    func signUp(logIn: String?, pswrd: String?, completion: @escaping (CheckerError?) -> Void)
+    func addStateDidChangeListener(completion: @escaping (User?) -> Void)
+}
+
+
 final class LogInViewModel {
     
     enum StateKeyboard {
@@ -16,6 +23,7 @@ final class LogInViewModel {
     
     enum Action {
         case didTapButton(log: String?, pswrd: String?)
+        case didTabSignUpButton(log: String?, pswrd: String?)
         case didTapSuperView
     }
     
@@ -28,7 +36,6 @@ final class LogInViewModel {
         case wrong(text: String)
         case error
     }
-    
     
     // MARK: - Public Properties
     
@@ -61,19 +68,35 @@ final class LogInViewModel {
         case .didTapButton(let log, let pswrd):
             self.state = .loading
             self.state = .HideKeyboard
-            
-            Checker.shared.check(logIn: log, pswrd: pswrd) { [weak self] result in
-                DispatchQueue.main.sync {
-                    switch result {
-                    case .success(let user):
+
+
+            (self.coordinator as? LogInCoordinator)?.logInInspectorDelegate?.checkCredentials(
+                logIn: log,
+                pswrd: pswrd
+            ) { [weak self] error in
+                DispatchQueue.main.async {
+                    guard let error = error else {
                         self?.state = .loaded
-                        (self?.coordinator as? LogInCoordinator)?.pushMainTabBarController(user: user)
-                        
-                    case .failure(let error):
-                        self?.state = .loaded
-                        self?.state = .wrong(text: error.description)
+                        return
                     }
+                    self?.state = .loaded
+                    self?.state = .wrong(text: error.description)
                 }
+            }
+            
+        case .didTabSignUpButton(let log, let pswrd):
+            self.state = .loading
+            self.state = .HideKeyboard
+            (self.coordinator as? LogInCoordinator)?.logInInspectorDelegate?.signUp(
+                logIn: log,
+                pswrd: pswrd
+            ) { [weak self] error in
+                guard let error = error else {
+                    self?.state = .loaded
+                    return
+                }
+                self?.state = .loaded
+                self?.state = .wrong(text: error.description)
             }
 
         case .didTapSuperView:
@@ -83,8 +106,8 @@ final class LogInViewModel {
         
     }
     
-    func keyboardNotification(_ stateKeyboard: ServiseContentOfSet.StateK, _ notification: Notification) {
-        let y = self.servise.ServiseContentOfSet(notification, stateK: stateKeyboard)
+    func keyboardNotification(_ stateKeyboard: ServiseContentOfSet.StateKayboard, _ notification: Notification) {
+        let y = self.servise.ServiseContentOfSet(notification, stateKayboard: stateKeyboard)
         self.state = .changeContentOffset(yPoint: y)
     }
     

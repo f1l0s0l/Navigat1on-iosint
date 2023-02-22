@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,14 +23,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         mainCoordinator = MainCoordinator(navigationController: navigationController)
         window.rootViewController = mainCoordinator?.start()
+        
+//        mainCoordinator?.start3 { [weak self] vc in
+//            self?.window?.rootViewController = vc
+//        }
+
         window.makeKeyAndVisible()
         self.window = window
         
-        let appConfiguration = AppConfiguration.ferstUrl(string: "https://swapi.dev/api/people/8")
-        NetworkService.reguest(for: appConfiguration)
+//        let appConfiguration = AppConfiguration.ferstUrl(string: "https://swapi.dev/api/people/8")
+//        NetworkService.reguest(for: appConfiguration)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        do {
+            try Auth.auth().signOut()
+            print("вышли из аккаунта")
+        } catch {
+            print("не вышло выйти из аккаунта")
+            print(error)
+        }
+
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.

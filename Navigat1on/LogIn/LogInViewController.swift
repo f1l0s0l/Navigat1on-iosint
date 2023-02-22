@@ -81,10 +81,23 @@ final class LogInViewController2: UIViewController {
         button.target = { [weak self] in
             self?.didTabLogInButton()
         }
+        button.isEnabled = false
         button.layer.cornerRadius = 10
         return button
     }()
     
+    private lazy var signUpButton: CustomButton = {
+        let button = CustomButton(title: "Sign Up",
+                                  backgroundImage: UIImage(named: "blue_pixel")
+        )
+        button.target = { [weak self] in
+            self?.didTabSignUpButton()
+        }
+        button.alpha = 0.8
+        button.layer.cornerRadius = 10
+        return button
+    }()
+        
     private lazy var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -115,6 +128,9 @@ final class LogInViewController2: UIViewController {
         super.viewDidLoad()
         self.setupView()
         self.bindViewModel()
+        #if DEBUG
+        self.setupDebug()
+        #endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,7 +156,8 @@ final class LogInViewController2: UIViewController {
         setupGestures()
         self.view.addSubview(loadingView)
         self.view.addSubview(activityIndicator)
-        setupConstraint()
+        self.setupTextField()
+        self.setupConstraint()
     }
     
     private func setupScrollView() {
@@ -149,6 +166,7 @@ final class LogInViewController2: UIViewController {
         self.stackView.addArrangedSubview(self.userEmailTextField)
         self.stackView.addArrangedSubview(self.userPasswordTextField)
         self.scrollView.addSubview(self.logInButton)
+        self.scrollView.addSubview(self.signUpButton)
     }
     
     private func setupGestures() {
@@ -165,7 +183,7 @@ final class LogInViewController2: UIViewController {
     @objc
     private func didShowKeyboard(_ notification: Notification) {
         self.viewModel.keyboardNotification(.Show(frameScrollView:  self.scrollView.frame,
-                                                  frameBottomItems: self.logInButton.frame
+                                                  frameBottomItems: self.signUpButton.frame
                                                  ), notification
         )
     }
@@ -183,6 +201,10 @@ final class LogInViewController2: UIViewController {
         )
     }
     
+    private func didTabSignUpButton() {
+        self.viewModel.didTap(action: .didTabSignUpButton(log: self.userEmailTextField.text, pswrd: self.userPasswordTextField.text))
+    }
+    
     private func bindViewModel() {
         viewModel.stateChenged = { [weak self] state in
             guard let self = self else {return}
@@ -194,10 +216,10 @@ final class LogInViewController2: UIViewController {
             case .loading:
                 self.loadingView.alpha = 0.6
                 self.activityIndicator.startAnimating()
-                print("Загрузка идет")
+//                print("Загрузка идет")
                 
             case .loaded:
-                print("Загрузка закончилась")
+//                print("Загрузка закончилась")
                 self.loadingView.alpha = 0
                 self.activityIndicator.stopAnimating()
                 
@@ -217,6 +239,29 @@ final class LogInViewController2: UIViewController {
         }
     }
     
+    private func setupTextField() {
+        self.userPasswordTextField.addTarget(self, action: #selector(editingChangedTextField), for: .editingChanged)
+        self.userEmailTextField.addTarget(self, action: #selector(editingChangedTextField), for: .editingChanged)
+    }
+    
+    @objc
+    private func editingChangedTextField() {
+        guard let emailText = self.userEmailTextField.text,
+              let pswrdText = self.userPasswordTextField.text,
+              emailText.count > 0,
+              pswrdText.count > 0
+        else {
+            self.logInButton.isEnabled = false
+            return
+        }
+        self.logInButton.isEnabled = true
+    }
+    
+    private func setupDebug() {
+        self.userEmailTextField.text = "test@gmail.com"
+        self.userPasswordTextField.text = "qwerty"
+        self.logInButton.isEnabled = true
+    }
     
     // MARK: - Constraint
 
@@ -241,6 +286,11 @@ final class LogInViewController2: UIViewController {
             logInButton.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
             logInButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            signUpButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 16),
+            signUpButton.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
+            signUpButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
+            signUpButton.heightAnchor.constraint(equalToConstant: 50),
             
             loadingView.topAnchor.constraint(equalTo: self.view.topAnchor),
             loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),

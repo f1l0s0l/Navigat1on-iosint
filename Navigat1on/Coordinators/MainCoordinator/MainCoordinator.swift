@@ -7,21 +7,14 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 final class MainCoordinator: Coordinatable {
     
     // MARK: - Properties
 
     private var navigationController: UINavigationController
-    
-    private var isVerification: Bool = false
-    
-    private var user: User = User(login: "defaultLogIn",
-                                  fullName: "DefaultName",
-                                  avatar: UIImage(named: "logo"),
-                                  status: "DefaultStatus"
-    )
-    
+
     private(set) var childCoordinators: [Coordinatable] = []
     
     
@@ -29,38 +22,45 @@ final class MainCoordinator: Coordinatable {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+//        start()
     }
     
     
     // MARK: - Public methods
     
     func start() -> UIViewController {
-        guard isVerification else {
-            self.pushLogInViewController()
-            return self.navigationController
+        
+        let checkerService = CheckerService()
+        let loginInspector = LoginInspector(checkerServise: checkerService)
+        loginInspector.addStateDidChangeListener { [weak self] user in
+            guard let user = user else {
+                self?.pushLogInViewController(loginInspector: loginInspector)
+                return
+            }
+            self?.pushMainTabBarController(user: user)
         }
-        self.pushMainTabBarController()
         return self.navigationController
     }
     
-    func pushMainTabBarController() {
+    func pushMainTabBarController(user: User) {
         self.navigationController.navigationBar.isHidden = true
         print("Попали в Мэйн соориднатор, вызываем таб бар навигатор")
         self.navigationController.viewControllers.removeAll()
         
-        let tabBarCoordinator = TabBarCoordinator(user: self.user)
+        let tabBarCoordinator = TabBarCoordinator(user: user)
         self.addChildCoordinator(tabBarCoordinator)
         
         self.navigationController.setViewControllers([tabBarCoordinator.start()], animated: true)
 //        self.startTimerForBannerVC()
     }
     
-    func pushLogInViewController() {
+    func pushLogInViewController(loginInspector: LoginInspector) {
         self.navigationController.navigationBar.isHidden = true
         self.navigationController.viewControllers.removeAll()
 
         let logInCoordinator = LogInCoordinator()
-        logInCoordinator.parentCoordinator = self
+        logInCoordinator.logInInspectorDelegate = loginInspector
+//        logInCoordinator.parentCoordinator = self
         self.addChildCoordinator(logInCoordinator)
         self.navigationController.setViewControllers([logInCoordinator.start()], animated: true)
     }
@@ -98,14 +98,8 @@ final class MainCoordinator: Coordinatable {
 }
 
 
-extension MainCoordinator: MainCoordinatorDelegate {
-    
-    func pushMainTabBarController(user: User) {
-        print("Провалились в делегат, но сам метод еще не вызвали")
-        self.user = user
-        self.pushMainTabBarController()
-    }
-}
+
+    // MARK: - extrension BannerViewControllerDelegate
 
 extension MainCoordinator: BannerViewControllerDelegate {
     
