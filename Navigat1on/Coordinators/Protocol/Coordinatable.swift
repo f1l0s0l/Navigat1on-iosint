@@ -13,7 +13,3 @@ protocol Coordinatable: AnyObject {
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)
 }
-
-protocol MainCoordinatorDelegate: AnyObject {
-    func pushMainTabBarController(user: User)
-}

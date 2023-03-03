@@ -20,6 +20,10 @@ final class Factory {
     
     private let flow: Flow
     
+    //
+    weak var delegate: LogInViewControllerDelegate?
+    //
+    
     init(navigationController: UINavigationController, coordinator: Coordinatable, flow: Flow) {
         self.navigationController = navigationController
         self.flow = flow

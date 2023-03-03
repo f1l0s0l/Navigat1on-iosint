@@ -9,10 +9,11 @@ import Foundation
 import UIKit
 
 final class LogInCoordinator: Coordinatable {
-    
+
     // MARK: - Public Properties
 
-    weak var parentCoordinator: MainCoordinatorDelegate?
+//    weak var parentCoordinator: MainCoordinatorDelegate?
+    weak var logInInspectorDelegate: LogInViewControllerDelegate?
     
     
     // MARK: - Properties
@@ -28,11 +29,7 @@ final class LogInCoordinator: Coordinatable {
                                           flow: .logIn
         )
         return logInViewController.navigationController.viewControllers[0]
-    }
-    
-    func pushMainTabBarController(user: User) {
-        print("в Лог Координаторе, вызов таб бар соординатора")
-        parentCoordinator?.pushMainTabBarController(user: user)
+        
     }
     
     func addChildCoordinator(_ coordinator: Coordinatable) {
