@@ -86,17 +86,17 @@ final class LogInViewController2: UIViewController {
         return button
     }()
     
-    private lazy var signUpButton: CustomButton = {
-        let button = CustomButton(title: "Sign Up",
-                                  backgroundImage: UIImage(named: "blue_pixel")
-        )
-        button.target = { [weak self] in
-            self?.didTabSignUpButton()
-        }
-        button.alpha = 0.8
-        button.layer.cornerRadius = 10
-        return button
-    }()
+//    private lazy var signUpButton: CustomButton = {
+//        let button = CustomButton(title: "Sign Up",
+//                                  backgroundImage: UIImage(named: "blue_pixel")
+//        )
+//        button.target = { [weak self] in
+//            self?.didTabSignUpButton()
+//        }
+//        button.alpha = 0.8
+//        button.layer.cornerRadius = 10
+//        return button
+//    }()
         
     private lazy var loadingView: UIView = {
         let view = UIView()
@@ -128,9 +128,9 @@ final class LogInViewController2: UIViewController {
         super.viewDidLoad()
         self.setupView()
         self.bindViewModel()
-        #if DEBUG
-        self.setupDebug()
-        #endif
+//        #if DEBUG
+//        self.setupDebug()
+//        #endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -166,7 +166,7 @@ final class LogInViewController2: UIViewController {
         self.stackView.addArrangedSubview(self.userEmailTextField)
         self.stackView.addArrangedSubview(self.userPasswordTextField)
         self.scrollView.addSubview(self.logInButton)
-        self.scrollView.addSubview(self.signUpButton)
+//        self.scrollView.addSubview(self.signUpButton)
     }
     
     private func setupGestures() {
@@ -183,7 +183,7 @@ final class LogInViewController2: UIViewController {
     @objc
     private func didShowKeyboard(_ notification: Notification) {
         self.viewModel.keyboardNotification(.Show(frameScrollView:  self.scrollView.frame,
-                                                  frameBottomItems: self.signUpButton.frame
+                                                  frameBottomItems: self.logInButton.frame
                                                  ), notification
         )
     }
@@ -201,9 +201,9 @@ final class LogInViewController2: UIViewController {
         )
     }
     
-    private func didTabSignUpButton() {
-        self.viewModel.didTap(action: .didTabSignUpButton(log: self.userEmailTextField.text, pswrd: self.userPasswordTextField.text))
-    }
+//    private func didTabSignUpButton() {
+//        self.viewModel.didTap(action: .didTabSignUpButton(log: self.userEmailTextField.text, pswrd: self.userPasswordTextField.text))
+//    }
     
     private func bindViewModel() {
         viewModel.stateChenged = { [weak self] state in
@@ -257,11 +257,11 @@ final class LogInViewController2: UIViewController {
         self.logInButton.isEnabled = true
     }
     
-    private func setupDebug() {
-        self.userEmailTextField.text = "test@gmail.com"
-        self.userPasswordTextField.text = "qwerty"
-        self.logInButton.isEnabled = true
-    }
+//    private func setupDebug() {
+//        self.userEmailTextField.text = "test@gmail.com"
+//        self.userPasswordTextField.text = "qwerty"
+//        self.logInButton.isEnabled = true
+//    }
     
     // MARK: - Constraint
 
@@ -287,10 +287,10 @@ final class LogInViewController2: UIViewController {
             logInButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             
-            signUpButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 16),
-            signUpButton.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
-            signUpButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
-            signUpButton.heightAnchor.constraint(equalToConstant: 50),
+//            signUpButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 16),
+//            signUpButton.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
+//            signUpButton.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
+//            signUpButton.heightAnchor.constraint(equalToConstant: 50),
             
             loadingView.topAnchor.constraint(equalTo: self.view.topAnchor),
             loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),

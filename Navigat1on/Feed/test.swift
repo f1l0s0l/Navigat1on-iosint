@@ -1,8 +1,8 @@
 //
-//  NameResidentsViewModel.swift
+//  test.swift
 //  Navigat1on
 //
-//  Created by Илья Сидорик on 17.02.2023.
+//  Created by Илья Сидорик on 03.03.2023.
 //
 
 import Foundation

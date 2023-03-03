@@ -19,30 +19,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = UINavigationController()
-        
-        mainCoordinator = MainCoordinator(navigationController: navigationController)
-        window.rootViewController = mainCoordinator?.start()
-        
-//        mainCoordinator?.start3 { [weak self] vc in
-//            self?.window?.rootViewController = vc
-//        }
-
+        let rootViewController = UIViewController()
+        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
+        window.rootViewController = mainCoordinator.start()
         window.makeKeyAndVisible()
         self.window = window
+        self.mainCoordinator = mainCoordinator
         
 //        let appConfiguration = AppConfiguration.ferstUrl(string: "https://swapi.dev/api/people/8")
 //        NetworkService.reguest(for: appConfiguration)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        do {
-            try Auth.auth().signOut()
-            print("вышли из аккаунта")
-        } catch {
-            print("не вышло выйти из аккаунта")
-            print(error)
-        }
+//        do {
+//            try Auth.auth().signOut()
+//            print("вышли из аккаунта")
+//        } catch {
+//            print("не вышло выйти из аккаунта")
+//            print(error)
+//        }
 
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
