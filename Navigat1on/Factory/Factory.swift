@@ -12,6 +12,7 @@ final class Factory {
         case logIn
         case feed
         case profile(user: User)
+        case favourites
     }
     
     let navigationController: UINavigationController
@@ -44,6 +45,12 @@ final class Factory {
 //            let feedModel = FeedModel()
 //            let controller = FeedViewController(feedModel: feedModel)
             navigationController.setViewControllers([controller], animated: true)
+            
+        case .favourites:
+            let viewModel = FavouritesViewModel(coordinator: self.coordinator)
+            let controller = FavouritesViewController(viewModel: viewModel)
+            navigationController.setViewControllers([controller], animated: true)
+            
             
         case let .profile(user):
             let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)

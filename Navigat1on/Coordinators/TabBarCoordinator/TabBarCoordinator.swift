@@ -28,26 +28,32 @@ final class TabBarCoordinator: Coordinatable {
     // MARK: - Public Methods
 
     func start() -> UIViewController {
-        let profileCoordinator = ProfileCoordinator(user: self.user, navController: UINavigationController())
         let feedCoordinator = FeedCoordinator(navController: UINavigationController())
+        let favouritesCoordinator = FavouritesCoordinator(navController: UINavigationController())
+        let profileCoordinator = ProfileCoordinator(user: self.user, navController: UINavigationController())
         let mainTabBarController = MainTabBarViewController(viewControllers: [
             feedCoordinator.start(),
+            favouritesCoordinator.start(),
             profileCoordinator.start()
         ])
         
-        addChildCoordinator(profileCoordinator)
-        addChildCoordinator(feedCoordinator)
+        self.addChildCoordinator(feedCoordinator)
+        self.addChildCoordinator(favouritesCoordinator)
+        self.addChildCoordinator(profileCoordinator)
         
         return mainTabBarController
 
     }
     
     func addChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        guard !self.childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
+        }
+        self.childCoordinators.append(coordinator)
     }
     
     func removeChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        self.childCoordinators.removeAll(where: {$0 === coordinator})
     }
  
 }

@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 struct PostView {
-    var author: String
-    var description: String
-    var image: String
+    var author: String?
+    var description: String?
+    var image: UIImage?
     var likes: Int
     var views: Int
 }

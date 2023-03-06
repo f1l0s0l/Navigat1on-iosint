@@ -11,7 +11,7 @@ import UIKit
 
  final class MainTabBarViewController: UITabBarController {
      
-     private var navControllers: [UIViewController] = []
+//     private var navControllers: [UIViewController] = []
      
      init(viewControllers: [UIViewController]) {
          super.init(nibName: nil, bundle: nil)

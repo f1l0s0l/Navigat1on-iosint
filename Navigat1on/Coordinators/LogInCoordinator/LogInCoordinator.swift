@@ -68,11 +68,14 @@ final class LogInCoordinator: Coordinatable {
     }
     
     func addChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
+        }
+        childCoordinators.append(coordinator)
     }
     
     func removeChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        childCoordinators.removeAll(where: {$0 === coordinator})
     }
     
 }

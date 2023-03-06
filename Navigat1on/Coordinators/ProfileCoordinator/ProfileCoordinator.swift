@@ -41,7 +41,7 @@ final class ProfileCoordinator: Coordinatable {
         )
         let itemForProfileVC = UITabBarItem(title: "Profile",
                                             image: UIImage(systemName: "person.crop.circle"),
-                                            tag: 1
+                                            tag: 2
         )
         profileViewController.navigationController.tabBarItem = itemForProfileVC
         self.navigationController = profileViewController.navigationController
@@ -56,11 +56,14 @@ final class ProfileCoordinator: Coordinatable {
     }
 
     func addChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
+        }
+        childCoordinators.append(coordinator)
     }
     
     func removeChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        childCoordinators.removeAll(where: {$0 === coordinator})
     }
     
 }

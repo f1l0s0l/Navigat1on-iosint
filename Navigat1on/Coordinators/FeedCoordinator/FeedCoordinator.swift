@@ -36,7 +36,7 @@ final class FeedCoordinator: Coordinatable {
         )
         let itemForProfileVCc = UITabBarItem(title: "Feed",
                                             image: UIImage(systemName: "square.stack.3d.down.right"),
-                                            tag: 1
+                                            tag: 0
         )
         feedViewController.navigationController.tabBarItem = itemForProfileVCc
         self.navigationController = feedViewController.navigationController
@@ -58,7 +58,7 @@ final class FeedCoordinator: Coordinatable {
     }
     
     func removeChildCoordinator(_ coordinator: Coordinatable) {
-        ()
+        childCoordinators.removeAll(where: {$0 === coordinator})
     }
     
 }

@@ -11,6 +11,9 @@ class PostTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    private var thisPost: PostView?
+    var isFavourites: Bool = false
+    
     private lazy var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -74,6 +77,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupTableViewCell()
         self.setupConstraints()
+        self.setupGestureRecognizer()
     }
     
     required init?(coder: NSCoder) {
@@ -84,11 +88,13 @@ class PostTableViewCell: UITableViewCell {
     // MARK: - Public Methods
     
     func setup(withPost post: PostView) {
-        self.titleTextLabel.text = post.author
-        self.postImageView.image = UIImage(named: post.image)
-        self.footerTextLabel.text = post.description
-        self.likesCountLabel.text = "Likes: \(post.likes)"
-        self.viewsCountLabel.text = "Views: \(post.views)"
+        self.thisPost = post
+        
+        self.titleTextLabel.text = thisPost?.author
+        self.postImageView.image = thisPost?.image
+        self.footerTextLabel.text = thisPost?.description
+        self.likesCountLabel.text = "Likes: \(thisPost?.likes ?? 0)"
+        self.viewsCountLabel.text = "Views: \(thisPost?.views ?? 0)"
     }
     
     
@@ -103,6 +109,23 @@ class PostTableViewCell: UITableViewCell {
         self.footerView.addSubview(self.footerTextLabel)
         self.footerView.addSubview(self.likesCountLabel)
         self.footerView.addSubview(self.viewsCountLabel)
+    }
+    
+    private func setupGestureRecognizer() {
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction))
+        doubleTapGesture.numberOfTapsRequired = 2
+        
+        self.contentView.addGestureRecognizer(doubleTapGesture)
+    }
+    
+    @objc
+    private func doubleTapAction() {
+        guard let thisPost = thisPost else {
+            return
+        }
+        if self.isFavourites == false {
+            CoreDataManager.shared.addFavourite(post: thisPost)
+        }
     }
     
     
