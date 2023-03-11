@@ -14,4 +14,5 @@ struct PostView {
     var image: UIImage?
     var likes: Int
     var views: Int
+    var id: String?
 }

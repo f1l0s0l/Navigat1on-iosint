@@ -30,11 +30,20 @@ final class FavouritesViewController: UIViewController {
         return label
     }()
     
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        return searchController
+    }()
+    
+    
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCellID")
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.backgroundColor = .systemGray6
         return tableView
     }()
@@ -76,13 +85,51 @@ final class FavouritesViewController: UIViewController {
     }
     
     private func setupNavigationBarItem() {
-        let removeButton = UIBarButtonItem(
+        let searchButton = UIBarButtonItem(
+            image: UIImage(systemName: "magnifyingglass"),
+            style: .done,
+            target: self,
+            action: #selector(didTapSearchButton)
+        )
+        self.navigationItem.leftBarButtonItem = searchButton
+        
+        self.hideSearchItem()
+    }
+    
+    private func showSearchItem() {
+        self.navigationItem.searchController = self.searchController
+        
+        let closeSearchButton = UIBarButtonItem(
+            image: UIImage(systemName: "x.square"),
+            style: .done,
+            target: self,
+            action: #selector(didTapCloseSearchButton)
+        )
+        self.navigationItem.rightBarButtonItem = closeSearchButton
+        self.oopsTextLabel.text = "Нет такого автора..."
+    }
+    
+    private func hideSearchItem() {
+        self.navigationItem.searchController = nil
+        
+        let removeFavouritesPostsButton = UIBarButtonItem(
             image: UIImage(systemName: "trash"),
             style: .done,
             target: self,
             action: #selector(removeOllFavorites)
         )
-        self.navigationItem.rightBarButtonItem = removeButton
+        self.navigationItem.rightBarButtonItem = removeFavouritesPostsButton
+        self.oopsTextLabel.text = "Тут должна быть милая картинка и текст, в духе: 'В вашем избранном пока пусто, но вы всегла можете добавить понравившиеся посты в избранное двойным тапом по посту'"
+    }
+    
+    @objc
+    private func didTapSearchButton() {
+        self.viewModel.doAction(action: .didTapSearchButton)
+    }
+    
+    @objc
+    private func didTapCloseSearchButton() {
+        self.viewModel.doAction(action: .didTapCloseSearchButton)
     }
     
     @objc
@@ -99,16 +146,25 @@ final class FavouritesViewController: UIViewController {
             case .initial:
                 ()
                 
-            case .noFavourites:
+            case .noFavouritesPosts:
                 self?.backView.isHidden = false
                 self?.tableView.isHidden = true
                 
-            case .haveFavourites:
+            case .showOllFavouritesPosts:
                 self?.tableView.reloadData()
                 self?.backView.isHidden = true
                 self?.tableView.isHidden = false
+                
+            case .removeFavoritePost(let indexPath):
+                self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+            case .showSearchItem:
+                self?.showSearchItem()
+                
+            case .hideSearchItem:
+                self?.hideSearchItem()
+                
             }
-            
         }
     }
     
@@ -137,7 +193,7 @@ final class FavouritesViewController: UIViewController {
 
 
 
-// MARK: - UITableViewDataSourse
+    // MARK: - UITableViewDataSourse
 
 extension FavouritesViewController: UITableViewDataSource {
     
@@ -163,7 +219,8 @@ extension FavouritesViewController: UITableViewDataSource {
             description: favouritePost.descriptionText,
             image: imagePost,
             likes: Int(favouritePost.likes),
-            views: Int(favouritePost.views)
+            views: Int(favouritePost.views),
+            id: favouritePost.id
         )
         
         cell.setup(withPost: postView)
@@ -171,5 +228,36 @@ extension FavouritesViewController: UITableViewDataSource {
         return cell
     }
     
+}
+
+
+
+    // MARK: - UITableViewDelegate
+
+extension FavouritesViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else {
+            return
+        }
+        self.viewModel.doAction(action: .removeFavouritePost(indexPath: indexPath))
+    }
     
 }
+
+
+
+    // MARK: - UISearchResultsUpdating
+
+extension FavouritesViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        self.viewModel.doAction(action: .didChangesSearch(searchString: searchController.searchBar.text))
+    }
+    
+}
+

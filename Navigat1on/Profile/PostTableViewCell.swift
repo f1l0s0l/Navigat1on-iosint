@@ -9,6 +9,10 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
+    // MARK: - Public Properties
+    
+    weak var parentTableView: ProfileViewController?
+    
     // MARK: - Properties
     
     private var thisPost: PostView?
@@ -35,6 +39,13 @@ class PostTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .black
         imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var addFavouritePostImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "heart"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0
         return imageView
     }()
     
@@ -103,6 +114,7 @@ class PostTableViewCell: UITableViewCell {
     private func setupTableViewCell(){
         self.contentView.addSubview(self.titleView)
         self.contentView.addSubview(self.postImageView)
+        self.contentView.addSubview(self.addFavouritePostImage)
         self.contentView.addSubview(self.footerView)
 
         self.titleView.addSubview(self.titleTextLabel)
@@ -124,7 +136,23 @@ class PostTableViewCell: UITableViewCell {
             return
         }
         if self.isFavourites == false {
-            CoreDataManager.shared.addFavourite(post: thisPost)
+            CoreDataManager.shared.addFavourite(post: thisPost) { [weak self] textError in
+                DispatchQueue.main.async {
+                    if let textError = textError, let parentTableView = self?.parentTableView {
+                        AlertNotification.shared.defaultAlertNotification(text: textError, viewController: parentTableView)
+                    } else {
+                        UIView.animate(
+                            withDuration: 0.4,
+                            delay: 0,
+                            options: [.curveEaseInOut],
+                            animations: {
+                                self?.addFavouritePostImage.alpha = 1
+                            }) { _ in
+                                self?.addFavouritePostImage.alpha = 0
+                            }
+                    }
+                }
+            }
         }
     }
     
@@ -146,6 +174,11 @@ class PostTableViewCell: UITableViewCell {
             postImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             postImageView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
             postImageView.heightAnchor.constraint(equalToConstant: self.contentView.bounds.width),
+            
+            addFavouritePostImage.topAnchor.constraint(equalTo: self.titleView.bottomAnchor),
+            addFavouritePostImage.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
+            addFavouritePostImage.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
+            addFavouritePostImage.heightAnchor.constraint(equalToConstant: self.contentView.bounds.width),
             
             footerView.topAnchor.constraint(equalTo: self.postImageView.bottomAnchor),
             footerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),

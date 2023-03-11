@@ -93,6 +93,7 @@ extension ProfileViewController: UITableViewDataSource {
             }
             
             cell.setup(withPost: self.viewModel.dataPosts[indexPath.row])
+            cell.parentTableView = self
             return cell
         }
     }

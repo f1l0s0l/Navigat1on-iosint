@@ -15,11 +15,10 @@ final class CoreDataManager {
     
     // MARK: - Public properties
     
-//    var favouritesPosts: [FavouritePost] = []
     var favouritesPosts: [FavouritePost] {
-        let fetch = FavouritePost.fetchRequest()
+        let fetchRequest = FavouritePost.fetchRequest()
         do {
-            return try self.persistentComtainer.viewContext.fetch(fetch)
+            return try self.persistentContainer.viewContext.fetch(fetchRequest)
         } catch {
             print(error)
         }
@@ -29,7 +28,7 @@ final class CoreDataManager {
     
     // MARK: - Properties
     
-    private lazy var persistentComtainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Navigat1on")
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
@@ -40,39 +39,48 @@ final class CoreDataManager {
     }()
     
     
-    // MARK: - Life cycle
-    
-//    init() {
-//        self.reloadFavouritesPosts()
-//    }
-    
-    
     // MARK: - Public methods
     
-//    func reloadFavouritesPosts() {
-//        let fetchRequest = FavouritePost.fetchRequest()
-//        self.favouritesPosts =  (try? self.persistentComtainer.viewContext.fetch(fetchRequest)) ?? []
-//    }
+    func addFavourite(post: PostView, completion: @escaping (String?) -> Void) {
+        self.persistentContainer.performBackgroundTask { contextBackground in
+            guard let id = post.id,
+                  self.getFavouritePost(by: id, context: contextBackground) == nil
+            else {
+                return completion("Пост уже добавлен в избранное")
+            }
+            let favouritePost = FavouritePost(context: contextBackground)
+            favouritePost.author = post.author
+            favouritePost.descriptionText = post.description
+            favouritePost.imageData = post.image?.pngData()
+            favouritePost.likes = Int64(post.likes)
+            favouritePost.views = Int64(post.views)
+            favouritePost.id = post.id
+            
+            do {
+                try contextBackground.save()
+            } catch {
+                print(error)
+                completion("Неизвестная ошибка")
+            }
+            completion(nil)
+        }
+    }
     
-    func addFavourite(post: PostView) {
-        let favouritePost = FavouritePost(context: persistentComtainer.viewContext)
-        favouritePost.author = post.author
-        favouritePost.descriptionText = post.description
-        favouritePost.imageData = post.image?.pngData()
-        favouritePost.likes = Int64(post.likes)
-        favouritePost.views = Int64(post.views)
+    func removeFavouritePost(favouritePost: FavouritePost, completion: @escaping () -> Void) {
+        self.persistentContainer.viewContext.delete(favouritePost)
         self.saveContext()
+        completion()
     }
     
     func removeAllFavourites() {
-        self.favouritesPosts.forEach( {persistentComtainer.viewContext.delete($0)} )
+        self.favouritesPosts.forEach( {persistentContainer.viewContext.delete($0)} )
         self.saveContext()
     }
     
     // MARK: - Methods
     
     private func saveContext() {
-        let context = persistentComtainer.viewContext
+        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
@@ -81,6 +89,24 @@ final class CoreDataManager {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    private func getFavouritePost(by id: String, context: NSManagedObjectContext) -> FavouritePost? {
+        let fetchRequest = FavouritePost.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        return (try? context.fetch(fetchRequest))?.first
+    }
+    
+    func getAutorFavouritesPosts(searchString: String) -> [FavouritePost] {
+        let fetchRequest = FavouritePost.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "author contains[c] %@", searchString)
+        
+        do {
+            return try self.persistentContainer.viewContext.fetch(fetchRequest)
+        } catch {
+            print(error)
+        }
+        return []
     }
     
 }

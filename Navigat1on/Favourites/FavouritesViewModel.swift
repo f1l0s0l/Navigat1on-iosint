@@ -11,13 +11,20 @@ final class FavouritesViewModel {
     
     enum State {
         case initial
-        case noFavourites
-        case haveFavourites
+        case noFavouritesPosts
+        case showOllFavouritesPosts
+        case removeFavoritePost(indexPath: IndexPath)
+        case showSearchItem
+        case hideSearchItem
     }
     
     enum Action {
         case reloadFavourites
         case removeOllFavourites
+        case removeFavouritePost(indexPath: IndexPath)
+        case didTapSearchButton
+        case didChangesSearch(searchString: String?)
+        case didTapCloseSearchButton
     }
     
     
@@ -38,7 +45,6 @@ final class FavouritesViewModel {
     private(set) var favouritesPosts: [FavouritePost] = []
     
     
-    
     // MARK: - Life cycle
     
     init(coordinator: Coordinatable) {
@@ -54,29 +60,56 @@ final class FavouritesViewModel {
             
         case .reloadFavourites:
             self.reloadFavouritesPots()
-            if self.favouritesPosts.count == 0 {
-                self.state = .noFavourites
-            } else {
-                self.state = .haveFavourites
-            }
             
         case .removeOllFavourites:
             CoreDataManager.shared.removeAllFavourites()
             self.reloadFavouritesPots()
-            self.state = .noFavourites
             
+        case .removeFavouritePost(let indexPath):
+            let favouritePost = self.favouritesPosts[indexPath.row]
+            
+            CoreDataManager.shared.removeFavouritePost(favouritePost: favouritePost) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.favouritesPosts.removeAll(where: {$0.id == favouritePost.id} )
+                self.state = .removeFavoritePost(indexPath: indexPath)
+                self.showFavotitesPosts()
+            }
+            
+        case .didTapSearchButton:
+            self.state = .showSearchItem
+            
+        case .didChangesSearch(let searchString):
+            guard let searchString = searchString,
+                  !searchString.isEmpty
+            else {
+                return
+            }
+            self.favouritesPosts = CoreDataManager.shared.getAutorFavouritesPosts(searchString: searchString)
+            self.showFavotitesPosts()
+            
+        case .didTapCloseSearchButton:
+            self.state = .hideSearchItem
+            self.reloadFavouritesPots()
         }
+        
     }
-    
     
     
     // MARK: - Methods
     
-    private func reloadFavouritesPots() {
-//        CoreDataManager.shared.reloadFavouritesPosts()
-        self.favouritesPosts = CoreDataManager.shared.favouritesPosts
+    private func showFavotitesPosts() {
+        if self.favouritesPosts.count == 0 {
+            self.state = .noFavouritesPosts
+        } else {
+            self.state = .showOllFavouritesPosts
+        }
     }
     
-    
+    private func reloadFavouritesPots() {
+        self.favouritesPosts = CoreDataManager.shared.favouritesPosts
+        self.showFavotitesPosts()
+    }
     
 }
