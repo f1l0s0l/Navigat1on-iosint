@@ -5,25 +5,25 @@
 //  Created by Илья Сидорик on 06.03.2023.
 //
 
-import Foundation
 import CoreData
-import UIKit
 
-final class CoreDataManager {
+class CoreDataManager {
     static let shared = CoreDataManager()
     
     
     // MARK: - Public properties
     
-    var favouritesPosts: [FavouritePost] {
+    lazy var fetchResultsController: NSFetchedResultsController<FavouritePost> = {
         let fetchRequest = FavouritePost.fetchRequest()
-        do {
-            return try self.persistentContainer.viewContext.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
-        return []
-    }
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateCreate", ascending: false)]
+        let frc = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        return frc
+    }()
     
     
     // MARK: - Properties
@@ -35,6 +35,7 @@ final class CoreDataManager {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
+        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
     
@@ -43,37 +44,44 @@ final class CoreDataManager {
     
     func addFavourite(post: PostView, completion: @escaping (String?) -> Void) {
         self.persistentContainer.performBackgroundTask { contextBackground in
+            
             guard let id = post.id,
                   self.getFavouritePost(by: id, context: contextBackground) == nil
             else {
                 return completion("Пост уже добавлен в избранное")
             }
+            
             let favouritePost = FavouritePost(context: contextBackground)
             favouritePost.author = post.author
             favouritePost.descriptionText = post.description
             favouritePost.imageData = post.image?.pngData()
             favouritePost.likes = Int64(post.likes)
             favouritePost.views = Int64(post.views)
-            favouritePost.id = post.id
+            favouritePost.uid = post.id
             
             do {
                 try contextBackground.save()
+                print("Добавили в базу новый пост")
+                print("\(self.fetchResultsController.fetchedObjects?.count)")
+                completion(nil)
             } catch {
                 print(error)
                 completion("Неизвестная ошибка")
             }
-            completion(nil)
         }
     }
     
-    func removeFavouritePost(favouritePost: FavouritePost, completion: @escaping () -> Void) {
+    func removeFavouritePost(favouritePost: FavouritePost) {
         self.persistentContainer.viewContext.delete(favouritePost)
-        self.saveContext()
-        completion()
+        try? self.persistentContainer.viewContext.save()
+//        self.saveContext()
+//        completion()
     }
     
     func removeAllFavourites() {
-        self.favouritesPosts.forEach( {persistentContainer.viewContext.delete($0)} )
+//        self.favouritesPosts.forEach( {persistentContainer.viewContext.delete($0)} )
+        self.fetchResultsController.fetchedObjects?.forEach({ persistentContainer.viewContext.delete($0) })
+//        try? self.persistentContainer.viewContext.save()
         self.saveContext()
     }
     
@@ -93,7 +101,7 @@ final class CoreDataManager {
     
     private func getFavouritePost(by id: String, context: NSManagedObjectContext) -> FavouritePost? {
         let fetchRequest = FavouritePost.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "uid == %@", id)
         return (try? context.fetch(fetchRequest))?.first
     }
     

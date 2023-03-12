@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreData
+//import UIKit
 
 final class FavouritesViewModel {
     
@@ -19,7 +21,10 @@ final class FavouritesViewModel {
     }
     
     enum Action {
+        //
         case reloadFavourites
+        //
+        
         case removeOllFavourites
         case removeFavouritePost(indexPath: IndexPath)
         case didTapSearchButton
@@ -37,19 +42,19 @@ final class FavouritesViewModel {
         }
     }
     
+    let fetchResultsController = CoreDataManager.shared.fetchResultsController
+    
     
     // MARK: - Properties
     
     private let coordinator: Coordinatable
-        
-    private(set) var favouritesPosts: [FavouritePost] = []
     
     
     // MARK: - Life cycle
     
     init(coordinator: Coordinatable) {
         self.coordinator = coordinator
-        self.reloadFavouritesPots()
+        try? fetchResultsController.performFetch()
     }
     
     
@@ -59,23 +64,14 @@ final class FavouritesViewModel {
         switch action {
             
         case .reloadFavourites:
-            self.reloadFavouritesPots()
+            ()
             
         case .removeOllFavourites:
             CoreDataManager.shared.removeAllFavourites()
-            self.reloadFavouritesPots()
             
         case .removeFavouritePost(let indexPath):
-            let favouritePost = self.favouritesPosts[indexPath.row]
-            
-            CoreDataManager.shared.removeFavouritePost(favouritePost: favouritePost) { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.favouritesPosts.removeAll(where: {$0.id == favouritePost.id} )
-                self.state = .removeFavoritePost(indexPath: indexPath)
-                self.showFavotitesPosts()
-            }
+            let favouritePost = self.fetchResultsController.object(at: indexPath)
+            CoreDataManager.shared.removeFavouritePost(favouritePost: favouritePost)
             
         case .didTapSearchButton:
             self.state = .showSearchItem
@@ -86,12 +82,11 @@ final class FavouritesViewModel {
             else {
                 return
             }
-            self.favouritesPosts = CoreDataManager.shared.getAutorFavouritesPosts(searchString: searchString)
+            //
             self.showFavotitesPosts()
             
         case .didTapCloseSearchButton:
             self.state = .hideSearchItem
-            self.reloadFavouritesPots()
         }
         
     }
@@ -100,16 +95,11 @@ final class FavouritesViewModel {
     // MARK: - Methods
     
     private func showFavotitesPosts() {
-        if self.favouritesPosts.count == 0 {
+        if self.fetchResultsController.fetchedObjects?.count ?? 0 < 0 {
             self.state = .noFavouritesPosts
         } else {
             self.state = .showOllFavouritesPosts
         }
-    }
-    
-    private func reloadFavouritesPots() {
-        self.favouritesPosts = CoreDataManager.shared.favouritesPosts
-        self.showFavotitesPosts()
     }
     
 }

@@ -5,14 +5,17 @@
 //  Created by Илья Сидорик on 06.03.2023.
 //
 
-import Foundation
+//import Foundation
 import UIKit
+import CoreData
 
-final class FavouritesViewController: UIViewController {
+class FavouritesViewController: UIViewController {
     
     // MARK: - Properties
     
     private var viewModel: FavouritesViewModel
+    
+    private lazy var fetchResultsController = self.viewModel.fetchResultsController
     
     private lazy var backView: UIView = {
         let view = UIView()
@@ -71,6 +74,7 @@ final class FavouritesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.doAction(action: .reloadFavourites)
+        self.tableView.reloadData()
     }
     
     
@@ -82,6 +86,7 @@ final class FavouritesViewController: UIViewController {
         self.view.addSubview(self.backView)
         self.view.addSubview(self.oopsTextLabel)
         self.view.addSubview(self.tableView)
+        self.fetchResultsController.delegate = self
     }
     
     private func setupNavigationBarItem() {
@@ -124,7 +129,8 @@ final class FavouritesViewController: UIViewController {
     
     @objc
     private func didTapSearchButton() {
-        self.viewModel.doAction(action: .didTapSearchButton)
+//        self.viewModel.doAction(action: .didTapSearchButton)
+        CoreDataManager.shared.addFavourite(post: DataPosts.dataPosts[1], completion: {_ in })
     }
     
     @objc
@@ -151,7 +157,7 @@ final class FavouritesViewController: UIViewController {
                 self?.tableView.isHidden = true
                 
             case .showOllFavouritesPosts:
-                self?.tableView.reloadData()
+//                self?.tableView.reloadData()
                 self?.backView.isHidden = true
                 self?.tableView.isHidden = false
                 
@@ -198,7 +204,7 @@ final class FavouritesViewController: UIViewController {
 extension FavouritesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.favouritesPosts.count
+        self.fetchResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -206,7 +212,9 @@ extension FavouritesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let favouritePost = self.viewModel.favouritesPosts[indexPath.row]
+        let favouritePost = self.fetchResultsController.object(at: indexPath)
+        
+        
         var imagePost: UIImage? {
             if let imageData = favouritePost.imageData {
                return UIImage(data: imageData)
@@ -220,7 +228,7 @@ extension FavouritesViewController: UITableViewDataSource {
             image: imagePost,
             likes: Int(favouritePost.likes),
             views: Int(favouritePost.views),
-            id: favouritePost.id
+            id: favouritePost.uid
         )
         
         cell.setup(withPost: postView)
@@ -257,6 +265,45 @@ extension FavouritesViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         self.viewModel.doAction(action: .didChangesSearch(searchString: searchController.searchBar.text))
+    }
+    
+}
+
+
+
+extension FavouritesViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        guard let indexPath = indexPath else {
+            return
+        }
+    
+        switch type {
+        case .delete:
+            if controller.fetchedObjects!.count == 0 {
+                self.tableView.reloadData()
+            } else {
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            print("NSFetchedResultsControllerDelegate - удалили")
+            
+        case .update:
+            self.tableView.reloadData()
+            print("NSFetchedResultsControllerDelegate - изменили")
+            
+        case .insert:
+            self.tableView.reloadData()
+            print("NSFetchedResultsControllerDelegate - добавили")
+            
+        default:
+            self.tableView.reloadData()
+            print("NSFetchedResultsControllerDelegate - что то кроме удаления изменения или добавления ячейки")
+            // так как мы не видим остальные изменения, тогда достаточно обновить таблицу
+            
+        }
+        
+//        self.tableView.reloadData()
+        
     }
     
 }
