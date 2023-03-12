@@ -5,7 +5,6 @@
 //  Created by Илья Сидорик on 06.03.2023.
 //
 
-//import Foundation
 import UIKit
 import CoreData
 
@@ -69,12 +68,7 @@ class FavouritesViewController: UIViewController {
         self.setupNavigationBarItem()
         self.setupConstraints()
         self.bindViewModel()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.viewModel.doAction(action: .reloadFavourites)
-        self.tableView.reloadData()
+        self.viewModel.doAction(action: .checkIsEmptyFavouritesPosts)
     }
     
     
@@ -129,8 +123,7 @@ class FavouritesViewController: UIViewController {
     
     @objc
     private func didTapSearchButton() {
-//        self.viewModel.doAction(action: .didTapSearchButton)
-        CoreDataManager.shared.addFavourite(post: DataPosts.dataPosts[1], completion: {_ in })
+        self.viewModel.doAction(action: .didTapSearchButton)
     }
     
     @objc
@@ -148,27 +141,35 @@ class FavouritesViewController: UIViewController {
     
     private func bindViewModel() {
         self.viewModel.stateChange = { [weak self] state in
+            guard let self = self else {
+                return
+            }
             switch state {
             case .initial:
                 ()
                 
             case .noFavouritesPosts:
-                self?.backView.isHidden = false
-                self?.tableView.isHidden = true
+                self.backView.isHidden = false
+                self.tableView.isHidden = true
                 
             case .showOllFavouritesPosts:
-//                self?.tableView.reloadData()
-                self?.backView.isHidden = true
-                self?.tableView.isHidden = false
-                
-            case .removeFavoritePost(let indexPath):
-                self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.backView.isHidden = true
+                self.tableView.isHidden = false
                 
             case .showSearchItem:
-                self?.showSearchItem()
+                self.showSearchItem()
                 
             case .hideSearchItem:
-                self?.hideSearchItem()
+                self.hideSearchItem()
+                
+            case .tableViewReloadData:
+                self.tableView.reloadData()
+                
+            case .tableViewInsertRow(indexPath: let indexPath):
+                self.tableView.insertRows(at: indexPath, with: .automatic)
+                
+            case .tableViewDeleteRow(indexPath: let indexPath):
+                self.tableView.deleteRows(at: indexPath, with: .automatic)
                 
             }
         }
@@ -271,40 +272,30 @@ extension FavouritesViewController: UISearchResultsUpdating {
 
 
 
+    // MARK: - UISearchResultsUpdating
+
 extension FavouritesViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let indexPath = indexPath else {
-            return
-        }
-    
+        
         switch type {
         case .delete:
             if controller.fetchedObjects!.count == 0 {
-                self.tableView.reloadData()
+                self.viewModel.doAction(action: .reloadDate)
             } else {
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.viewModel.doAction(action: .deleteRow(indexPath: [indexPath!]))
             }
-            print("NSFetchedResultsControllerDelegate - удалили")
-            
-        case .update:
-            self.tableView.reloadData()
-            print("NSFetchedResultsControllerDelegate - изменили")
-            
+
         case .insert:
-            self.tableView.reloadData()
-            print("NSFetchedResultsControllerDelegate - добавили")
-            
+            self.viewModel.doAction(action: .insertRow(indexPath: [newIndexPath!]))
+
         default:
-            self.tableView.reloadData()
-            print("NSFetchedResultsControllerDelegate - что то кроме удаления изменения или добавления ячейки")
+            self.viewModel.doAction(action: .reloadDate)
             // так как мы не видим остальные изменения, тогда достаточно обновить таблицу
-            
         }
-        
-//        self.tableView.reloadData()
-        
+        self.viewModel.doAction(action: .checkIsEmptyFavouritesPosts)
     }
+    
     
 }
 

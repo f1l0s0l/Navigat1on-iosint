@@ -61,8 +61,6 @@ class CoreDataManager {
             
             do {
                 try contextBackground.save()
-                print("Добавили в базу новый пост")
-                print("\(self.fetchResultsController.fetchedObjects?.count)")
                 completion(nil)
             } catch {
                 print(error)
@@ -74,15 +72,11 @@ class CoreDataManager {
     func removeFavouritePost(favouritePost: FavouritePost) {
         self.persistentContainer.viewContext.delete(favouritePost)
         try? self.persistentContainer.viewContext.save()
-//        self.saveContext()
-//        completion()
     }
     
     func removeAllFavourites() {
-//        self.favouritesPosts.forEach( {persistentContainer.viewContext.delete($0)} )
         self.fetchResultsController.fetchedObjects?.forEach({ persistentContainer.viewContext.delete($0) })
-//        try? self.persistentContainer.viewContext.save()
-        self.saveContext()
+        try? self.persistentContainer.viewContext.save()
     }
     
     // MARK: - Methods
@@ -103,18 +97,6 @@ class CoreDataManager {
         let fetchRequest = FavouritePost.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uid == %@", id)
         return (try? context.fetch(fetchRequest))?.first
-    }
-    
-    func getAutorFavouritesPosts(searchString: String) -> [FavouritePost] {
-        let fetchRequest = FavouritePost.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "author contains[c] %@", searchString)
-        
-        do {
-            return try self.persistentContainer.viewContext.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
-        return []
     }
     
 }

@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import CoreData
-//import UIKit
+//import CoreData
 
 final class FavouritesViewModel {
     
@@ -15,21 +14,24 @@ final class FavouritesViewModel {
         case initial
         case noFavouritesPosts
         case showOllFavouritesPosts
-        case removeFavoritePost(indexPath: IndexPath)
         case showSearchItem
         case hideSearchItem
+        case tableViewReloadData
+        case tableViewInsertRow(indexPath: [IndexPath])
+        case tableViewDeleteRow(indexPath: [IndexPath])
     }
     
     enum Action {
-        //
         case reloadFavourites
-        //
-        
         case removeOllFavourites
         case removeFavouritePost(indexPath: IndexPath)
         case didTapSearchButton
         case didChangesSearch(searchString: String?)
         case didTapCloseSearchButton
+        case checkIsEmptyFavouritesPosts
+        case insertRow(indexPath: [IndexPath])
+        case deleteRow(indexPath: [IndexPath])
+        case reloadDate
     }
     
     
@@ -69,24 +71,44 @@ final class FavouritesViewModel {
         case .removeOllFavourites:
             CoreDataManager.shared.removeAllFavourites()
             
+            
         case .removeFavouritePost(let indexPath):
             let favouritePost = self.fetchResultsController.object(at: indexPath)
             CoreDataManager.shared.removeFavouritePost(favouritePost: favouritePost)
             
+            
         case .didTapSearchButton:
             self.state = .showSearchItem
             
+            
         case .didChangesSearch(let searchString):
-            guard let searchString = searchString,
-                  !searchString.isEmpty
-            else {
-                return
-            }
-            //
-            self.showFavotitesPosts()
+            self.changeFetchResultsController(searchString: searchString)
+            self.state = .tableViewReloadData
+            
             
         case .didTapCloseSearchButton:
+            self.changeFetchResultsController(searchString: nil)
             self.state = .hideSearchItem
+            
+            
+        case .checkIsEmptyFavouritesPosts:
+            self.showFavotitesPosts()
+            
+            
+        case .deleteRow(let indexPath):
+            if self.fetchResultsController.fetchedObjects?.count == 0 {
+                self.state = .tableViewReloadData
+            } else {
+                self.state = .tableViewDeleteRow(indexPath: indexPath)
+            }
+            
+            
+        case .insertRow(let indexPath):
+            self.state = .tableViewInsertRow(indexPath: indexPath)
+            
+            
+        case .reloadDate:
+            self.state = .tableViewReloadData
         }
         
     }
@@ -95,11 +117,22 @@ final class FavouritesViewModel {
     // MARK: - Methods
     
     private func showFavotitesPosts() {
-        if self.fetchResultsController.fetchedObjects?.count ?? 0 < 0 {
+        if self.fetchResultsController.fetchedObjects?.count ?? 0 == 0 {
             self.state = .noFavouritesPosts
         } else {
             self.state = .showOllFavouritesPosts
         }
+    }
+    
+    private func changeFetchResultsController(searchString: String?) {
+        if let searchString = searchString, !searchString.isEmpty {
+            self.fetchResultsController.fetchRequest.predicate = NSPredicate(format: "author contains[c] %@", searchString)
+        } else {
+            self.fetchResultsController.fetchRequest.predicate = NSPredicate(value: true)
+        }
+        
+        try? self.fetchResultsController.performFetch()
+        self.showFavotitesPosts()
     }
     
 }

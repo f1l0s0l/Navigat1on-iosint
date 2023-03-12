@@ -329,7 +329,6 @@
 				A4A5078029A6664800534622 /* Firebase */,
 				A49AE012299CD206000E14D3 /* NetworkService */,
 				A436988E2979AA2000395E32 /* Application */,
-				A43698DF29800B5600395E32 /* CustomUI */,
 				A426E46529816D0D001128BF /* Factory */,
 				A426E45329816577001128BF /* Coordinators */,
 				A436988F2979AA3F00395E32 /* TabBarController */,
@@ -420,6 +419,7 @@
 		A47251FD29B74E470076A6CA /* PublicAlertModel */ = {
 			isa = PBXGroup;
 			children = (
+				A43698DF29800B5600395E32 /* CustomUI */,
 				A47251FE29B74E640076A6CA /* AlertNotification.swift */,
 			);
 			path = PublicAlertModel;
