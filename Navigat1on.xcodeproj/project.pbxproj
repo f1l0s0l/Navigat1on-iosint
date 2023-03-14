@@ -51,6 +51,7 @@
 		A43698DE297E964900395E32 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = A43698DD297E964900395E32 /* iOSIntPackage */; };
 		A43698E129800B7E00395E32 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43698E029800B7E00395E32 /* CustomButton.swift */; };
 		A45D5AEB29A393330026CEA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A45D5AEA29A393330026CEA2 /* GoogleService-Info.plist */; };
+		A470389B29C0859900309017 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A470389A29C0859900309017 /* KeychainAccess */; };
 		A47251F129B62A630076A6CA /* FavouritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47251F029B62A630076A6CA /* FavouritesCoordinator.swift */; };
 		A47251F429B62C020076A6CA /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47251F329B62C020076A6CA /* FavouritesViewController.swift */; };
 		A47251F629B62C0E0076A6CA /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47251F529B62C0E0076A6CA /* FavouritesViewModel.swift */; };
@@ -173,6 +174,7 @@
 				A48E9B7D29B1FD0300BA91BB /* Realm in Frameworks */,
 				A48E9B7F29B1FD0300BA91BB /* RealmSwift in Frameworks */,
 				A43698DE297E964900395E32 /* iOSIntPackage in Frameworks */,
+				A470389B29C0859900309017 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +531,7 @@
 				A43698DD297E964900395E32 /* iOSIntPackage */,
 				A48E9B7C29B1FD0300BA91BB /* Realm */,
 				A48E9B7E29B1FD0300BA91BB /* RealmSwift */,
+				A470389A29C0859900309017 /* KeychainAccess */,
 			);
 			productName = Navigat1on;
 			productReference = A43698762979A89700395E32 /* Navigat1on.app */;
@@ -583,6 +586,7 @@
 			packageReferences = (
 				A43698DC297E964900395E32 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 				A48E9B7B29B1FD0300BA91BB /* XCRemoteSwiftPackageReference "realm-swift" */,
+				A470389929C0859900309017 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = A43698772979A89700395E32 /* Products */;
 			projectDirPath = "";
@@ -978,6 +982,14 @@
 				kind = branch;
 			};
 		};
+		A470389929C0859900309017 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		A48E9B7B29B1FD0300BA91BB /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -993,6 +1005,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A43698DC297E964900395E32 /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
+		};
+		A470389A29C0859900309017 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A470389929C0859900309017 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		A48E9B7C29B1FD0300BA91BB /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
