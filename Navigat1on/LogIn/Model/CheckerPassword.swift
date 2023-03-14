@@ -17,10 +17,24 @@ final class CheckerPassword {
             return completion(nil)
         }
         
-        RealmManager.shared.addCurrentUser(login: login, password: pswrd) { user in
-            completion(user)
+        // Тут можно и без перехода на другой поток желать, но я заметил
+        // Что на авторизацию тратиьься доли секунды, и без перехода на другой поток
+        // Не запускается анимация ожидания (activityIndicator)
+        // а так все работает плавно
+        
+        DispatchQueue.global().async {
+            RealmManager.shared.addCurrentUser(login: login, password: pswrd) { user in
+                DispatchQueue.main.async {
+                    
+                    guard let user = user else {
+                        return completion(nil)
+                    }
+                    completion(user)
+                }
+                
+            }
         }
+        
     }
-    
     
 }

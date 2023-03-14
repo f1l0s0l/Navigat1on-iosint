@@ -8,47 +8,90 @@
 import Foundation
 import RealmSwift
 import UIKit
+import KeychainAccess
 
 final class RealmManager {
     static let shared = RealmManager()
     
+    
+    // MARK: - Public methods
+    
     func userIsLogin() -> User? {
-        let realm = try! Realm()
-        
-        let currentUser1 = realm.objects(CurrentUser.self)
-        
-        switch currentUser1.count {
-        case 1:
-            let user = currentUser1[0]
-            
-            if user.isLogin {
-                return User(fullName: user.name, avatar: UIImage(data: user.imageData), status: user.status)
-            } else {
-                return nil
-            }
-            
-        default:
+        guard let realmm = self.getRealm(),
+              let currentUser = realmm.objects(CurrentUser.self).first,
+              currentUser.isLogin
+        else {
             return nil
         }
         
-        
-    }
-    
-    
-    func addCurrentUser(login: String, password: String, completion: @escaping (User) -> Void) {
-        let currentUser = CurrentUser(login: login, password: password)
         let user = User(
             fullName: currentUser.name,
             avatar: UIImage(data: currentUser.imageData),
             status: currentUser.status
         )
-        
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(currentUser)
+        return user
+    }
+    
+    
+    func addCurrentUser(login: String, password: String, completion: @escaping (User?) -> Void) {
+        guard let realm = self.getRealm() else {
+            return completion(nil)
+        }
+        let currentUser = CurrentUser(login: login, password: password)
+        do {
+            try realm.write {
+                realm.add(currentUser)
+            }
+        } catch {
+            print(error)
+            return completion(nil)
         }
         
-        completion(user)
+        let user = User(
+            fullName: currentUser.name,
+            avatar: UIImage(data: currentUser.imageData),
+            status: currentUser.status
+        )
+        return completion(user)
+    }
+    
+    
+    
+    // MARK: - Methods
+    
+    private func addNewValue(key: String, for keychain: Keychain) {
+        let valueDataString = UUID().uuidString
+        let valueData = Data(valueDataString.utf8)
+        do {
+            try keychain.set(valueData, key: key)
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func getConfigKey() -> Data? {
+        let key = "configKeyData"
+        let keychain = Keychain(service: "configKey")
+        
+        do {
+            return try keychain.getData(key)
+        } catch {
+            self.addNewValue(key: key, for: keychain)
+            return nil
+        }
+    }
+    
+    
+    private func getRealm() -> Realm? {
+        var config = Realm.Configuration.defaultConfiguration
+        config.encryptionKey = self.getConfigKey()
+        
+        do {
+           return try Realm(configuration: config)
+        } catch let error as NSError {
+            print(error)
+            return nil
+        }
     }
     
 }
