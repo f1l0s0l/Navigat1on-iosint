@@ -12,6 +12,9 @@
 		A400952E299F7BDF00959447 /* Resident.swift in Sources */ = {isa = PBXBuildFile; fileRef = A400952D299F7BDF00959447 /* Resident.swift */; };
 		A4009530299F805500959447 /* FeedNetworkService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A400952F299F805500959447 /* FeedNetworkService2.swift */; };
 		A410AA23299A1E18001B666B /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A410AA22299A1E18001B666B /* BannerViewController.swift */; };
+		A41C451929F10D9D00C1F708 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41C451829F10D9D00C1F708 /* MapCoordinator.swift */; };
+		A41C451C29F10DF800C1F708 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41C451B29F10DF800C1F708 /* MapViewModel.swift */; };
+		A41C451E29F10E0200C1F708 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41C451D29F10E0200C1F708 /* MapViewController.swift */; };
 		A426E45229804997001128BF /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45129804997001128BF /* FeedModel.swift */; };
 		A426E4592981662E001128BF /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E4582981662E001128BF /* MainCoordinator.swift */; };
 		A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45A2981666A001128BF /* LogInCoordinator.swift */; };
@@ -103,6 +106,9 @@
 		A400952D299F7BDF00959447 /* Resident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resident.swift; sourceTree = "<group>"; };
 		A400952F299F805500959447 /* FeedNetworkService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNetworkService2.swift; sourceTree = "<group>"; };
 		A410AA22299A1E18001B666B /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
+		A41C451829F10D9D00C1F708 /* MapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinator.swift; sourceTree = "<group>"; };
+		A41C451B29F10DF800C1F708 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		A41C451D29F10E0200C1F708 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A426E45129804997001128BF /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		A426E4582981662E001128BF /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		A426E45A2981666A001128BF /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -197,6 +203,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A41C451729F10D7D00C1F708 /* MapCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				A41C451829F10D9D00C1F708 /* MapCoordinator.swift */,
+			);
+			path = MapCoordinator;
+			sourceTree = "<group>";
+		};
+		A41C451A29F10DC600C1F708 /* MapViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A41C451B29F10DF800C1F708 /* MapViewModel.swift */,
+				A41C451D29F10E0200C1F708 /* MapViewController.swift */,
+			);
+			path = MapViewController;
+			sourceTree = "<group>";
+		};
 		A426E45329816577001128BF /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +227,7 @@
 				A426E4542981659D001128BF /* MainCoordinator */,
 				A48049012983DF36009FAA66 /* TabBarCoordinator */,
 				A426E455298165A6001128BF /* LogInCoordinator */,
+				A41C451729F10D7D00C1F708 /* MapCoordinator */,
 				A426E456298165B5001128BF /* FeedCoordinator */,
 				A47251EF29B62A2B0076A6CA /* FavouritesCoordinator */,
 				A426E457298165D6001128BF /* ProfileCoordinator */,
@@ -333,6 +357,7 @@
 				A426E45329816577001128BF /* Coordinators */,
 				A436988F2979AA3F00395E32 /* TabBarController */,
 				A426E46929816FEB001128BF /* LogIn */,
+				A41C451A29F10DC600C1F708 /* MapViewController */,
 				A426E4712981749B001128BF /* Feed */,
 				A47251F229B62BD20076A6CA /* Favourites */,
 				A426E476298176F7001128BF /* Profile */,
@@ -632,6 +657,7 @@
 				A426E45F2981668D001128BF /* ProfileCoordinator.swift in Sources */,
 				A43698A12979ABAF00395E32 /* FeeaViewController.swift in Sources */,
 				A410AA23299A1E18001B666B /* BannerViewController.swift in Sources */,
+				A41C451929F10D9D00C1F708 /* MapCoordinator.swift in Sources */,
 				A43698AD2979AC6E00395E32 /* PhotosTableViewCell.swift in Sources */,
 				A48E9B7329B1EE7000BA91BB /* test.swift in Sources */,
 				A48049032983DF54009FAA66 /* TabBarCoordinator.swift in Sources */,
@@ -657,6 +683,7 @@
 				A47251FF29B74E640076A6CA /* AlertNotification.swift in Sources */,
 				A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */,
 				A43698992979AAC300395E32 /* PostView.swift in Sources */,
+				A41C451C29F10DF800C1F708 /* MapViewModel.swift in Sources */,
 				A43698972979AAB900395E32 /* CustomUITextField.swift in Sources */,
 				A4E2FE5F29B1CF040039F07B /* LoadingViewController.swift in Sources */,
 				A400952C299F79CD00959447 /* Planet.swift in Sources */,
@@ -673,6 +700,7 @@
 				A43698D2297AC27200395E32 /* CheckerService.swift in Sources */,
 				A47251F429B62C020076A6CA /* FavouritesViewController.swift in Sources */,
 				A4E427E32982C16000A249F0 /* Coordinatable.swift in Sources */,
+				A41C451E29F10E0200C1F708 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

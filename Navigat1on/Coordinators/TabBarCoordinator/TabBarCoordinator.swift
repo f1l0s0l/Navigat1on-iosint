@@ -31,13 +31,17 @@ final class TabBarCoordinator: Coordinatable {
         let feedCoordinator = FeedCoordinator(navController: UINavigationController())
         let favouritesCoordinator = FavouritesCoordinator(navController: UINavigationController())
         let profileCoordinator = ProfileCoordinator(user: self.user, navController: UINavigationController())
+        let mapCoordinator = MapCoordinator(navController: UINavigationController())
+        
         let mainTabBarController = MainTabBarViewController(viewControllers: [
             feedCoordinator.start(),
+            mapCoordinator.start(),
             favouritesCoordinator.start(),
             profileCoordinator.start()
         ])
         
         self.addChildCoordinator(feedCoordinator)
+        self.addChildCoordinator(mapCoordinator)
         self.addChildCoordinator(favouritesCoordinator)
         self.addChildCoordinator(profileCoordinator)
         

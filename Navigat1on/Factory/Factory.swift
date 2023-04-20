@@ -13,6 +13,7 @@ final class Factory {
         case feed
         case profile(user: User)
         case favourites
+        case map
     }
     
     let navigationController: UINavigationController
@@ -56,6 +57,11 @@ final class Factory {
             let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
             let controller = ProfileViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
+            
+        case .map:
+//            let viewModel = MapViewModel(coordinator: self.coordinator)
+            let viewController = MapViewController(coordinator: self.coordinator)
+            navigationController.setViewControllers([viewController], animated: true)
         }
         
         
