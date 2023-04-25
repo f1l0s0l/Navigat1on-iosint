@@ -12,6 +12,13 @@ import MapKit
 
 final class MapViewController: UIViewController {
     
+    private enum LocalizedKeys: String {
+        case segmentedControlItemStandard = "segmentedControl.item.standard"
+        case segmentedControlItemHybrid = "segmentedControl.item.hybrid"
+        case segmentedControlItemSatellite = "segmentedControl.item.satellite"
+        case createRouteButtonTitle = "createRouteButton.title"
+    }
+    
     // MARK: Properties
     
     private let coordinator: Coordinatable
@@ -38,17 +45,24 @@ final class MapViewController: UIViewController {
         return mapView
     }()
     
-    private lazy var testButton: UIButton = {
+    private lazy var createRouteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Построить маршрут", for: .normal)
+        button.setTitle(
+            String(localized: String.LocalizationValue(LocalizedKeys.createRouteButtonTitle.rawValue)),
+            for: .normal
+        )
         button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
         button.backgroundColor = .systemGray3
         return button
     }()
     
     private lazy var mapTypeSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
+        let segmentedControl = UISegmentedControl(items: [
+            String(localized: String.LocalizationValue(LocalizedKeys.segmentedControlItemStandard.rawValue)),
+            String(localized: String.LocalizationValue(LocalizedKeys.segmentedControlItemHybrid.rawValue)),
+            String(localized: String.LocalizationValue(LocalizedKeys.segmentedControlItemSatellite.rawValue))
+        ])
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.selectedSegmentTintColor = UIColor(red: 32/255, green: 77/255, blue: 197/255, alpha: 1)
@@ -109,7 +123,7 @@ final class MapViewController: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .white
         self.view.addSubview(self.mapView)
-        self.view.addSubview(self.testButton)
+        self.view.addSubview(self.createRouteButton)
         self.view.addSubview(self.mapTypeSegmentedControl)
     }
     
@@ -176,11 +190,11 @@ final class MapViewController: UIViewController {
             return
         }
         switch newMapType {
-        case "Standard":
+        case String(localized: String.LocalizationValue(LocalizedKeys.segmentedControlItemStandard.rawValue)):
             self.mapView.mapType = .standard
-        case "Hybrid":
+        case String(localized: String.LocalizationValue(LocalizedKeys.segmentedControlItemHybrid.rawValue)):
             self.mapView.mapType = .hybrid
-        case "Satellite":
+        case String(localized: String.LocalizationValue(LocalizedKeys.segmentedControlItemSatellite.rawValue)):
             self.mapView.mapType = .satellite
         default:
             return
@@ -201,8 +215,8 @@ final class MapViewController: UIViewController {
             self.mapTypeSegmentedControl.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
 
             
-            self.testButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.testButton.bottomAnchor.constraint(equalTo: self.mapTypeSegmentedControl.topAnchor),
+            self.createRouteButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.createRouteButton.bottomAnchor.constraint(equalTo: self.mapTypeSegmentedControl.topAnchor),
         ])
     }
 }

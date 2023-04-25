@@ -10,6 +10,10 @@ import UIKit
 
 final class FavouritesCoordinator: Coordinatable {
     
+    private enum LocalizedKeys: String {
+        case tabBarItemTitle = "favouriteTabBarItem.title"
+    }
+    
     // MARK: - Public Properties
 
 //    weak var parentCoordinator: Coordinatable?
@@ -36,7 +40,7 @@ final class FavouritesCoordinator: Coordinatable {
             flow: .favourites
         )
         let itemForFavouritesVC = UITabBarItem(
-            title: "Favourites",
+            title: String(localized: String.LocalizationValue(LocalizedKeys.tabBarItemTitle.rawValue)),
             image: UIImage(systemName: "heart"),
             tag: 1
         )

@@ -15,6 +15,9 @@ class PostTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    private let likeFormatterString = NSLocalizedString("likes", comment: "")
+    private let viewsFormatterString = NSLocalizedString("views", comment: "")
+    
     private var thisPost: PostView?
     var isFavourites: Bool = false
     
@@ -101,11 +104,15 @@ class PostTableViewCell: UITableViewCell {
     func setup(withPost post: PostView) {
         self.thisPost = post
         
+        
         self.titleTextLabel.text = thisPost?.author
         self.postImageView.image = thisPost?.image
         self.footerTextLabel.text = thisPost?.description
-        self.likesCountLabel.text = "Likes: \(thisPost?.likes ?? 0)"
-        self.viewsCountLabel.text = "Views: \(thisPost?.views ?? 0)"
+        
+        self.likesCountLabel.text = String(format: self.likeFormatterString, post.likes)
+        self.viewsCountLabel.text = String(format: self.viewsFormatterString, post.views)
+//        self.likesCountLabel.text = "Likes: \(thisPost?.likes ?? 0)"
+//        self.viewsCountLabel.text = "Views: \(thisPost?.views ?? 0)"
     }
     
     

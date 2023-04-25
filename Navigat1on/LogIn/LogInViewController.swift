@@ -9,6 +9,13 @@ import UIKit
 
 final class LogInViewController2: UIViewController {
     
+    private enum LocalizedKeys: String {
+        case userEmailTextFieldPlaceholder = "userEmailTextField.placeholder"
+        case userPasswordTextFieldPlaceholder = "userPasswordTextField.placeholder"
+        case logInButtonTitle = "logInButton.title"
+        
+    }
+    
     // MARK: - Properties
     
     private let viewModel: LogInViewModel
@@ -44,7 +51,7 @@ final class LogInViewController2: UIViewController {
         textField.backgroundColor = .systemGray6
         
         textField.keyboardType = .emailAddress
-        textField.placeholder = "Email or phone"
+        textField.placeholder = String(localized: String.LocalizationValue(LocalizedKeys.userEmailTextFieldPlaceholder.rawValue))
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.clearButtonMode = .whileEditing
@@ -64,7 +71,7 @@ final class LogInViewController2: UIViewController {
         
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
-        textField.placeholder = "Password"
+        textField.placeholder = String(localized: String.LocalizationValue(LocalizedKeys.userPasswordTextFieldPlaceholder.rawValue))
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.autocapitalizationType = .none
@@ -75,8 +82,9 @@ final class LogInViewController2: UIViewController {
     }()
     
     private lazy var logInButton: CustomButton = {
-        let button = CustomButton(title: "Log In",
-                                  backgroundImage: UIImage(named: "blue_pixel")
+        let button = CustomButton(
+            title: String(localized: String.LocalizationValue(LocalizedKeys.logInButtonTitle.rawValue)),
+            backgroundImage: UIImage(named: "blue_pixel")
         )
         button.target = { [weak self] in
             self?.didTabLogInButton()

@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 
 final class FeedCoordinator: Coordinatable {
+    
+    private enum LocalizedKeys: String {
+        case tabBarItemTitle = "feedTabBarItem.title"
+    }
 
     // MARK: - Public Properties
 
@@ -34,9 +38,10 @@ final class FeedCoordinator: Coordinatable {
                                          coordinator: self,
                                          flow: .feed
         )
-        let itemForProfileVCc = UITabBarItem(title: "Feed",
-                                            image: UIImage(systemName: "square.stack.3d.down.right"),
-                                            tag: 0
+        let itemForProfileVCc = UITabBarItem(
+            title: String(localized: String.LocalizationValue(LocalizedKeys.tabBarItemTitle.rawValue)),
+            image: UIImage(systemName: "square.stack.3d.down.right"),
+            tag: 0
         )
         feedViewController.navigationController.tabBarItem = itemForProfileVCc
         self.navigationController = feedViewController.navigationController

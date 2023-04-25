@@ -10,6 +10,10 @@ import UIKit
 
 final class MapCoordinator: Coordinatable {
 
+    private enum LocalizedKeys: String {
+        case tabBarItemTitle = "mapTabBarItem.title"
+    }
+    
     // MARK: - Public Properties
 
 //    weak var parentCoordinator: Coordinatable?
@@ -36,7 +40,7 @@ final class MapCoordinator: Coordinatable {
             flow: .map
         )
         let itemForMapVC = UITabBarItem(
-            title: "Map",
+            title: String(localized: String.LocalizationValue(LocalizedKeys.tabBarItemTitle.rawValue)),
             image: UIImage(systemName: "map"),
             tag: 3
         )

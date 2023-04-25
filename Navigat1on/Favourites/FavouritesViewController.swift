@@ -10,6 +10,10 @@ import CoreData
 
 class FavouritesViewController: UIViewController {
     
+    private enum LocalizedKeys: String {
+        case title = "favouriteViewController.title"
+    }
+    
     // MARK: - Properties
     
     private var viewModel: FavouritesViewModel
@@ -75,7 +79,7 @@ class FavouritesViewController: UIViewController {
     // MARK: - Methods
     
     private func setupView() {
-        self.title = "Favourites"
+        self.title = String(localized: String.LocalizationValue(LocalizedKeys.title.rawValue))
         self.view.backgroundColor = .systemGray6
         self.view.addSubview(self.backView)
         self.view.addSubview(self.oopsTextLabel)

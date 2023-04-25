@@ -9,6 +9,11 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
+    private enum LocalizedKeys: String {
+        case buttonShowStatusTitle = "buttonShowStatus.title"
+        case changedButtonShowStatusTitle = "changedButtonShowStatus.title"
+    }
+    
     // MARK: - Properties
     
    private var statusText = StatusText(text: "Любимая доча")
@@ -38,8 +43,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private lazy var buttonShowStatus: CustomButton = {
-        let button = CustomButton(title: "Show status",
-                                  backgroundColor: UIColor.systemBlue
+        let button = CustomButton(
+            title: String(localized: String.LocalizationValue(LocalizedKeys.buttonShowStatusTitle.rawValue)),
+            backgroundColor: UIColor.systemBlue
         )
         button.target = { [weak self] in
             self?.tapOnButtonShowStatus()
@@ -121,7 +127,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         changeUserStatus.placeholder = statusText.text
         print(userStatus.text ?? "Нет статуса")
         self.endEditing(true)
-        buttonShowStatus.setTitle("Show status", for: .normal)
+        buttonShowStatus.setTitle(
+            String(localized: String.LocalizationValue(LocalizedKeys.buttonShowStatusTitle.rawValue)),
+            for: .normal
+        )
     }
     
     @objc
@@ -131,7 +140,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     @objc
     private func titleButtonShowStatusChange(){
-        buttonShowStatus.setTitle("Set status", for: .normal)
+        buttonShowStatus.setTitle(
+            String(localized: String.LocalizationValue(LocalizedKeys.changedButtonShowStatusTitle.rawValue)),
+            for: .normal
+        )
     }
     
     

@@ -10,6 +10,10 @@ import UIKit
 
 final class ProfileCoordinator: Coordinatable {
     
+    private enum LocalizedKeys: String {
+        case tabBarItemTitle = "profileTabBarItem.title"
+    }
+    
     // MARK: - Public Properties
     
 //    weak var parentCoordinator: Coordinatable?
@@ -39,9 +43,10 @@ final class ProfileCoordinator: Coordinatable {
                                             coordinator: self,
                                             flow: .profile(user: self.user)
         )
-        let itemForProfileVC = UITabBarItem(title: "Profile",
-                                            image: UIImage(systemName: "person.crop.circle"),
-                                            tag: 2
+        let itemForProfileVC = UITabBarItem(
+            title: String(localized: String.LocalizationValue(LocalizedKeys.tabBarItemTitle.rawValue)),
+            image: UIImage(systemName: "person.crop.circle"),
+            tag: 2
         )
         profileViewController.navigationController.tabBarItem = itemForProfileVC
         self.navigationController = profileViewController.navigationController
@@ -51,7 +56,6 @@ final class ProfileCoordinator: Coordinatable {
 
     func pushToPhotosViewController(arrayPhotos: [UIImage?]) { // тут мы передадим фотгграфии из viewModel
         let photosViewController = PhotosViewController(arrayPhotos: arrayPhotos)
-        photosViewController.title = "Photo Gallery"
         self.navigationController.pushViewController(photosViewController, animated: true)
     }
 

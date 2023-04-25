@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  Navigat1on
+
+  Created by Илья Сидорик on 25.04.2023.
+  
+*/
+
+
+// MARK: - Login
+
+"userEmailTextField.placeholder" = "Почта или телефон";
+"userPasswordTextField.placeholder" = "Пароль";
+"logInButton.title" = "Войти";
+
+
+// MARK: - Feed
+
+"feedTabBarItem.title" = "Новости";
+"feedViewController.title" = "Новости";
+"firstTextLabel.text" = "Заголовок:";
+"secondTextLabel.text" = "Орбитальный период:";
+"downloadDataButton.title" = "Загрузить информацию";
+"showNameResidentsTatooineButton.title" = "Загрузить резидентов";
+
+
+// MARK: - Map
+
+"createRouteButton.title" = "Построить маршрут";
+
+// SegmentedControl
+"mapTabBarItem.title" = "Карта";
+"segmentedControl.item.standard" = "Стандарт";
+"segmentedControl.item.hybrid" = "Гибрид";
+"segmentedControl.item.satellite" = "Спутник";
+
+
+// MARK: - Favourite
+
+"favouriteTabBarItem.title" = "Избранное";
+"favouriteViewController.title" = "Избранное";
+
+
+// MARK: - Profile
+
+"profileTabBarItem.title" = "Профиль";
+"profileViewController.title" = "Профиль";
+
+
+// Header
+"buttonShowStatus.title" = "Показать статус";
+"changedButtonShowStatus.title" = "Установить статус";
+
+
+// PhotosTableViewCell
+"titleLabel" = "Фотографии";
+
+
+// PhotosViewController
+"photosViewController.title" = "Фотогалерея";

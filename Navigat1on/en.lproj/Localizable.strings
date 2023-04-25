@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Navigat1on
+
+  Created by Илья Сидорик on 25.04.2023.
+  
+*/
+
+// MARK: - Login
+
+"userEmailTextField.placeholder" = "Email or phone";
+"userPasswordTextField.placeholder" = "Password";
+"logInButton.title" = "logIn";
+
+
+// MARK: - Feed
+
+"feedTabBarItem.title" = "Feed";
+"feedViewController.title" = "Feed";
+"firstTextLabel.text" = "Title:";
+"secondTextLabel.text" = "Orbital period:";
+"downloadDataButton.title" = "Downoad information";
+"showNameResidentsTatooineButton.title" = "Downoad residents";
+
+
+
+// MARK: - Map
+
+"createRouteButton.title" = "Create route";
+
+// SegmentedControl
+"mapTabBarItem.title" = "Map";
+"segmentedControl.item.standard" = "Standart";
+"segmentedControl.item.hybrid" = "Hybrid";
+"segmentedControl.item.satellite" = "Satellite";
+
+
+
+// MARK: - Favourite
+
+"favouriteTabBarItem.title" = "Favourite";
+"favouriteViewController.title" = "Feed";
+
+
+
+// MARK: - Profile
+
+"profileTabBarItem.title" = "Profile";
+"profileViewController.title" = "Profile";
+
+
+// Header
+"buttonShowStatus.title" = "Show status";
+"changedButtonShowStatus.title" = "Set status";
+
+
+// PhotosTableViewCell
+"titleLabel" = "Photos";
+
+
+// PhotosViewController
+"photosViewController.title" = "Photo Gallery";
+

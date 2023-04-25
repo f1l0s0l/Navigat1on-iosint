@@ -9,12 +9,16 @@ import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
     
+    private enum LocalizedKeys: String {
+        case titleLabel = "titleLabel"
+    }
+    
     // MARK: - Properties
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Photos"
+        label.text = String(localized: String.LocalizationValue(LocalizedKeys.titleLabel.rawValue))
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label

@@ -10,6 +10,14 @@ import UIKit
 
 final class FeedViewController2: UIViewController {
     
+    private enum LocalizedKeys: String {
+        case title = "feedViewController.title"
+        case firstTextLabelText = "firstTextLabel.text"
+        case secondTextLabelText = "secondTextLabel.text"
+        case downloadDataButtonTitle = "downloadDataButton.title"
+        case showNameResidentsTatooineButtonTitle = "showNameResidentsTatooineButton.title"
+    }
+    
     // MARK: - Properties
     
     private let viewModel: FeedViewModel
@@ -23,7 +31,7 @@ final class FeedViewController2: UIViewController {
     private lazy var firstTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Title: "
+        label.text = String(localized: String.LocalizationValue(LocalizedKeys.firstTextLabelText.rawValue))
         return label
     }()
     
@@ -31,6 +39,7 @@ final class FeedViewController2: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Orbital period: "
+        label.text = String(localized: String.LocalizationValue(LocalizedKeys.secondTextLabelText.rawValue))
         return label
     }()
     
@@ -38,7 +47,10 @@ final class FeedViewController2: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
-        button.setTitle("Downoad information", for: .normal)
+        button.setTitle(
+            String(localized: String.LocalizationValue(LocalizedKeys.downloadDataButtonTitle.rawValue)),
+            for: .normal
+        )
         button.layer.cornerRadius = 15
         button.addTarget(self, action: #selector(didTabDownloadDataButton), for: .touchUpInside)
         return button
@@ -52,7 +64,10 @@ final class FeedViewController2: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
-        button.setTitle("Downoad residents", for: .normal)
+        button.setTitle(
+            String(localized: String.LocalizationValue(LocalizedKeys.showNameResidentsTatooineButtonTitle.rawValue)),
+            for: .normal
+        )
         button.layer.cornerRadius = 15
         button.addTarget(self, action: #selector(didTabShowNameResidentsTatooineButton), for: .touchUpInside)
         return button
@@ -86,6 +101,7 @@ final class FeedViewController2: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .systemGray6
         self.title = "Feed"
+        self.title = String(localized: String.LocalizationValue(LocalizedKeys.title.rawValue))
         self.view.addSubview(firstTextLabel)
         self.view.addSubview(secondTextLabel)
         self.view.addSubview(downloadDataButton)
@@ -106,11 +122,14 @@ final class FeedViewController2: UIViewController {
                 
             case .loadedFirstTextLabel(let text):
                 self.activityIndicator.stopAnimating()
-                self.firstTextLabel.text = "Title: \(text)"
+                self.firstTextLabel.text = String(localized: String.LocalizationValue(LocalizedKeys.firstTextLabelText.rawValue))
+                + " " + text
+                
                 
             case .loadedSecondTextLabel(let text):
                 self.activityIndicator.stopAnimating()
-                self.secondTextLabel.text = "Orbital period: \(text)"
+                self.secondTextLabel.text = String(localized: String.LocalizationValue(LocalizedKeys.secondTextLabelText.rawValue))
+                + " " + text
                 
             case .wrong(let text):
                 self.setupAlertConfiguration(title: text)

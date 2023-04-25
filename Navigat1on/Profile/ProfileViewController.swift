@@ -10,6 +10,10 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
+    private enum LocalizedKeys: String {
+        case title = "profileViewController.title"
+    }
+    
     // MARK: - Properties
     
     private let viewModel: ProfileViewModel
@@ -49,7 +53,7 @@ final class ProfileViewController: UIViewController {
 //        self.view.addSubview(profileView)
         self.view = profileView
 //        self.title = "Profile"
-        self.title = "Profile"
+        self.title = String(localized: String.LocalizationValue(LocalizedKeys.title.rawValue))
         self.navigationController?.navigationBar.isHidden = true
         
     }

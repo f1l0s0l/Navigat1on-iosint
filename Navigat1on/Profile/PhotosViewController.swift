@@ -9,6 +9,10 @@ import iOSIntPackage
 import UIKit
 
 class PhotosViewController: UIViewController {
+    
+    private enum LocalizedKeys: String {
+        case photosViewControllerTitle = "photosViewController.title"
+    }
 
     // MARK: - Constants
     
@@ -77,6 +81,7 @@ class PhotosViewController: UIViewController {
     // MARK: - Methods
     
     private func setupView() {
+        self.title = String(localized: String.LocalizationValue(LocalizedKeys.photosViewControllerTitle.rawValue))
         self.view.backgroundColor = .systemGray6
         self.view.addSubview(collectionView)
         self.startProcessImagesOnThread()
