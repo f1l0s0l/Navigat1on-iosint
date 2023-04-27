@@ -27,11 +27,15 @@ import UIKit
     // MARK: - Methods
     
     private func setupView() {
-        UITabBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
-        UITabBar.appearance().backgroundColor = .white
+//        UITabBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+//        UITabBar.appearance().backgroundColor = .white
+        UITabBar.appearance().tintColor = ColorConstant.tabBarTint
+        UITabBar.appearance().backgroundColor = ColorConstant.tabBar
 
-        UINavigationBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
-        UINavigationBar.appearance().backgroundColor = .systemGray6
+//        UINavigationBar.appearance().tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+//        UINavigationBar.appearance().backgroundColor = .systemGray6
+        UINavigationBar.appearance().tintColor = ColorConstant.navigationBarTint
+        UINavigationBar.appearance().backgroundColor = ColorConstant.navigationBar
     }
     
 }

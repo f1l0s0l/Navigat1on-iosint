@@ -19,7 +19,8 @@ class PhotosTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = String(localized: String.LocalizationValue(LocalizedKeys.titleLabel.rawValue))
-        label.textColor = .black
+//        label.textColor = .black
+        label.textColor = ColorConstant.label
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label
     }()
@@ -43,7 +44,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var firstPhotoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -54,7 +54,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var secondPhotoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -65,7 +64,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var thirdPhotoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -76,7 +74,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var fourthPhotoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -120,7 +117,8 @@ class PhotosTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     private func setupView() {
-        self.backgroundColor = .white
+//        self.backgroundColor = .white
+        self.backgroundColor = ColorConstant.backgroundCell
         self.addSubview(titleLabel)
         self.addSubview(nextButton)
         self.addSubview(stackView)

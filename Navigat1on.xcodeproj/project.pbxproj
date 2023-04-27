@@ -17,6 +17,7 @@
 		A41C451E29F10E0200C1F708 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41C451D29F10E0200C1F708 /* MapViewController.swift */; };
 		A41C452329F7A85E00C1F708 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A41C452529F7A85E00C1F708 /* Localizable.strings */; };
 		A41C452929F7CDA400C1F708 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = A41C452B29F7CDA400C1F708 /* Localizable.stringsdict */; };
+		A41C453329FA455500C1F708 /* ColorConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41C453229FA455500C1F708 /* ColorConstant.swift */; };
 		A426E45229804997001128BF /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45129804997001128BF /* FeedModel.swift */; };
 		A426E4592981662E001128BF /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E4582981662E001128BF /* MainCoordinator.swift */; };
 		A426E45B2981666A001128BF /* LogInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A426E45A2981666A001128BF /* LogInCoordinator.swift */; };
@@ -115,6 +116,7 @@
 		A41C452629F7A92D00C1F708 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A41C452C29F7CDA500C1F708 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		A41C452D29F7CDB400C1F708 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		A41C453229FA455500C1F708 /* ColorConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConstant.swift; sourceTree = "<group>"; };
 		A426E45129804997001128BF /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		A426E4582981662E001128BF /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		A426E45A2981666A001128BF /* LogInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInCoordinator.swift; sourceTree = "<group>"; };
@@ -224,6 +226,14 @@
 				A41C451D29F10E0200C1F708 /* MapViewController.swift */,
 			);
 			path = MapViewController;
+			sourceTree = "<group>";
+		};
+		A41C453129FA454500C1F708 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				A41C453229FA455500C1F708 /* ColorConstant.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 		A426E45329816577001128BF /* Coordinators */ = {
@@ -353,6 +363,7 @@
 		A43698782979A89700395E32 /* Navigat1on */ = {
 			isa = PBXGroup;
 			children = (
+				A41C453129FA454500C1F708 /* Constant */,
 				A47251FD29B74E470076A6CA /* PublicAlertModel */,
 				A47251F729B63E580076A6CA /* CoreData */,
 				A48E9B7629B1FBBF00BA91BB /* Realm */,
@@ -699,6 +710,7 @@
 				A4E2FE5F29B1CF040039F07B /* LoadingViewController.swift in Sources */,
 				A400952C299F79CD00959447 /* Planet.swift in Sources */,
 				A43698A52979ABDE00395E32 /* InfoViewController.swift in Sources */,
+				A41C453329FA455500C1F708 /* ColorConstant.swift in Sources */,
 				A426E46729816D19001128BF /* Factory.swift in Sources */,
 				A47251F129B62A630076A6CA /* FavouritesCoordinator.swift in Sources */,
 				A480490C298A658D009FAA66 /* ProfileView.swift in Sources */,

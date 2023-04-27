@@ -45,8 +45,8 @@ final class ProfileViewController: UIViewController {
         #if DEBUG
         self.view.backgroundColor = .red
         #else
-//        self.view.backgroundColor = .systemGray6
-        self.view.backgroundColor = .blue
+//        self.view.backgroundColor = .blue
+        self.view.backgroundColor = ColorConstant.background
         #endif
 //        self.view.backgroundColor = UIColor.orange
         self.profileView.configureTableView(dataSource: self, delegate: self)

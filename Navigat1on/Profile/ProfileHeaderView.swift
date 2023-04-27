@@ -37,7 +37,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Ария"
         label.textAlignment = .center
-        label.textColor = .black
+//        label.textColor = .black
+        label.textColor = ColorConstant.label
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
@@ -45,7 +46,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var buttonShowStatus: CustomButton = {
         let button = CustomButton(
             title: String(localized: String.LocalizationValue(LocalizedKeys.buttonShowStatusTitle.rawValue)),
-            backgroundColor: UIColor.systemBlue
+            backgroundColor: ColorConstant.mainButton //UIColor.systemBlue
         )
         button.target = { [weak self] in
             self?.tapOnButtonShowStatus()
@@ -57,7 +58,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         button.layer.shadowOffset.width = 4
         button.layer.shadowOffset.height = 4
         button.layer.shadowRadius = 4
-        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowColor = UIColor.black.cgColor // !!!!!!!!
         button.layer.shadowOpacity = 0.7
         return button
     }()
@@ -67,7 +68,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Любимая доча"
         label.textAlignment = .center
-        label.textColor = .gray
+//        label.textColor = .gray
+        label.textColor = ColorConstant.secondaryLabel
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
@@ -75,10 +77,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var changeUserStatus: TextFieldWithPadding = {
         let text = TextFieldWithPadding()
         text.translatesAutoresizingMaskIntoConstraints = false
-        text.backgroundColor = .white
+//        text.backgroundColor = .white
+        text.backgroundColor = ColorConstant.backgroundTextFieldProfileHeader
+        
         text.placeholder = "Любимая доча"
         text.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        text.textColor = .black
+//        text.textColor = .black
+        text.textColor = ColorConstant.label
         text.layer.cornerRadius = 12
         text.textPadding.left = 7
         text.textPadding.right = 7

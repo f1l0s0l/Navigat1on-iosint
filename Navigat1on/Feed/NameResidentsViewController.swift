@@ -50,7 +50,8 @@ final class NameResidentsViewController: UIViewController {
     // MARK: - Methods
     
     private func setupView() {
-        self.view.backgroundColor = .systemGray6
+//        self.view.backgroundColor = .systemGray6
+        self.view.backgroundColor = ColorConstant.background
         self.title = "Residents"
         self.view.addSubview(tableView)
         self.view.addSubview(activityIndicator)

@@ -41,18 +41,20 @@ final class LogInViewController2: UIViewController {
         stackView.distribution = .fillEqually
         stackView.layer.cornerRadius = 10
         stackView.layer.borderWidth = 0.5
-        stackView.layer.borderColor = UIColor.lightGray.cgColor
+        stackView.layer.borderColor = UIColor.lightGray.cgColor // !!!!!!!!!!!!
         return stackView
     }()
     
     private lazy var userEmailTextField: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .systemGray6
+//        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = ColorConstant.backgroundTextFieldLogin
         
         textField.keyboardType = .emailAddress
         textField.placeholder = String(localized: String.LocalizationValue(LocalizedKeys.userEmailTextFieldPlaceholder.rawValue))
-        textField.textColor = .black
+//        textField.textColor = .black
+        textField.textColor = ColorConstant.label
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.clearButtonMode = .whileEditing
         textField.autocapitalizationType = .none
@@ -65,14 +67,16 @@ final class LogInViewController2: UIViewController {
     private lazy var userPasswordTextField: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .systemGray6
+//        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = ColorConstant.backgroundTextFieldLogin
         textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.borderColor = UIColor.lightGray.cgColor // !!!!!!!
         
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
         textField.placeholder = String(localized: String.LocalizationValue(LocalizedKeys.userPasswordTextFieldPlaceholder.rawValue))
-        textField.textColor = .black
+//        textField.textColor = .black
+        textField.textColor = ColorConstant.label
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.autocapitalizationType = .none
         textField.textPadding.left = 8
@@ -109,7 +113,8 @@ final class LogInViewController2: UIViewController {
     private lazy var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
+        view.backgroundColor = ColorConstant.background
         view.alpha = 0
         return view
     }()
@@ -158,7 +163,8 @@ final class LogInViewController2: UIViewController {
     // MARK: - Methods
 
     private func setupView() {
-        self.view.backgroundColor = .white
+//        self.view.backgroundColor = .white
+        self.view.backgroundColor = ColorConstant.backgroundLoginFlow
         self.view.addSubview(self.scrollView)
         setupScrollView()
         setupGestures()

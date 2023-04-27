@@ -41,7 +41,8 @@ class PhotosViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
+//        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = ColorConstant.backgroundCell
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: "PhotosCollectionViewCellID")
@@ -82,7 +83,8 @@ class PhotosViewController: UIViewController {
     
     private func setupView() {
         self.title = String(localized: String.LocalizationValue(LocalizedKeys.photosViewControllerTitle.rawValue))
-        self.view.backgroundColor = .systemGray6
+//        self.view.backgroundColor = .systemGray6
+        self.view.backgroundColor = ColorConstant.background
         self.view.addSubview(collectionView)
         self.startProcessImagesOnThread()
     }

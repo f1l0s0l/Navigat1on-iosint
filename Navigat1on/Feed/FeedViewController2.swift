@@ -32,6 +32,7 @@ final class FeedViewController2: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = String(localized: String.LocalizationValue(LocalizedKeys.firstTextLabelText.rawValue))
+        label.textColor = ColorConstant.label
         return label
     }()
     
@@ -40,13 +41,15 @@ final class FeedViewController2: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Orbital period: "
         label.text = String(localized: String.LocalizationValue(LocalizedKeys.secondTextLabelText.rawValue))
+        label.textColor = ColorConstant.label
         return label
     }()
     
     private lazy var downloadDataButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBlue
+//        button.backgroundColor = .systemBlue
+        button.backgroundColor = ColorConstant.mainButton
         button.setTitle(
             String(localized: String.LocalizationValue(LocalizedKeys.downloadDataButtonTitle.rawValue)),
             for: .normal
@@ -63,7 +66,8 @@ final class FeedViewController2: UIViewController {
     private lazy var showNameResidentsTatooineButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBlue
+//        button.backgroundColor = .systemBlue
+        button.backgroundColor = ColorConstant.mainButton
         button.setTitle(
             String(localized: String.LocalizationValue(LocalizedKeys.showNameResidentsTatooineButtonTitle.rawValue)),
             for: .normal
@@ -99,8 +103,8 @@ final class FeedViewController2: UIViewController {
     // MARK: - Methods
     
     private func setupView() {
-        self.view.backgroundColor = .systemGray6
-        self.title = "Feed"
+//        self.view.backgroundColor = .systemGray6
+        self.view.backgroundColor = ColorConstant.background
         self.title = String(localized: String.LocalizationValue(LocalizedKeys.title.rawValue))
         self.view.addSubview(firstTextLabel)
         self.view.addSubview(secondTextLabel)
