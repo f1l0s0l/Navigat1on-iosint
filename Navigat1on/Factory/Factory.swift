@@ -36,15 +36,19 @@ final class Factory {
     private func initModule() {
         switch flow {
         case .logIn:
-            let viewModel = LogInViewModel(coordinator: self.coordinator)
+            let checkerPassword = CheckerPassword()
+            let localAuthorizationService = LocalAuthorizationService()
+            let viewModel = LogInViewModel(
+                coordinator: self.coordinator,
+                checkerPassword: checkerPassword,
+                localAuthorizationService: localAuthorizationService
+            )
             let controller = LogInViewController2(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
 
         case .feed:
             let viewModel = FeedViewModel(coordinator: self.coordinator)
             let controller = FeedViewController2(viewModel: viewModel)
-//            let feedModel = FeedModel()
-//            let controller = FeedViewController(feedModel: feedModel)
             navigationController.setViewControllers([controller], animated: true)
             
         case .favourites:

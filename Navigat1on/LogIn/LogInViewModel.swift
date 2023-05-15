@@ -6,88 +6,107 @@
 //
 
 import Foundation
+import UIKit
+
+protocol ILogInViewModel: AnyObject {
+    var stateChenged: ((LogInViewModel.State) -> Void)? { get set }
+    func checkCanEvaluete()
+    func didTapButton(log: String?, pswrd: String?)
+    func didTaplocalAuthorizationButton()
+}
 
 final class LogInViewModel {
     
-    enum StateKeyboard {
-        case didShowKeyboard(frameScrollView: Any, frameBottomItems: Any )
-        case didHideKeyboard
-    }
-    
-    enum Action {
-        case didTapButton(log: String?, pswrd: String?)
-//        case didTabSignUpButton(log: String?, pswrd: String?)
-        case didTapSuperView
-    }
+    // MARK: - Enum
     
     enum State {
-        case initial
         case loading
         case loaded
-        case changeContentOffset(yPoint: Double)
-        case HideKeyboard
         case wrong(text: String)
-        case error
+        case canEvaluete(image: UIImage?)
     }
+    
     
     // MARK: - Public Properties
     
     var stateChenged: ((State) -> Void)?
-    private(set) var state: State = .initial {
-        didSet {
-            stateChenged?(state)
-        }
-    }
     
     
-    // MARK: - Properties
+    // MARK: - Private properties
     
     private let coordinator: Coordinatable
-    private let serviseContentOfSet = ServiseContentOfSet()
-    private let checkerPassword = CheckerPassword()
+    private let checkerPassword: CheckerPassword
+    private let localAuthorizationService: LocalAuthorizationService
     
-    
-    // MARK: - Life cycle
-    
-    init(coordinator: Coordinatable) {
-        self.coordinator = coordinator
+    private var state: State = .loading {
+        didSet {
+            self.stateChenged?(state)
+        }
     }
     
     
-    // MARK: - Public methods
+    // MARK: - Init
     
-    func didTap(action: Action) {
-        switch action {
-        case .didTapButton(let log, let pswrd):
-            self.state = .loading
-            self.state = .HideKeyboard
-            
-            self.checkerPassword.checkAuthData(login: log, pswrd: pswrd) { [weak self] user in
-                guard let user = user else {
-                    self?.state = .loaded
-                    self?.state = .wrong(text: "Неизвестная ошибка")
-                    return
-                }
-                self?.state = .loaded
-                (self?.coordinator as? CoordinatableLogin)?.switchToTabBarController(user: user)
-                
-            }
-            
-//        case .didTabSignUpButton(let log, let pswrd):
-//            self.state = .loading
-//            self.state = .HideKeyboard
-            
+    init(coordinator: Coordinatable, checkerPassword: CheckerPassword, localAuthorizationService: LocalAuthorizationService) {
+        self.coordinator = coordinator
+        self.checkerPassword = checkerPassword
+        self.localAuthorizationService = localAuthorizationService
+    }
+    
+}
 
-        case .didTapSuperView:
-            self.state = .HideKeyboard
+
+
+    // MARK: - ILogInViewModel
+
+extension LogInViewModel: ILogInViewModel {
+    func didTapButton(log: String?, pswrd: String?) {
+        self.state = .loading
+        
+        self.checkerPassword.checkAuthData(login: log, pswrd: pswrd) { [weak self] user in
+            guard let user = user else {
+                self?.state = .loaded
+                self?.state = .wrong(text: "Неизвестная ошибка")
+                return
+            }
+            self?.state = .loaded
+            (self?.coordinator as? CoordinatableLogin)?.switchToTabBarController(user: user)
             
         }
+    }
+    
+    func didTaplocalAuthorizationButton() {
+        self.state = .loaded
         
+        self.localAuthorizationService.evaluate { [weak self] isSuccess, error in
+            guard isSuccess else {
+                self?.state = .wrong(text: error.localizedDescription)
+                return
+            }
+            // Берем авторизированного юзера из реалма (в нашем примере там храняться пользователи)
+            // но так как у нас другой функционал, для примера просто создадим пользователя
+            // в реалм его добавлять не будетм для того, что бы каждый раз заходя, он требовал опять авторизации
+            let user = User(fullName: "ТестЮзер", avatar: nil, status: "ТестСтатус")
+            (self?.coordinator as? CoordinatableLogin)?.switchToTabBarController(user: user)
+        }
     }
     
-    func keyboardNotification(_ stateKeyboard: ServiseContentOfSet.StateKayboard, _ notification: Notification) {
-        let y = self.serviseContentOfSet.ServiseContentOfSet(notification, stateKayboard: stateKeyboard)
-        self.state = .changeContentOffset(yPoint: y)
+    func checkCanEvaluete() {
+        self.localAuthorizationService.canEvaluate { [weak self] isSuccess, biometryType, error in
+            guard isSuccess else {
+                return
+            }
+            
+            switch biometryType {
+            case .faceID:
+                self?.state = .canEvaluete(image: UIImage(systemName: "faceid"))
+                
+            case .touchID:
+                self?.state = .canEvaluete(image: UIImage(systemName: "touchid"))
+                
+            default:
+                ()
+            }
+        }
     }
-    
 }

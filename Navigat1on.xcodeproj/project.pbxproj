@@ -64,7 +64,6 @@
 		A47251FC29B63EA80076A6CA /* Navigat1on.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A47251FA29B63EA80076A6CA /* Navigat1on.xcdatamodeld */; };
 		A47251FF29B74E640076A6CA /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47251FE29B74E640076A6CA /* AlertNotification.swift */; };
 		A48049032983DF54009FAA66 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48049022983DF54009FAA66 /* TabBarCoordinator.swift */; };
-		A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */; };
 		A480490C298A658D009FAA66 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A480490B298A658D009FAA66 /* ProfileView.swift */; };
 		A48E9B7329B1EE7000BA91BB /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48E9B7229B1EE7000BA91BB /* test.swift */; };
 		A48E9B7529B1EEB000BA91BB /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48E9B7429B1EEB000BA91BB /* test2.swift */; };
@@ -73,6 +72,7 @@
 		A48E9B7D29B1FD0300BA91BB /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = A48E9B7C29B1FD0300BA91BB /* Realm */; };
 		A48E9B7F29B1FD0300BA91BB /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A48E9B7E29B1FD0300BA91BB /* RealmSwift */; };
 		A49AE016299CD24F000E14D3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49AE015299CD24F000E14D3 /* NetworkService.swift */; };
+		A4DEEAFE2A12699B002D43EC /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DEEAFD2A12699B002D43EC /* LocalAuthorizationService.swift */; };
 		A4E2FE5F29B1CF040039F07B /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E2FE5E29B1CF040039F07B /* LoadingViewController.swift */; };
 		A4E2FE6129B1E52E0039F07B /* CheckerPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E2FE6029B1E52E0039F07B /* CheckerPassword.swift */; };
 		A4E427D829818D9400A249F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E427D729818D9400A249F0 /* User.swift */; };
@@ -163,7 +163,6 @@
 		A47251FB29B63EA80076A6CA /* Navigat1on.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Navigat1on.xcdatamodel; sourceTree = "<group>"; };
 		A47251FE29B74E640076A6CA /* AlertNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertNotification.swift; sourceTree = "<group>"; };
 		A48049022983DF54009FAA66 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
-		A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiseContentOfSet.swift; sourceTree = "<group>"; };
 		A480490B298A658D009FAA66 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A48E9B7229B1EE7000BA91BB /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		A48E9B7429B1EEB000BA91BB /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
@@ -172,6 +171,7 @@
 		A49AE015299CD24F000E14D3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A49C622F299FC751003190FB /* NameResidentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameResidentsViewController.swift; sourceTree = "<group>"; };
 		A49C6233299FC9FA003190FB /* NameResidentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameResidentsViewModel.swift; sourceTree = "<group>"; };
+		A4DEEAFD2A12699B002D43EC /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		A4E2FE5E29B1CF040039F07B /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		A4E2FE6029B1E52E0039F07B /* CheckerPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerPassword.swift; sourceTree = "<group>"; };
 		A4E427D729818D9400A249F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -363,6 +363,7 @@
 		A43698782979A89700395E32 /* Navigat1on */ = {
 			isa = PBXGroup;
 			children = (
+				A4DEEAFC2A12696C002D43EC /* LocalAuthorizationService */,
 				A41C453129FA454500C1F708 /* Constant */,
 				A47251FD29B74E470076A6CA /* PublicAlertModel */,
 				A47251F729B63E580076A6CA /* CoreData */,
@@ -491,7 +492,6 @@
 		A4804911298EC0D1009FAA66 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A4804906298403E6009FAA66 /* ServiseContentOfSet.swift */,
 				A4E427D729818D9400A249F0 /* User.swift */,
 				A4E2FE6029B1E52E0039F07B /* CheckerPassword.swift */,
 			);
@@ -530,6 +530,14 @@
 				A43698D1297AC27200395E32 /* CheckerService.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		A4DEEAFC2A12696C002D43EC /* LocalAuthorizationService */ = {
+			isa = PBXGroup;
+			children = (
+				A4DEEAFD2A12699B002D43EC /* LocalAuthorizationService.swift */,
+			);
+			path = LocalAuthorizationService;
 			sourceTree = "<group>";
 		};
 		A4E427E12982C14100A249F0 /* Protocol */ = {
@@ -703,7 +711,6 @@
 				A43698D6297AC79200395E32 /* LoginInspector.swift in Sources */,
 				A436987C2979A89700395E32 /* SceneDelegate.swift in Sources */,
 				A47251FF29B74E640076A6CA /* AlertNotification.swift in Sources */,
-				A4804907298403E6009FAA66 /* ServiseContentOfSet.swift in Sources */,
 				A43698992979AAC300395E32 /* PostView.swift in Sources */,
 				A41C451C29F10DF800C1F708 /* MapViewModel.swift in Sources */,
 				A43698972979AAB900395E32 /* CustomUITextField.swift in Sources */,
@@ -717,6 +724,7 @@
 				A48E9B7A29B1FBEC00BA91BB /* RealmManager.swift in Sources */,
 				A43698B32979ACB000395E32 /* PhotosCollectionViewCell.swift in Sources */,
 				A426E47A29817712001128BF /* ProfileViewController.swift in Sources */,
+				A4DEEAFE2A12699B002D43EC /* LocalAuthorizationService.swift in Sources */,
 				A47251F929B63E6E0076A6CA /* CoreDataManager.swift in Sources */,
 				A43698A32979ABC600395E32 /* PostViewController.swift in Sources */,
 				A426E475298174B6001128BF /* FeedViewController2.swift in Sources */,
