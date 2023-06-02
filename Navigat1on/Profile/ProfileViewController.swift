@@ -16,14 +16,14 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let viewModel: ProfileViewModel
+    private let viewModel: IProfileViewModel
     
     private lazy var profileView = ProfileView()
     
     
     // MARK: - Life cycle
     
-    init(viewModel: ProfileViewModel) {
+    init(viewModel: IProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 //        self.setupView()
@@ -36,6 +36,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+        self.viewModel.registeForLatestUpdatesIfPossible(self)
     }
     
     
@@ -126,8 +127,29 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
-            self.viewModel.didPab()
+            self.viewModel.didTapPhotos()
         }
+    }
+    
+}
+
+
+
+extension ProfileViewController: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if response.notification.request.content.categoryIdentifier == "updates" {
+            switch response.actionIdentifier {
+            case UNNotificationDefaultActionIdentifier:
+                print("Пользователь сделал свайп")
+            case "Показать":
+                print("Пользователь нажал на 'показать больше информации'")
+            default:
+                break
+            }
+        }
+        completionHandler()
     }
     
 }

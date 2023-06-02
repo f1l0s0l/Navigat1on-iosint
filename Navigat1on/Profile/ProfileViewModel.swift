@@ -6,30 +6,71 @@
 //
 
 import Foundation
+import UserNotifications
+import UIKit
+
+protocol IProfileViewModel {
+    var dataPosts: [PostView] { get }
+    var arrayPhotos: [UIImage?] { get }
+    var user: User { get }
+    var stateChanged: ((ProfileViewModel.State) -> Void)? { get set }
+    
+    func didTapPhotos()
+    func registeForLatestUpdatesIfPossible(_ object: UNUserNotificationCenterDelegate)
+}
 
 final class ProfileViewModel {
     
-    // MARK: - Properties
+    // MARK: - Enum
     
-    let dataPosts = DataPosts.dataPosts
-    let arrayPhotos = Photos.photos
+    enum State {
+        case setDelegateNotificationCenter
+    }
     
-    let coordinator: Coordinatable
+    
+    // MARK: - Public properties
+    
+    var dataPosts = DataPosts.dataPosts
+    var arrayPhotos = Photos.photos
     var user: User
+    var stateChanged: ((State) -> Void)?
+    
+    
+    // MARK: - Private properties
+    
+    private let coordinator: Coordinatable
+    
+    private let localNotificationService: ILocalNotificationService
+    
+    private var state: State = .setDelegateNotificationCenter {
+        didSet {
+            self.stateChanged?(self.state)
+        }
+    }
     
     
     // MARK: - Life Cycle
     
-    init(coordinator: Coordinatable, user: User) {
+    init(coordinator: Coordinatable, user: User, localNotificationService: ILocalNotificationService) {
         self.coordinator = coordinator
         self.user = user
+        self.localNotificationService = localNotificationService
     }
     
+}
+
+
+
+    // MARK: - IProfileViewModel
+
+extension ProfileViewModel: IProfileViewModel {
     
-    // MARK: - Public Methods
-    
-    func didPab() {
-        (coordinator as? ProfileCoordinator)?.pushToPhotosViewController(arrayPhotos: arrayPhotos)
+    func didTapPhotos() {
+        (self.coordinator as? ProfileCoordinator)?.pushToPhotosViewController(arrayPhotos: arrayPhotos)
     }
     
+    func registeForLatestUpdatesIfPossible(_ object: UNUserNotificationCenterDelegate) {
+        self.localNotificationService.setDelegate(object)
+        self.localNotificationService.registeForLatestUpdatesIfPossible()
+    }
 }
