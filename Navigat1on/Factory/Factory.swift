@@ -58,7 +58,8 @@ final class Factory {
             
             
         case let .profile(user):
-            let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
+            let localNotificationService = LocalNotificationService()
+            let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user, localNotificationService: localNotificationService)
             let controller = ProfileViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
             
