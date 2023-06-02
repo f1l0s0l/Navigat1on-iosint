@@ -15,7 +15,7 @@ protocol IProfileViewModel {
     var user: User { get }
     var stateChanged: ((ProfileViewModel.State) -> Void)? { get set }
     
-    func didTapPhotos(_ object: UNUserNotificationCenterDelegate)
+    func didTapPhotos()
     func registeForLatestUpdatesIfPossible(_ object: UNUserNotificationCenterDelegate)
 }
 
@@ -65,10 +65,8 @@ final class ProfileViewModel {
 
 extension ProfileViewModel: IProfileViewModel {
     
-    func didTapPhotos(_ object: UNUserNotificationCenterDelegate) {
-//        (self.coordinator as? ProfileCoordinator)?.pushToPhotosViewController(arrayPhotos: arrayPhotos)
-        self.localNotificationService.setDelegate(object)
-        self.localNotificationService.registeForLatestUpdatesIfPossible()
+    func didTapPhotos() {
+        (self.coordinator as? ProfileCoordinator)?.pushToPhotosViewController(arrayPhotos: arrayPhotos)
     }
     
     func registeForLatestUpdatesIfPossible(_ object: UNUserNotificationCenterDelegate) {
