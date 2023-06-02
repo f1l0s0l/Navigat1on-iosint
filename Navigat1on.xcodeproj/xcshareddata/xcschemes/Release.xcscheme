@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A4A7637D2A229A2E005FF392"
+               BuildableName = "Navigat1onTests.xctest"
+               BlueprintName = "Navigat1onTests"
+               ReferencedContainer = "container:Navigat1on.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A46394A42A2540C900C2234F"
+               BuildableName = "Navigat1onTests2.xctest"
+               BlueprintName = "Navigat1onTests2"
+               ReferencedContainer = "container:Navigat1on.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

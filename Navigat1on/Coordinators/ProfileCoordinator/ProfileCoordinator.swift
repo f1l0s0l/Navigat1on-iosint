@@ -5,39 +5,45 @@
 //  Created by Илья Сидорик on 25.01.2023.
 //
 
-import Foundation
 import UIKit
 
-final class ProfileCoordinator: Coordinatable {
+protocol IProfileCoordinator: AnyObject {
+    func pushToPhotosViewController(arrayPhotos: [UIImage?])
+}
+
+final class ProfileCoordinator {
+    
+    // MARK: - Enum
     
     private enum LocalizedKeys: String {
         case tabBarItemTitle = "profileTabBarItem.title"
     }
+
     
-    // MARK: - Public Properties
-    
-//    weak var parentCoordinator: Coordinatable?
-    
-    
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private var user: User
     
     private var navigationController: UINavigationController
     
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var childCoordinators: [ICoordinator] = []
     
     
-    // MARK: - Life Cycle
+    // MARK: - Init
 
     init(user: User, navController: UINavigationController) {
         self.user = user
         self.navigationController = navController
     }
     
-    
-    // MARK: - Public Methods
+}
 
+
+
+    // MARK: - ICoordinator
+
+extension ProfileCoordinator: ICoordinator {
+    
     func start() -> UIViewController {
         let profileViewController = Factory(navigationController: self.navigationController,
                                             coordinator: self,
@@ -53,21 +59,16 @@ final class ProfileCoordinator: Coordinatable {
         
         return profileViewController.navigationController
     }
+}
 
+
+
+    // MARK: - IProfileCoordinator
+
+extension ProfileCoordinator: IProfileCoordinator {
     func pushToPhotosViewController(arrayPhotos: [UIImage?]) { // тут мы передадим фотгграфии из viewModel
         let photosViewController = PhotosViewController(arrayPhotos: arrayPhotos)
         self.navigationController.pushViewController(photosViewController, animated: true)
     }
 
-    func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
-            return
-        }
-        childCoordinators.append(coordinator)
-    }
-    
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
-        childCoordinators.removeAll(where: {$0 === coordinator})
-    }
-    
 }

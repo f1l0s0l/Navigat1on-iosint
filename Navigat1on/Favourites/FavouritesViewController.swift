@@ -72,7 +72,7 @@ class FavouritesViewController: UIViewController {
         self.setupNavigationBarItem()
         self.setupConstraints()
         self.bindViewModel()
-        self.viewModel.doAction(action: .checkIsEmptyFavouritesPosts)
+        self.viewModel.checkIsEmptyFavouritesPosts()
     }
     
     
@@ -127,17 +127,17 @@ class FavouritesViewController: UIViewController {
     
     @objc
     private func didTapSearchButton() {
-        self.viewModel.doAction(action: .didTapSearchButton)
+        self.viewModel.didTapSearchButton()
     }
     
     @objc
     private func didTapCloseSearchButton() {
-        self.viewModel.doAction(action: .didTapCloseSearchButton)
+        self.viewModel.didTapCloseSearchButton()
     }
     
     @objc
     private func removeOllFavorites() {
-        self.viewModel.doAction(action: .removeOllFavourites)
+        self.viewModel.removeOllFavourites()
     }
     
     
@@ -257,7 +257,7 @@ extension FavouritesViewController: UITableViewDelegate {
         guard editingStyle == .delete else {
             return
         }
-        self.viewModel.doAction(action: .removeFavouritePost(indexPath: indexPath))
+        self.viewModel.removeFavouritePost(indexPath: indexPath)
     }
     
 }
@@ -269,7 +269,7 @@ extension FavouritesViewController: UITableViewDelegate {
 extension FavouritesViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        self.viewModel.doAction(action: .didChangesSearch(searchString: searchController.searchBar.text))
+        self.viewModel.didChangesSearch(searchString: searchController.searchBar.text)
     }
     
 }
@@ -285,19 +285,19 @@ extension FavouritesViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .delete:
             if controller.fetchedObjects!.count == 0 {
-                self.viewModel.doAction(action: .reloadDate)
+                self.viewModel.reloadData()
             } else {
-                self.viewModel.doAction(action: .deleteRow(indexPath: [indexPath!]))
+                self.viewModel.deleteRow(indexPath: indexPath!)
             }
 
         case .insert:
-            self.viewModel.doAction(action: .insertRow(indexPath: [newIndexPath!]))
+            self.viewModel.insertRow(indexPath: newIndexPath!)
 
         default:
-            self.viewModel.doAction(action: .reloadDate)
+            self.viewModel.reloadData()
             // так как мы не видим остальные изменения, тогда достаточно обновить таблицу
         }
-        self.viewModel.doAction(action: .checkIsEmptyFavouritesPosts)
+        self.viewModel.checkIsEmptyFavouritesPosts()
     }
     
     

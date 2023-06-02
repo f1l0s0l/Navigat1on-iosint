@@ -18,7 +18,7 @@ final class Factory {
     
     let navigationController: UINavigationController
     
-    let coordinator: Coordinatable
+    let coordinator: ICoordinator
     
     private let flow: Flow
     
@@ -26,7 +26,7 @@ final class Factory {
 //    weak var delegate: LogInViewControllerDelegate?
     //
     
-    init(navigationController: UINavigationController, coordinator: Coordinatable, flow: Flow) {
+    init(navigationController: UINavigationController, coordinator: ICoordinator, flow: Flow) {
         self.navigationController = navigationController
         self.flow = flow
         self.coordinator = coordinator
@@ -39,7 +39,7 @@ final class Factory {
             let checkerPassword = CheckerPassword()
             let localAuthorizationService = LocalAuthorizationService()
             let viewModel = LogInViewModel(
-                coordinator: self.coordinator,
+                coordinator: self.coordinator as! ILoginCoordinator,
                 checkerPassword: checkerPassword,
                 localAuthorizationService: localAuthorizationService
             )
@@ -47,24 +47,24 @@ final class Factory {
             navigationController.setViewControllers([controller], animated: true)
 
         case .feed:
-            let viewModel = FeedViewModel(coordinator: self.coordinator)
+            let viewModel = FeedViewModel(coordinator: self.coordinator as? IFeedCoordinator)
             let controller = FeedViewController2(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
             
         case .favourites:
-            let viewModel = FavouritesViewModel(coordinator: self.coordinator)
+            let viewModel = FavouritesViewModel(coordinator: self.coordinator as? IFavouritesCoordinator)
             let controller = FavouritesViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
             
             
         case let .profile(user):
-            let viewModel = ProfileViewModel(coordinator: self.coordinator, user: user)
+            let viewModel = ProfileViewModel(coordinator: self.coordinator as? IProfileCoordinator, user: user)
             let controller = ProfileViewController(viewModel: viewModel)
             navigationController.setViewControllers([controller], animated: true)
             
         case .map:
 //            let viewModel = MapViewModel(coordinator: self.coordinator)
-            let viewController = MapViewController(coordinator: self.coordinator)
+            let viewController = MapViewController(coordinator: self.coordinator as? IMapCoordinator)
             navigationController.setViewControllers([viewController], animated: true)
         }
         

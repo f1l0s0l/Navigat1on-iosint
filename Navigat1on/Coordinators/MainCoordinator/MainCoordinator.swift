@@ -10,111 +10,65 @@ import UIKit
 //import FirebaseAuth
 import RealmSwift
 
-protocol CoordinatableMain: AnyObject {
+protocol IMainCoordinator: AnyObject {
     func switchToTabBarController(user: User)
     func switchToLoginController()
 }
 
 
-final class MainCoordinator: Coordinatable {
+final class MainCoordinator {
     
-    // MARK: - Properties
+    // MARK: - Private properties
     
-    private var currentUser: User?
-
     private var rootViewController: UIViewController
 
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var childCoordinators: [ICoordinator] = []
     
     
-    // MARK: - Life cycle
+    // MARK: - Lifecycles
     
     init(rootViewController: UIViewController) {
         self.rootViewController = rootViewController
     }
     
     
-    // MARK: - Public methods
+    // MARK: - Private methods
     
-    func start() -> UIViewController {
-        let loadingViewController = LoadingViewController()
-        self.rootViewController.addChild(loadingViewController)
-        loadingViewController.view.frame = self.rootViewController.view.bounds
-        self.rootViewController.view.addSubview(loadingViewController.view)
-        loadingViewController.didMove(toParent: self.rootViewController)
-        
-        self.checkUser()
-        
-        return self.rootViewController
+    private func checkUser() -> User? {
+        RealmManager.shared.userIsLogin()
     }
     
-    private func checkUser() {
-        guard let user = RealmManager.shared.userIsLogin() else {
-            self.showLoginController()
-            return
-        }
-        self.showTabBarController(user: user)
+    private func makeLoginCoordinator() -> ICoordinator{
+        let loginCoordionator = LogInCoordinator(parentCoordinator: self)
+        return loginCoordionator
     }
     
-    private func showLoginController() {
-        let loginCoordinator = LogInCoordinator(parentCoordinator: self)
-        self.addChildCoordinator(loginCoordinator)
-        let loginVC = loginCoordinator.start()
-        self.makeShow(to: loginVC)
-    }
-    
-    private func showTabBarController(user: User) {
+    private func makeTabBarCoordinator(user: User) -> ICoordinator{
         let tabBarCoordinator = TabBarCoordinator(user: user)
-        self.addChildCoordinator(tabBarCoordinator)
-        let tabBarController = tabBarCoordinator.start()
-        self.makeSwitch(to: tabBarController)
-        
+        return tabBarCoordinator
     }
         
-    func addChildCoordinator(_ coordinator: Coordinatable) {
+    private func addChildCoordinator(_ coordinator: ICoordinator) {
         guard !childCoordinators.contains(where: { $0 === coordinator }) else {
             return
         }
         childCoordinators.append(coordinator)
     }
     
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
+    private func removeChildCoordinator(_ coordinator: ICoordinator) {
         childCoordinators.removeAll(where: {$0 === coordinator})
     }
     
-    
-    // MARK: - Methods
-//
-//    private func startTimerForBannerVC() {
-//        Timer.scheduledTimer(
-//            withTimeInterval: 3,
-//            repeats: true
-//        ) { timer in
-//            self.pushBannerVC()
-//            timer.invalidate()
-//        }
-//    }
-//
-//    private func pushBannerVC() {
-//        let bannerVC = BannerViewController()
-//        bannerVC.delegate = self
-//        self.navigationController.pushViewController(bannerVC, animated: true)
-//    }
-    
-    private func makeShow(to newViewController: UIViewController) {
+    private func setFlow(to newViewController: UIViewController) {
         self.rootViewController.addChild(newViewController)
         newViewController.view.frame = self.rootViewController.view.bounds
         self.rootViewController.view.addSubview(newViewController.view)
         newViewController.didMove(toParent: self.rootViewController)
-        
-        self.rootViewController.children[0].willMove(toParent: nil)
-        self.rootViewController.children[0].view.removeFromSuperview()
-        self.rootViewController.children[0].removeFromParent()
-        
     }
     
-    private func makeSwitch(to newViewController: UIViewController) {
+    private func switchFlow(to newViewController: UIViewController) {
         self.rootViewController.children[0].willMove(toParent: nil)
+        self.rootViewController.children[0].navigationController?.navigationBar.isHidden = true
         self.rootViewController.addChild(newViewController)
         newViewController.view.frame = self.rootViewController.view.bounds
         
@@ -128,28 +82,46 @@ final class MainCoordinator: Coordinatable {
             self.rootViewController.children[0].removeFromParent()
             newViewController.didMove(toParent: self.rootViewController)
             }
-        
     }
     
 }
 
 
 
-    // MARK: - CoordinatableMain
+    // MARK: - ICoordinator
 
-extension MainCoordinator: CoordinatableMain {
+extension MainCoordinator: ICoordinator {
+    
+    func start() -> UIViewController {
+        guard let user = self.checkUser() else {
+            let loginCoordinator = self.makeLoginCoordinator()
+            self.addChildCoordinator(loginCoordinator)
+            self.setFlow(to: loginCoordinator.start())
+            return self.rootViewController
+        }
+        let tabBarCoordinator = self.makeTabBarCoordinator(user: user)
+        self.addChildCoordinator(tabBarCoordinator)
+        self.setFlow(to: tabBarCoordinator.start())
+        return self.rootViewController
+    }
+}
+
+
+
+    // MARK: - IMainCoordinator
+
+extension MainCoordinator: IMainCoordinator {
+    
     func switchToTabBarController(user: User) {
         let tabBarCoordinator = TabBarCoordinator(user: user)
         self.addChildCoordinator(tabBarCoordinator)
-        let tabBarController = tabBarCoordinator.start()
-        self.makeSwitch(to: tabBarController)
+        self.switchFlow(to: tabBarCoordinator.start())
         self.removeChildCoordinator(self.childCoordinators[0])
     }
     
     func switchToLoginController() {
         // пока нет необходимости, но так монжно попадать обратно в flow авторизации
     }
-    
     
 }
 

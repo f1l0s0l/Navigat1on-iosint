@@ -5,28 +5,44 @@
 //  Created by Илья Сидорик on 27.01.2023.
 //
 
-import Foundation
 import UIKit
 
-final class TabBarCoordinator: Coordinatable {
-    
-    // MARK: - Public Properties
-    
-//    weak var parentCoordinator: Coordinatable?
+final class TabBarCoordinator {
     
     // MARK: - Properties
 
     private var user: User
     
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var childCoordinators: [ICoordinator] = []
+    
+    
+    // MARK: - Init
     
     init(user: User) {
         self.user = user
     }
     
     
-    // MARK: - Public Methods
+    // MARK: - Private methods
+    
+    private func addChildCoordinator(_ coordinator: ICoordinator) {
+        guard !self.childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
+        }
+        self.childCoordinators.append(coordinator)
+    }
+    
+    private func removeChildCoordinator(_ coordinator: ICoordinator) {
+        self.childCoordinators.removeAll(where: {$0 === coordinator})
+    }
+ 
+}
 
+
+
+    // MARK: - ICoordinator
+
+extension TabBarCoordinator: ICoordinator {
     func start() -> UIViewController {
         let feedCoordinator = FeedCoordinator(navController: UINavigationController())
         let favouritesCoordinator = FavouritesCoordinator(navController: UINavigationController())
@@ -46,18 +62,5 @@ final class TabBarCoordinator: Coordinatable {
         self.addChildCoordinator(profileCoordinator)
         
         return mainTabBarController
-
     }
-    
-    func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard !self.childCoordinators.contains(where: { $0 === coordinator }) else {
-            return
-        }
-        self.childCoordinators.append(coordinator)
-    }
-    
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
-        self.childCoordinators.removeAll(where: {$0 === coordinator})
-    }
- 
 }

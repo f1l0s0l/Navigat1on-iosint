@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol IFeedViewModel {
+    var stateChenged: ((FeedViewModel.State) -> Void)? { get set }
+    func didTapDownloadDataButton()
+    func didTapShowNameResidentsButton()
+}
+
 final class FeedViewModel {
     
     enum State {
@@ -18,57 +24,56 @@ final class FeedViewModel {
         case error
     }
     
-    enum Action {
-        case didTapDownloadDataButton
-        case didTapShowNameResidentsButton
-    }
-    
     
     // MARK: - Public Properties
     
     var stateChenged: ((State) -> Void)?
+    
+    
+    // MARK: - Private properties
+    
+    private weak var coordinator: IFeedCoordinator?
+    
+    private var residents: [String] = []
+    
     private(set) var state: State = .initial {
         didSet {
-            stateChenged?(state)
+            self.stateChenged?(self.state)
         }
     }
     
     
-    // MARK: - Properties
+    // MARK: - Init
     
-    private let coordinator: Coordinatable
-    private var residents: [String] = []
-    
-    // MARK: - Life cycle
-    
-    init(coordinator: Coordinatable) {
+    init(coordinator: IFeedCoordinator?) {
         self.coordinator = coordinator
     }
     
+}
+
+
+
+    // MARK: - IFeedViewModel
+extension FeedViewModel: IFeedViewModel {
     
-    // MARK: - Public methods
-    
-    func didTap(action: Action) {
-        switch action {
-        case .didTapDownloadDataButton:
-            self.state = .loading
-            
-            FeedNetworkService1.request { [weak self] text in
-                self?.state = .loadedFirstTextLabel(text: text)
-            }
-            FeedNetworkService2.request { [weak self] text, residents in
-                self?.state = .loadedSecondTextLabel(text: text)
-                self?.residents = residents
-            }
-            
-        case .didTapShowNameResidentsButton:
-            guard residents.count != 0 else {
-                self.state = .wrong(text: "Нет данных")
-                return
-            }
-            (self.coordinator as? FeedCoordinator)?.pushNameResidentsViewController(residents: self.residents)
+    func didTapDownloadDataButton() {
+        self.state = .loading
+        
+        FeedNetworkService1.request { [weak self] text in
+            self?.state = .loadedFirstTextLabel(text: text)
+        }
+        FeedNetworkService2.request { [weak self] text, residents in
+            self?.state = .loadedSecondTextLabel(text: text)
+            self?.residents = residents
         }
     }
     
     
+    func didTapShowNameResidentsButton() {
+        guard residents.count != 0 else {
+            self.state = .wrong(text: "Нет данных")
+            return
+        }
+        self.coordinator?.pushNameResidentsViewController(residents: self.residents)
+    }
 }

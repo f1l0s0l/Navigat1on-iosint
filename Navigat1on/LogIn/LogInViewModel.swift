@@ -34,7 +34,7 @@ final class LogInViewModel {
     
     // MARK: - Private properties
     
-    private let coordinator: Coordinatable
+    private weak var coordinator: ILoginCoordinator?
     private let checkerPassword: CheckerPassword
     private let localAuthorizationService: LocalAuthorizationService
     
@@ -47,7 +47,7 @@ final class LogInViewModel {
     
     // MARK: - Init
     
-    init(coordinator: Coordinatable, checkerPassword: CheckerPassword, localAuthorizationService: LocalAuthorizationService) {
+    init(coordinator: ILoginCoordinator, checkerPassword: CheckerPassword, localAuthorizationService: LocalAuthorizationService) {
         self.coordinator = coordinator
         self.checkerPassword = checkerPassword
         self.localAuthorizationService = localAuthorizationService
@@ -70,7 +70,7 @@ extension LogInViewModel: ILogInViewModel {
                 return
             }
             self?.state = .loaded
-            (self?.coordinator as? CoordinatableLogin)?.switchToTabBarController(user: user)
+            self?.coordinator?.switchToTabBarController(user: user)
             
         }
     }
@@ -87,7 +87,7 @@ extension LogInViewModel: ILogInViewModel {
             // но так как у нас другой функционал, для примера просто создадим пользователя
             // в реалм его добавлять не будетм для того, что бы каждый раз заходя, он требовал опять авторизации
             let user = User(fullName: "ТестЮзер", avatar: nil, status: "ТестСтатус")
-            (self?.coordinator as? CoordinatableLogin)?.switchToTabBarController(user: user)
+            self?.coordinator?.switchToTabBarController(user: user)
         }
     }
     

@@ -8,7 +8,23 @@
 import Foundation
 //import CoreData
 
+protocol IFavouritesViewModel: AnyObject {
+    var stateChange: ((FavouritesViewModel.State) -> Void)? { get set }
+    
+    func removeOllFavourites()
+    func removeFavouritePost(indexPath: IndexPath)
+    func didTapSearchButton()
+    func didChangesSearch(searchString: String?)
+    func didTapCloseSearchButton()
+    func checkIsEmptyFavouritesPosts()
+    func deleteRow(indexPath: IndexPath)
+    func insertRow(indexPath: IndexPath)
+    func reloadData()
+}
+
 final class FavouritesViewModel {
+    
+    // MARK: Enum
     
     enum State {
         case initial
@@ -21,24 +37,14 @@ final class FavouritesViewModel {
         case tableViewDeleteRow(indexPath: [IndexPath])
     }
     
-    enum Action {
-        case reloadFavourites
-        case removeOllFavourites
-        case removeFavouritePost(indexPath: IndexPath)
-        case didTapSearchButton
-        case didChangesSearch(searchString: String?)
-        case didTapCloseSearchButton
-        case checkIsEmptyFavouritesPosts
-        case insertRow(indexPath: [IndexPath])
-        case deleteRow(indexPath: [IndexPath])
-        case reloadDate
-    }
-    
-    
     // MARK: - Public Properties
     
     var stateChange: ((State) -> Void)?
-    private var state: State = .initial {
+    
+    
+    // MARK: - Private properties
+    
+    private(set) var state: State = .initial {
         didSet {
             stateChange?(state)
         }
@@ -46,75 +52,18 @@ final class FavouritesViewModel {
     
     let fetchResultsController = CoreDataManager.shared.fetchResultsController
     
-    
-    // MARK: - Properties
-    
-    private let coordinator: Coordinatable
+    private weak var coordinator: IFavouritesCoordinator?
     
     
     // MARK: - Life cycle
     
-    init(coordinator: Coordinatable) {
+    init(coordinator: IFavouritesCoordinator?) {
         self.coordinator = coordinator
         try? fetchResultsController.performFetch()
     }
     
     
-    // MARK: - Public methods
-    
-    func doAction(action: Action) {
-        switch action {
-            
-        case .reloadFavourites:
-            ()
-            
-        case .removeOllFavourites:
-            CoreDataManager.shared.removeAllFavourites()
-            
-            
-        case .removeFavouritePost(let indexPath):
-            let favouritePost = self.fetchResultsController.object(at: indexPath)
-            CoreDataManager.shared.removeFavouritePost(favouritePost: favouritePost)
-            
-            
-        case .didTapSearchButton:
-            self.state = .showSearchItem
-            
-            
-        case .didChangesSearch(let searchString):
-            self.changeFetchResultsController(searchString: searchString)
-            self.state = .tableViewReloadData
-            
-            
-        case .didTapCloseSearchButton:
-            self.changeFetchResultsController(searchString: nil)
-            self.state = .hideSearchItem
-            
-            
-        case .checkIsEmptyFavouritesPosts:
-            self.showFavotitesPosts()
-            
-            
-        case .deleteRow(let indexPath):
-            if self.fetchResultsController.fetchedObjects?.count == 0 {
-                self.state = .tableViewReloadData
-            } else {
-                self.state = .tableViewDeleteRow(indexPath: indexPath)
-            }
-            
-            
-        case .insertRow(let indexPath):
-            self.state = .tableViewInsertRow(indexPath: indexPath)
-            
-            
-        case .reloadDate:
-            self.state = .tableViewReloadData
-        }
-        
-    }
-    
-    
-    // MARK: - Methods
+    // MARK: - Private methods
     
     private func showFavotitesPosts() {
         if self.fetchResultsController.fetchedObjects?.count ?? 0 == 0 {
@@ -133,6 +82,57 @@ final class FavouritesViewModel {
         
         try? self.fetchResultsController.performFetch()
         self.showFavotitesPosts()
+    }
+    
+}
+
+
+
+    // MARK: - IFavouritesViewModel
+
+extension FavouritesViewModel: IFavouritesViewModel {
+    
+    func removeOllFavourites() {
+        CoreDataManager.shared.removeAllFavourites()
+    }
+    
+    func removeFavouritePost(indexPath: IndexPath) {
+        let favouritePost = self.fetchResultsController.object(at: indexPath)
+        CoreDataManager.shared.removeFavouritePost(favouritePost: favouritePost)
+    }
+    
+    func didTapSearchButton() {
+        self.state = .showSearchItem
+    }
+    
+    func didChangesSearch(searchString: String?) {
+        self.changeFetchResultsController(searchString: searchString)
+        self.state = .tableViewReloadData
+    }
+    
+    func didTapCloseSearchButton() {
+        self.changeFetchResultsController(searchString: nil)
+        self.state = .hideSearchItem
+    }
+    
+    func checkIsEmptyFavouritesPosts() {
+        self.showFavotitesPosts()
+    }
+    
+    func deleteRow(indexPath: IndexPath) {
+        if self.fetchResultsController.fetchedObjects?.count == 0 {
+            self.state = .tableViewReloadData
+        } else {
+            self.state = .tableViewDeleteRow(indexPath: [indexPath])
+        }
+    }
+    
+    func insertRow(indexPath: IndexPath) {
+        self.state = .tableViewInsertRow(indexPath: [indexPath])
+    }
+    
+    func reloadData() {
+        self.state = .tableViewReloadData
     }
     
 }

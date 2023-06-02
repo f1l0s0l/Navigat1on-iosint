@@ -7,29 +7,41 @@
 
 import Foundation
 
+protocol IProfileViewModel: AnyObject {
+    func didTapPhotosCell()
+}
+
 final class ProfileViewModel {
     
-    // MARK: - Properties
+    // MARK: - Public properties
     
     let dataPosts = DataPosts.dataPosts
+
     let arrayPhotos = Photos.photos
     
-    let coordinator: Coordinatable
     var user: User
     
     
-    // MARK: - Life Cycle
+    // MARK: - Private properties
     
-    init(coordinator: Coordinatable, user: User) {
+    private weak var coordinator: IProfileCoordinator?
+    
+    
+    // MARK: - Init
+    
+    init(coordinator: IProfileCoordinator?, user: User) {
         self.coordinator = coordinator
         self.user = user
     }
     
-    
-    // MARK: - Public Methods
-    
-    func didPab() {
-        (coordinator as? ProfileCoordinator)?.pushToPhotosViewController(arrayPhotos: arrayPhotos)
+}
+
+
+
+    // MARK: - IProfileViewModel
+
+extension ProfileViewModel: IProfileViewModel {
+    func didTapPhotosCell() {
+        self.coordinator?.pushToPhotosViewController(arrayPhotos: self.arrayPhotos)
     }
-    
 }

@@ -21,7 +21,7 @@ final class MapViewController: UIViewController {
     
     // MARK: Properties
     
-    private let coordinator: Coordinatable
+    private weak var coordinator: IMapCoordinator?
     
 //    private let viewModel: IMapViewModel
     
@@ -87,7 +87,7 @@ final class MapViewController: UIViewController {
     
     // MARK: - Life cycle
     
-    init(coordinator: Coordinatable) {
+    init(coordinator: IMapCoordinator?) {
 //        self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)

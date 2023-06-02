@@ -5,34 +5,41 @@
 //  Created by Илья Сидорик on 25.01.2023.
 //
 
-import Foundation
 import UIKit
 
-final class FeedCoordinator: Coordinatable {
+protocol IFeedCoordinator: AnyObject {
+    func pushNameResidentsViewController(residents: [String])
+}
+
+final class FeedCoordinator {
+    
+    // MARK: - Enum
     
     private enum LocalizedKeys: String {
         case tabBarItemTitle = "feedTabBarItem.title"
     }
-
-    // MARK: - Public Properties
-
-//    weak var parentCoordinator: Coordinatable?
     
-    // MARK: - Properties
+    
+    // MARK: - Private properties
 
     private var navigationController: UINavigationController
     
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var childCoordinators: [ICoordinator] = []
     
-    // MARK: - Life Cycle
+    
+    // MARK: - Init
     
     init(navController: UINavigationController) {
         self.navigationController = navController
     }
     
-    
-    // MARK: - Public Methods
-    
+}
+
+
+
+    // MARK: - ICoordinator
+
+extension FeedCoordinator: ICoordinator {
     func start() -> UIViewController {
         let feedViewController = Factory(navigationController: self.navigationController,
                                          coordinator: self,
@@ -48,22 +55,16 @@ final class FeedCoordinator: Coordinatable {
         
         return self.navigationController
     }
-    
+}
+
+
+
+    // MARK: - IFeedCoordinator
+
+extension FeedCoordinator: IFeedCoordinator {
     func pushNameResidentsViewController(residents: [String]) {
         let viewModel = NameResidentsViewModel(residents: residents)
         let nameResidentsViewController = NameResidentsViewController(viewModel: viewModel)
         self.navigationController.pushViewController(nameResidentsViewController, animated: true)
     }
- 
-    func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
-            return
-        }
-        childCoordinators.append(coordinator)
-    }
-    
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
-        childCoordinators.removeAll(where: {$0 === coordinator})
-    }
-    
 }

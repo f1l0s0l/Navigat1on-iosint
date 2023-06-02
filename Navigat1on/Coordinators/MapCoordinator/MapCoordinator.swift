@@ -5,33 +5,41 @@
 //  Created by Илья Сидорик on 20.04.2023.
 //
 
-import Foundation
 import UIKit
 
-final class MapCoordinator: Coordinatable {
+protocol IMapCoordinator: AnyObject {
+    
+}
+
+final class MapCoordinator {
+    
+    // MARK: - Enum
 
     private enum LocalizedKeys: String {
         case tabBarItemTitle = "mapTabBarItem.title"
     }
     
-    // MARK: - Public Properties
-
-//    weak var parentCoordinator: Coordinatable?
     
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private var navigationController: UINavigationController
     
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var childCoordinators: [ICoordinator] = []
     
-    // MARK: - Life Cycle
+    
+    // MARK: - Init
     
     init(navController: UINavigationController) {
         self.navigationController = navController
     }
     
-    
-    // MARK: - Public Methods
+}
+
+
+
+    // MARK: - ICoordinator
+
+extension MapCoordinator: ICoordinator {
     
     func start() -> UIViewController {
         let mapViewController = Factory(
@@ -46,37 +54,13 @@ final class MapCoordinator: Coordinatable {
         )
         mapViewController.navigationController.tabBarItem = itemForMapVC
         self.navigationController = mapViewController.navigationController
-        
-        
-//        let feedViewController = Factory(navigationController: self.navigationController,
-//                                         coordinator: self,
-//                                         flow: .feed
-//        )
-//        let itemForProfileVCc = UITabBarItem(title: "Feed",
-//                                            image: UIImage(systemName: "square.stack.3d.down.right"),
-//                                            tag: 0
-//        )
-//        feedViewController.navigationController.tabBarItem = itemForProfileVCc
-//        self.navigationController = feedViewController.navigationController
-        
+
         return self.navigationController
     }
-    
-//    func pushNameResidentsViewController(residents: [String]) {
-//        let viewModel = NameResidentsViewModel(residents: residents)
-//        let nameResidentsViewController = NameResidentsViewController(viewModel: viewModel)
-//        self.navigationController.pushViewController(nameResidentsViewController, animated: true)
-//    }
- 
-    func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
-            return
-        }
-        childCoordinators.append(coordinator)
-    }
-    
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
-        childCoordinators.removeAll(where: {$0 === coordinator})
-    }
+}
+
+
+
+extension MapCoordinator: IMapCoordinator {
     
 }

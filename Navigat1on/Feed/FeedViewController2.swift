@@ -60,7 +60,7 @@ final class FeedViewController2: UIViewController {
     }()
     @objc
     private func didTabDownloadDataButton() {
-        self.viewModel.didTap(action: .didTapDownloadDataButton)
+        self.viewModel.didTapDownloadDataButton()
     }
     
     private lazy var showNameResidentsTatooineButton: UIButton = {
@@ -78,7 +78,7 @@ final class FeedViewController2: UIViewController {
     }()
     @objc
     private func didTabShowNameResidentsTatooineButton() {
-        self.viewModel.didTap(action: .didTapShowNameResidentsButton)
+        self.viewModel.didTapShowNameResidentsButton()
     }
     
     // MARK: - Life cycle
@@ -128,7 +128,6 @@ final class FeedViewController2: UIViewController {
                 self.activityIndicator.stopAnimating()
                 self.firstTextLabel.text = String(localized: String.LocalizationValue(LocalizedKeys.firstTextLabelText.rawValue))
                 + " " + text
-                
                 
             case .loadedSecondTextLabel(let text):
                 self.activityIndicator.stopAnimating()

@@ -5,33 +5,41 @@
 //  Created by Илья Сидорик on 06.03.2023.
 //
 
-import Foundation
 import UIKit
 
-final class FavouritesCoordinator: Coordinatable {
+protocol IFavouritesCoordinator: AnyObject {
+    
+}
+
+final class FavouritesCoordinator {
+    
+    // MARK: - Enum
     
     private enum LocalizedKeys: String {
         case tabBarItemTitle = "favouriteTabBarItem.title"
     }
     
-    // MARK: - Public Properties
-
-//    weak var parentCoordinator: Coordinatable?
     
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private var navigationController: UINavigationController
     
-    private(set) var childCoordinators: [Coordinatable] = []
+    private var childCoordinators: [ICoordinator] = []
     
-    // MARK: - Life Cycle
+    
+    // MARK: - Init
     
     init(navController: UINavigationController) {
         self.navigationController = navController
     }
     
-    
-    // MARK: - Public Methods
+}
+
+
+
+    // MARK: - ICoordinator
+
+extension FavouritesCoordinator: ICoordinator {
     
     func start() -> UIViewController {
         let favouritesViewController = Factory(
@@ -49,16 +57,10 @@ final class FavouritesCoordinator: Coordinatable {
         
         return self.navigationController
     }
- 
-    func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
-            return
-        }
-        childCoordinators.append(coordinator)
-    }
-    
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
-        ()
-    }
+}
+
+
+
+extension FavouritesCoordinator: IFavouritesCoordinator {
     
 }
