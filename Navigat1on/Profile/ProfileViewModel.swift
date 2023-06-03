@@ -15,7 +15,7 @@ final class ProfileViewModel {
     
     // MARK: - Public properties
     
-    let dataPosts = DataPosts.dataPosts
+    var dataPosts = DataPosts.dataPosts
 
     let arrayPhotos = Photos.photos
     
