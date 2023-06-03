@@ -22,6 +22,7 @@ final class ProfileView: UIView {
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderViewID")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCellID")
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCellID")
+        tableView.dragInteractionEnabled = true
         return tableView
     }()
     
@@ -41,9 +42,11 @@ final class ProfileView: UIView {
     
     // MARK: - Public Methods
     
-    func configureTableView(dataSource: UITableViewDataSource, delegate: UITableViewDelegate) {
+    func configureTableView(dataSource: UITableViewDataSource, delegate: UITableViewDelegate, dragDelegate: UITableViewDragDelegate, dropDelegate: UITableViewDropDelegate) {
         self.tableView.dataSource = dataSource
         self.tableView.delegate = delegate
+        self.tableView.dragDelegate = dragDelegate
+        self.tableView.dropDelegate = dropDelegate
     }
     
     

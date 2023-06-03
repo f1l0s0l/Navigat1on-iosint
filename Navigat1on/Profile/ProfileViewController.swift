@@ -10,6 +10,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
+    
     private enum LocalizedKeys: String {
         case title = "profileViewController.title"
     }
@@ -45,17 +46,29 @@ final class ProfileViewController: UIViewController {
         #if DEBUG
         self.view.backgroundColor = .red
         #else
-//        self.view.backgroundColor = .blue
         self.view.backgroundColor = ColorConstant.background
         #endif
-//        self.view.backgroundColor = UIColor.orange
-        self.profileView.configureTableView(dataSource: self, delegate: self)
-//        self.view.addSubview(profileView)
+        self.profileView.configureTableView(dataSource: self, delegate: self, dragDelegate: self, dropDelegate: self)
         self.view = profileView
-//        self.title = "Profile"
         self.title = String(localized: String.LocalizationValue(LocalizedKeys.title.rawValue))
         self.navigationController?.navigationBar.isHidden = true
         
+    }
+    
+    private func getDragItemsFromCell(for indexPath: IndexPath) -> [UIDragItem] {
+        guard let image = self.viewModel.dataPosts[indexPath.row].image,
+              let description = self.viewModel.dataPosts[indexPath.row].description
+        else {
+            return []
+        }
+        let imageItemProvider = NSItemProvider(object: image as NSItemProviderWriting)
+        let descriptionItemProvider = NSItemProvider(object: description as NSItemProviderWriting)
+        
+        let dragItems = [
+            UIDragItem(itemProvider: imageItemProvider),
+            UIDragItem(itemProvider: descriptionItemProvider),
+        ]
+        return dragItems
     }
     
 }
@@ -130,4 +143,67 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
     
+}
+
+
+
+    // MARK: - UITableViewDragDelegate
+
+extension ProfileViewController: UITableViewDragDelegate {
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        self.getDragItemsFromCell(for: indexPath)
+    }
+    
+    
+}
+
+
+
+
+// MARK: - UITableViewDropDelegate
+
+extension ProfileViewController: UITableViewDropDelegate {
+    
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        session.canLoadObjects(ofClass: UIImage.self)
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        
+        guard session.items.count == 1 else {
+            return UITableViewDropProposal(operation: .cancel)
+        }
+        return UITableViewDropProposal(operation: .copy, intent: .insertIntoDestinationIndexPath)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        let destinationIndexPath: IndexPath
+        
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            let section = tableView.numberOfSections - 1
+            let row = tableView.numberOfRows(inSection: section)
+            destinationIndexPath = IndexPath(row: row, section: section)
+        }
+        
+        coordinator.session.loadObjects(ofClass: UIImage.self) { [weak self] items in
+            guard let image = items.first as? UIImage else {
+                return
+            }
+            let newPostView = PostView(
+                author: "Drag & Drop",
+                description: "Drag & Drop description",
+                image: image,
+                likes: 0,
+                views: 0,
+                id: UUID().uuidString
+            )
+            self?.viewModel.dataPosts.insert(newPostView, at: destinationIndexPath.row)
+            tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+        }
+    }
+
 }
